@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import clienteAxios from '../../../api/axios';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './css/NuevoAprendiz.css';
 import Swal from 'sweetalert2';
+import { IoArrowBackSharp } from "react-icons/io5";
 
 function NuevoAprendiz() {
     const { id_instructor } = useParams();
@@ -64,6 +65,8 @@ function NuevoAprendiz() {
     return (
         <Fragment>
             <h1 className='text-center'>Agregar nuevo Aprendiz</h1>
+            <button className='relative left-10'><Link to={'/instructor'} className='Regresar'><IoArrowBackSharp 
+                className='inline-block'/> Regresar</Link></button>
             <main className='contenedor-formulario'>
                 <form className='formulario-aprendiz' onSubmit={handleSubmit}>
                     <input type='text' placeholder='Tipo de documento' name="tipo_documento"

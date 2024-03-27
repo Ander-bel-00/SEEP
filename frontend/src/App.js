@@ -192,7 +192,9 @@ function App() {
           path="/:rol_usuario/:id_instructor/nuevaFicha"
           element={
             isAuthenticated && userRole === 'instructor' ? (
-              <NuevaFicha />
+              <main className="">
+                <NuevaFicha />
+              </main>
             ) : (
               <Navigate to="/" replace />
             )

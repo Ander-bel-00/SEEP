@@ -278,6 +278,9 @@ ul li a:active {
         left: 5px;
         top: 90px;
     }
+    .ficha-card:hover{
+        transform: scale(1.04);
+    }
     .searchContent{
         position: relative;
         left: 15px;

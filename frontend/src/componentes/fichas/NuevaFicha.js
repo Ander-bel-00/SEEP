@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import clienteAxios from '../../api/axios';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './css/fichas-styles.css';
+import { IoArrowBackSharp } from "react-icons/io5";
 
 function NuevaFicha() {
     const { id_instructor } = useParams();
@@ -55,9 +56,12 @@ function NuevaFicha() {
 
     return (
         <Fragment>
+            <button className='relative left-10 top-2'><Link to={'/instructor'} className='Regresar'><IoArrowBackSharp 
+                className='inline-block'/> Regresar</Link></button>
             <h1 className='text-center'>Agregar nueva Ficha</h1>
-            <main className='form-contenido'>
-                <form className='formularioFichas' onSubmit={handleSubmit}>
+
+            <main className='form-fichas-contenido'>
+                <form className='formularioFichasInstructor' onSubmit={handleSubmit}>
                     <input type="text" placeholder='Ingresa el número de ficha' name="numero_ficha"
                         onChange={handleChange} required />
                     <input type='text' placeholder='Programa de formación' name="programa_formacion"

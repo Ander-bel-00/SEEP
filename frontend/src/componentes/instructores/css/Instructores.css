@@ -269,6 +269,9 @@ ul li a:active {
         padding: 5px;
         padding-bottom: 30px;
     }
+    .ficha-card:hover{
+        transform: scale(1.04);
+    }
     /* Estilos para las fichas */
     .fichas-grid {
         display: grid;

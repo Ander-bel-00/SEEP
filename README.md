@@ -8,7 +8,7 @@ Integrantes:
 4. Jhon Anderson Beltran Echavarria
 
 Instrucciones:
-1. Paso 1: Debes importar en tu administrador de base de datos favorito(phpmyadmin, workbench), crea la base de datos llamada seep, luego en la raiz del proyecto entra a la carpeta database, en ella encontrarás el archivo para importar en tu base de datos, en el está la creación de las tablas y la insercción de cada usuario.
+1. Paso 1: Debes importar en tu administrador de base de datos favorito (phpmyadmin, workbench), crea la base de datos llamada seep, luego en la raiz del proyecto entra a la carpeta database, en ella encontrarás el archivo para importar en tu base de datos, en el está la creación de las tablas y la insercción de cada usuario.
 
 
 2. Paso 2: Una vez configurado el servidor y el cliente, debes ir a la carpeta backend, entras a la carpeta config, verás un archivo database.js el cual contendrá la configuración para conectarse a la base de datos, una vez dentro, según el administrador de BD que estés utilizando debes configurar la conexión de forma muy rápida, si usas mysql workbench y usas el usuaro por defecto de worbenck y el puerto por defecto, deja la configuaración tal como está ya que está configurada para trabajar con workbench con el usuario root que viene con workbench,

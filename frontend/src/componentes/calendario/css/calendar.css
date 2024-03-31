@@ -15,73 +15,97 @@
   text-align: center; /* Centra el texto en todos los dispositivos */
 }
 
-
-@media screen and (max-width: 1508.89px) {
-  .calendar-container {
-    height: 94vh; /* Ajusta la altura en pantallas más pequeñas */
-    width: 60vw;
-    top: 10px;
-  }
-  .calendar-container .rbc-event{
-    position: relative;
-    background-color: #39a900;
-    color: #fff;
-  }
+.back__button-calendar .Regresar-calendar{
+  color: #39a900;
+  font-size: 20px;
+  padding: 8px;
+}
+.Regresar-calendar:hover{
+  color: #fff;
+  background-color: #39a900;
+  border-bottom: 10px;
 }
 
-@media screen and (max-width: 1413.33px) {
-  .calendar-container {
-      height: 95vh; /* Ajusta la altura en pantallas aún más pequeñas */
-      width: 65vw;
-      top: -10px;
-  }
-  .calendar-container .rbc-event{
-    position: relative;
-    top: -5px;
-    background-color: #39a900;
-    color: #fff;
-  }
+.modal-body {
+  display: flex;
 }
 
-@media screen and (max-width: 1358px) {
+.modal-column {
+  flex: 1;
+}
+
+.modal-column:first-child {
+  border-right: 1px solid #ccc; /* Agrega un borde a la derecha del primer modal-column */
+}
+
+.modal-column + .modal-column {
+  margin-left: 5px; /* Agrega un margen a la izquierda del segundo modal-column */
+}
+
+
+
+@media screen and (min-width: 1024px) {
   .calendar-container {
-    height: 97vh; /* Ajusta la altura en pantallas aún más pequeñas */
+    height: 105vh; /* Ajusta la altura en pantallas más pequeñas */
     width: 70vw;
-    top: -10px;
+    top: -5px;
+    position: relative;
+    left: 15%;
   }
   .calendar-container .rbc-event{
     position: relative;
-    top: -5px;
     background-color: #39a900;
     color: #fff;
   }
-
+  .back__button-calendar{
+    position: relative;
+    left: 5%;
+  }
   .modal-title {
     text-align: left; /* Ajusta la alineación a la izquierda en dispositivos móviles */
     position: relative;
-    right: 10px;
+    right: 20px;
   }
 }
 
 @media screen and (max-width: 1272px) {
   .calendar-container {
-    height: 110vh; /* Ajusta la altura en pantallas aún más pequeñas */
+    height: 115vh; /* Ajusta la altura en pantallas más pequeñas */
     width: 70vw;
-    top: -10px;
+    top: -5px;
+    position: relative;
+    left: 20%;
   }
   .calendar-container .rbc-event{
     position: relative;
-    top: -5px;
     background-color: #39a900;
     color: #fff;
   }
-} 
+  .back__button-calendar{
+    position: relative;
+    left: 10%;
+  }
+  .modal-title {
+    text-align: left; /* Ajusta la alineación a la izquierda en dispositivos móviles */
+    position: relative;
+    right: 60px;
+  }
+}
 
-@media screen and (max-width: 780px) {
+
+@media screen and (max-width: 480px) {
+  .calendar-box{
+    width: 100%;
+    position: relative;
+    left: 50%;
+    top: 15px;
+  }
   .calendar-container {
-    height: 90vh; /* Ajusta la altura en pantallas aún más pequeñas */
-    width: 100vw;
+    height: 95vh; /* Ajusta la altura en pantallas aún más pequeñas */
+    width: 100%;
     top: -10px;
+    position: relative;
+    left: 30px;
 }
   .calendar-container .rbc-event{
     position: relative;
@@ -90,16 +114,17 @@
     color: #fff;
   }
 
-  .back {
-    display: none;
+  .back__button-calendar{
+    position: relative;
+    top: -2px;
+    left: 5%;
+    font-size: 25px;
   }
 
   .modal-title {
     text-align: left; /* Ajusta la alineación a la izquierda en dispositivos móviles */
     position: relative;
-    right: 45px;
+    right: 60px;
   }
 }
-
-
 

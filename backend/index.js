@@ -30,7 +30,7 @@ app.use(session({
 
 // Habilitar cors.
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://192.168.1.26:3000',
     credentials: true // Establecer las cookies al frontend.
 }));
 
@@ -38,6 +38,9 @@ app.use(cors({
 app.engine('hbs', exphbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
+
+
+
 
 // Rutas
 app.use('/', routes());

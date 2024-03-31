@@ -40,8 +40,8 @@ const NavbarAprendiz = ({ showNav, handleLogout, setShowNav }) => {
                     <ul className="list-group menu-content">
                         <li className="menu-options text-nowrap"><Link to={'/'}><IoHomeSharp className="inline-block"/> Inicio</Link></li>
                         {/* <li className="menu-options text-nowrap"><a href="#"><FaUser className="inline-block"/> Perfil</a></li> */}
-                        <li className="menu-options text-nowrap"><Link to={`/${usuario.rol_usuario}/${usuario.id_aprendiz}/documents-aprendiz`}><IoDocuments className="inline-block"/> Documentos</Link></li>
-                        <li className="menu-options text-nowrap"><Link to={`/${usuario.rol_usuario}/${usuario.id_aprendiz}/bitacoras-aprendiz`}><FaFileExcel className="inline-block"/> Bitacoras</Link></li>
+                        <li className="menu-options text-nowrap"><Link to={`${usuario.id_aprendiz}/documents-aprendiz`}><IoDocuments className="inline-block"/> Documentos</Link></li>
+                        <li className="menu-options text-nowrap"><Link to={`${usuario.id_aprendiz}/bitacoras-aprendiz`}><FaFileExcel className="inline-block"/> Bitacoras</Link></li>
                         <li className="menu-options text-nowrap"><Link to="/login" onClick={handleLogout}><BiSolidLogOut className="inline-block"/> Cerrar sesión</Link></li>
                     </ul>
                 </div>

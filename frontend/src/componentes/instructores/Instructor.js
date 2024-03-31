@@ -42,8 +42,19 @@ function Instructor() {
 
   // Función para manejar cambios en el campo de búsqueda
   const handleChangeBusqueda = (event) => {
-    setBusqueda(event.target.value);
+    // Obtener el valor ingresado en el campo de búsqueda
+    let valor = event.target.value;
+
+    // Validar si el valor ingresado no es un número
+    if (isNaN(valor)) {
+      // Si no es un número, eliminar todos los caracteres no numéricos del valor
+      valor = valor.replace(/\D/g, '');
+    }
+
+    // Actualizar el estado con el nuevo valor modificado
+    setBusqueda(valor);
   };
+
 
   // Filtrar las fichas según el número de ficha ingresado en el campo de búsqueda
   const fichasFiltradas = fichasAsignadas.filter(ficha =>
@@ -63,14 +74,15 @@ function Instructor() {
             
             <div className="row my-2 fichas-content rounded-md">
               <div className='searchContent'>
-                <input
-                  type='search'
-                  placeholder='Buscar Fichas...'
-                  className='relative buscarFichas'
-                  name='searchFichas'
-                  value={busqueda}
-                  onChange={handleChangeBusqueda}
-                />
+              <input
+                type='search'
+                placeholder='Buscar Fichas...'
+                className='relative buscarFichas'
+                name='searchFichas'
+                value={busqueda}
+                onChange={handleChangeBusqueda}
+              />
+
               </div>
               {fichasFiltradas.length > 0 ? (
                 <div className="fichas-grid">
@@ -88,7 +100,7 @@ function Instructor() {
                           <p className="card-text"><strong>Fecha fin lectiva: </strong>{formatearFecha(ficha.fecha_fin_lectiva)}</p>
                         </div>
                         <button className='btnVerFicha'>
-                          <Link to={`/${usuario.rol_usuario}/aprendicesFicha/${ficha.numero_ficha}`} className='verFichas'>
+                          <Link to={`aprendicesFicha/${ficha.numero_ficha}`} className='verFichas'>
                             Ver Ficha</Link>
                         </button>
                       </div>

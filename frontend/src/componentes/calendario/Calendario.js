@@ -56,7 +56,7 @@ function Calendario() {
     setSelectedTime('');
     setEventTitle('');
     setShowModal(true);
-  };
+  };  
   
   const openModalVerEvento = (event) => {
     setSelectedEvent(event);
@@ -185,9 +185,9 @@ function Calendario() {
 
   return (
     <Fragment>
-      <button className="relative left-10 top-14">
-        <Link to={`/${rol_usuario}/aprendicesFicha/${numero_ficha}`} className="Regresar back">
-          <IoArrowBackSharp className="inline-block" /> Regresar
+      <button type='button' className="relative left-10 top-14 back__button-calendar">
+        <Link to={`/instructor/aprendicesFicha/${numero_ficha}`} className="Regresar-calendar">
+          <IoArrowBackSharp className="inline-block" />
         </Link>
       </button>
       <Calendar
@@ -204,7 +204,6 @@ function Calendario() {
           title: (
             <div>
               <div>{event.tipo_visita}</div>
-              <div className='text-wrap'>Fecha: {moment(event.fecha).format('LL')}</div>
               <div>Hora: {moment(event.hora, 'HH:mm').format('h:mm A')}</div>
             </div>
           ),
@@ -231,9 +230,18 @@ function Calendario() {
               <div className="modal-body">
                 {selectedEvent ? (
                   <Fragment>
-                    <div><strong>Tipo de Visita:</strong> {selectedEvent.tipo_visita}</div>
-                    <div><strong>Fecha:</strong> {moment(selectedEvent.fecha).format('LL')}</div>
-                    <div><strong>Hora:</strong> {moment(selectedEvent.hora, 'HH:mm').format('h:mm A')}</div>
+                    <div className="modal-body">
+                      <div className="modal-column">
+                        <div><strong>Nombre del Aprendiz:</strong> {selectedEvent.nombres_aprendiz}</div>
+                        <div><strong>Número de Ficha:</strong> {selectedEvent.numero_ficha_aprendiz}</div>
+                        <div><strong>Programa de Formación:</strong> {selectedEvent.programa_formacion}</div>
+                      </div>
+                      <div className="modal-column">
+                        <div><strong>Tipo de Visita:</strong> {selectedEvent.tipo_visita}</div>
+                        <div><strong>Fecha:</strong> {moment(selectedEvent.fecha).format('LL')}</div>
+                        <div><strong>Hora:</strong> {moment(selectedEvent.hora, 'HH:mm').format('h:mm A')}</div>
+                      </div>
+                    </div>
                   </Fragment>
                 ) : (
                   <Fragment>

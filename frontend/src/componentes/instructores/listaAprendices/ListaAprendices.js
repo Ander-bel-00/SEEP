@@ -1,13 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import clienteAxios from '../../../api/axios';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { IoArrowBackSharp } from "react-icons/io5";
-import { Navigate } from 'react-big-calendar';
 import './css/ListaAprendices.css';
 
 function ListaAprendices() {
     const [aprendices, setAprendices] = useState([]);
-    const { numero_ficha, rol_usuario } = useParams();
+    const { numero_ficha } = useParams();
     
     const consultarApi = async () => {
         try {
@@ -38,7 +37,7 @@ function ListaAprendices() {
                         aprendices.map(aprendiz => (
                             <li key={aprendiz.id_aprendiz} className='aprendices-fichas '>
                                 {aprendiz.nombres} {aprendiz.apellidos}
-                                <button><Link to={`/${rol_usuario}/visitas-add/${numero_ficha}/${aprendiz.id_aprendiz}`}
+                                <button><Link to={`/instructor/visitas-add/${numero_ficha}/${aprendiz.id_aprendiz}`} 
                                 className='agendarVisita'>Ver o agendar visitas</Link></button>
                             </li>
                         ))

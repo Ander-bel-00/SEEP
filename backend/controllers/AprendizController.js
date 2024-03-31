@@ -1,10 +1,14 @@
 const Aprendices = require('../models/Aprendices');
+const enviarCorreo = require('../utils/enviarCorreo');
+const plantillasController = require('../controllers/templatesController');
 const Fichas = require('../models/Fichas');
 const bcrypt = require('bcryptjs');
 
 
 exports.nuevoAprendiz = async (req, res, next) => {
     try {
+
+        const contrasenaPlana = req.body.contrasena;
         // Verificar si la contraseña cumple con los requisitos
         const contrasena = req.body.contrasena;
         if (!esContrasenaValida(contrasena)) {
@@ -50,8 +54,19 @@ exports.nuevoAprendiz = async (req, res, next) => {
         if (aprendizExistente) {
             res.status(500).json({ mensaje: 'El aprendiz ya se encuentra registrado'});
         }else{
+            const correo_electronico1 = req.body.correo_electronico1;
             // Crea el aprendiz en la base de datos
             const aprendiz = await Aprendices.create(aprendizData);
+
+            const datosPlantilla = {
+                nombreUsuario: aprendiz.nombres,
+                numeroDocumento: aprendiz.numero_documento,
+                rolUsuario: aprendiz.rol_usuario,
+                contrasenaUsuario: contrasenaPlana
+            };
+            const cuerpoCorreo = plantillasController.RegisterAprendiz(datosPlantilla);
+
+            await enviarCorreo(correo_electronico1, 'S.E.E.P-Bienvenido al Sistema de Evaluación de Etapa Productiva', cuerpoCorreo);
 
             // Enviar mesnaje de respuesta con los datos de el aprendiz creado.
             res.json({ mensaje: 'El aprendiz ha sido registrado exitosamente', aprendiz });

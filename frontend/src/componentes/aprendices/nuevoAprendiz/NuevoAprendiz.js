@@ -28,7 +28,8 @@ function NuevoAprendiz() {
             const response = await clienteAxios.post('/aprendices-add', formData);
 
             Swal.fire({
-                title: 'Aprendiz registrado exitosamente',
+                title: 'Aprendiz registrado exitosamente, se ha enviado \n\
+                un correo al aprendiz con los pasos para iniciar sesión',
                 icon: 'success',
                 showCancelButton: false,
                 confirmButtonText: 'Aceptar',

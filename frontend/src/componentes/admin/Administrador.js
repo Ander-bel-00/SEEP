@@ -10,21 +10,21 @@ function Administrador() {
     <div className='contenedor-admin'>
       <h1 className="titulo-panel">Panel de control</h1>
 
-      <Link to="/crear-ficha">
+      <Link to="/admin/crear-ficha">
         <div className="icon-box">
           <AiFillFileAdd className="icon" size={120} />
           <span>Crear Ficha</span>
         </div>
       </Link>
 
-      <Link to="/crear-instructor">
+      <Link to="/admin/crear-instructor">
         <div className="icon-box">
           <AiFillContacts className="icon" size={120} />
           <span>Crear Instructor</span>
         </div>
       </Link>
 
-      <Link to="/crear-aprendiz">
+      <Link to="/admin/crear-aprendiz">
         <div className="icon-box">
           <AiFillIdcard className="icon" size={120} />
           <span>Crear Aprendiz</span>

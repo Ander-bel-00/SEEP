@@ -38,7 +38,26 @@
     color: #fff;
 }
 
-@media screen and (max-width: 780px) {
+@media screen and (min-width: 1024px) {
+    .lista-aprendices {
+        list-style: none;
+        padding: 0;
+        margin: 20px auto;
+        max-width: 600px;
+        background-color: #f1EEEE;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        padding: 6px;
+        position: relative;
+        left: 50%;
+    }
+
+    .list-title{
+        position: relative;
+        left: 50%;
+    }
+}
+
+@media screen and (max-width: 480px) {
     .lista-aprendices {
         list-style: none;
         padding: 0;
@@ -48,7 +67,12 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
         padding: 3px;
         position: relative;
-        left: 1px;
+        left: 60%;
+    }
+
+    .list-title{
+        position: relative;
+        left: 60%;
     }
     
     .aprendices-fichas {

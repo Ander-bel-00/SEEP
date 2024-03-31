@@ -20,7 +20,6 @@ exports.cargarPlantillaResetPasswordRequest = (datos) => {
     }
 };
 
-
 exports.ChangePasswordTemplate = (datos) => {
     try {
         // Cargar el contenido de la plantilla desde el archivo
@@ -39,3 +38,22 @@ exports.ChangePasswordTemplate = (datos) => {
         throw error;
     }
 };
+
+exports.RegisterAprendiz = (datos) => {
+    try {
+        // Cargar el contenido de la plantilla desde el archivo
+        const contenidoPlantilla = fs.readFileSync('./views/emails/register_aprendiz.hbs', 'utf8');
+
+        // Compilar la plantilla utilizando Handlebars
+        const template = handlebars.compile(contenidoPlantilla);
+
+        // Interpolar las variables dinámicas en la plantilla
+        const correoInterpolado = template(datos);
+
+        return correoInterpolado;
+    } catch (error) {
+        console.error('Error al cargar la plantilla de registro de \n\
+        aprenidz:', error);
+        throw error;
+    }
+}

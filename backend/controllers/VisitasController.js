@@ -29,14 +29,15 @@ exports.crearEvento = async (req, res) => {
     
             
             const nuevoEvento = await Visitas.create({
-            tipo_visita: tipo_visita.toLowerCase(), // Convertir a minúsculas
-            fecha,
-            hora,
-            aprendiz: id_aprendiz,
-            documento_aprendiz: aprendices.numero_documento,
-            nombres_aprendiz: aprendices.nombres,
-            apellidos_aprendiz: aprendices.apellidos,
-            numero_ficha_aprendiz: aprendices.numero_ficha,
+                tipo_visita: tipo_visita.toLowerCase(), // Convertir a minúsculas
+                fecha,
+                hora,
+                aprendiz: id_aprendiz,
+                documento_aprendiz: aprendices.numero_documento,
+                nombres_aprendiz: aprendices.nombres,
+                apellidos_aprendiz: aprendices.apellidos,
+                numero_ficha_aprendiz: aprendices.numero_ficha,
+                programa_formacion: aprendices.programa_formacion,
             });
     
             res.json(nuevoEvento);

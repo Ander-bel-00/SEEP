@@ -39,7 +39,11 @@ const Visitas = sequelize.define('Visitas', {
     numero_ficha_aprendiz: {
         type: DataTypes.INTEGER,
         allowNull: false
-    }
+    },
+    programa_formacion: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 },{
     sequelize,
     modelName: 'Visitas'

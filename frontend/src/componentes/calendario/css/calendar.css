@@ -26,105 +26,134 @@
   border-bottom: 10px;
 }
 
-.modal-body {
-  display: flex;
+.calendar-box{
+  position: relative;
+  left: 10%;
 }
 
-.modal-column {
-  flex: 1;
-}
+/* Celulares con breakpoint de 480px */
 
-.modal-column:first-child {
-  border-right: 1px solid #ccc; /* Agrega un borde a la derecha del primer modal-column */
+@media screen and (max-width: 780px) {
+  .calendar-container {
+    height: 90vh; /* Ajusta la altura en pantallas aún más pequeñas */
+    width: 100vw;
+    top: -10px;
 }
+  .calendar-container .rbc-event{
+    position: relative;
+    top: -5px;
+    background-color: #39a900;
+    color: #fff;
+  }
 
-.modal-column + .modal-column {
-  margin-left: 5px; /* Agrega un margen a la izquierda del segundo modal-column */
+  .back {
+    display: none;
+  }
+
+  .modal-title {
+    text-align: left; /* Ajusta la alineación a la izquierda en dispositivos móviles */
+    position: relative;
+    right: 45px;
+  }
 }
-
 
 
 @media screen and (min-width: 1024px) {
   .calendar-container {
-    height: 105vh; /* Ajusta la altura en pantallas más pequeñas */
+    height: 100vh; /* Ajusta la altura en pantallas aún más pequeñas */
     width: 70vw;
-    top: -5px;
-    position: relative;
-    left: 15%;
+    top: -10px;
   }
   .calendar-container .rbc-event{
     position: relative;
+    top: -5px;
     background-color: #39a900;
     color: #fff;
   }
-  .back__button-calendar{
-    position: relative;
-    left: 5%;
-  }
+
   .modal-title {
     text-align: left; /* Ajusta la alineación a la izquierda en dispositivos móviles */
     position: relative;
-    right: 20px;
+    right: 10px;
+  }
+  
+  .back__button-calendar{
+    position: relative;
+    left: -50px;
   }
 }
 
 @media screen and (max-width: 1272px) {
-  .calendar-container {
-    height: 115vh; /* Ajusta la altura en pantallas más pequeñas */
-    width: 70vw;
-    top: -5px;
-    position: relative;
-    left: 20%;
-  }
-  .calendar-container .rbc-event{
-    position: relative;
-    background-color: #39a900;
-    color: #fff;
-  }
-  .back__button-calendar{
-    position: relative;
-    left: 10%;
-  }
-  .modal-title {
-    text-align: left; /* Ajusta la alineación a la izquierda en dispositivos móviles */
-    position: relative;
-    right: 60px;
-  }
+    .calendar-box{
+      position: relative;
+      left: 15%;
+    }
+
+    .calendar-container {
+      height: 110vh; /* Ajusta la altura en pantallas aún más pequeñas */
+      width: 70vw;
+      top: -10px;
+    }
+    .calendar-container .rbc-event{
+      position: relative;
+      top: -5px;
+      background-color: #39a900;
+      color: #fff;
+    }
+
+    .modal-title {
+      text-align: left; /* Ajusta la alineación a la izquierda en dispositivos móviles */
+      position: relative;
+      right: 10px;
+    }
+    
+    .back__button-calendar{
+      position: relative;
+      left: -50px;
+    }
+}
+
+@media screen and (min-width: 1545px) {
+      .calendar-container .rbc-event{
+      position: relative;
+      top: 0px;
+      background-color: #39a900;
+      color: #fff;
+    }
+}
+
+@media screen and (min-width: 1865px) {
+    .calendar-box{
+      position: relative;
+      left: -0%;
+    }
+    .calendar-container {
+      height: 80vh; /* Ajusta la altura en pantallas aún más pequeñas */
+      width: 70vw;
+      top: -10px;
+    }
+    .calendar-container .rbc-event{
+      position: relative;
+      top: 0px;
+      background-color: #39a900;
+      color: #fff;
+    }
+
+    .modal-title {
+      text-align: left; /* Ajusta la alineación a la izquierda en dispositivos móviles */
+      position: relative;
+      right: 10px;
+    }
+    
+    .back__button-calendar{
+      position: relative;
+      left: -100px;
+    }
 }
 
 
-@media screen and (max-width: 480px) {
-  .calendar-box{
-    width: 100%;
-    position: relative;
-    left: 50%;
-    top: 15px;
-  }
-  .calendar-container {
-    height: 95vh; /* Ajusta la altura en pantallas aún más pequeñas */
-    width: 100%;
-    top: -10px;
-    position: relative;
-    left: 30px;
-}
-  .calendar-container .rbc-event{
-    position: relative;
-    top: -5px;
-    background-color: #39a900;
-    color: #fff;
-  }
 
-  .back__button-calendar{
-    position: relative;
-    top: -2px;
-    left: 5%;
-    font-size: 25px;
-  }
 
-  .modal-title {
-    text-align: left; /* Ajusta la alineación a la izquierda en dispositivos móviles */
-    position: relative;
-    right: 60px;
-  }
-}
+
+
 

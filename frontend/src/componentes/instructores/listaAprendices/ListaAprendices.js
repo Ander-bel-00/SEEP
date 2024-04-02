@@ -30,8 +30,6 @@ function ListaAprendices() {
         <Fragment>
             <div>
                 <h1 className='text-center list-title'>Aprendices de la Ficha {numero_ficha}</h1>
-                <button className='relative left-10'><Link to={'/instructor'} className='Regresar'><IoArrowBackSharp 
-                className='inline-block'/> Regresar</Link></button>
                 <ul className='lista-aprendices'>
                     {Array.isArray(aprendices) && aprendices.length > 0 ? (
                         aprendices.map(aprendiz => (

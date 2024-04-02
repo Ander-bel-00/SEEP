@@ -56,7 +56,7 @@ function Calendario() {
     setSelectedTime('');
     setEventTitle('');
     setShowModal(true);
-  };  
+  };
   
   const openModalVerEvento = (event) => {
     setSelectedEvent(event);
@@ -204,6 +204,7 @@ function Calendario() {
           title: (
             <div>
               <div>{event.tipo_visita}</div>
+              <div className='text-wrap'>Fecha: {moment(event.fecha).format('LL')}</div>
               <div>Hora: {moment(event.hora, 'HH:mm').format('h:mm A')}</div>
             </div>
           ),
@@ -230,18 +231,9 @@ function Calendario() {
               <div className="modal-body">
                 {selectedEvent ? (
                   <Fragment>
-                    <div className="modal-body">
-                      <div className="modal-column">
-                        <div><strong>Nombre del Aprendiz:</strong> {selectedEvent.nombres_aprendiz}</div>
-                        <div><strong>Número de Ficha:</strong> {selectedEvent.numero_ficha_aprendiz}</div>
-                        <div><strong>Programa de Formación:</strong> {selectedEvent.programa_formacion}</div>
-                      </div>
-                      <div className="modal-column">
-                        <div><strong>Tipo de Visita:</strong> {selectedEvent.tipo_visita}</div>
-                        <div><strong>Fecha:</strong> {moment(selectedEvent.fecha).format('LL')}</div>
-                        <div><strong>Hora:</strong> {moment(selectedEvent.hora, 'HH:mm').format('h:mm A')}</div>
-                      </div>
-                    </div>
+                    <div><strong>Tipo de Visita:</strong> {selectedEvent.tipo_visita}</div>
+                    <div><strong>Fecha:</strong> {moment(selectedEvent.fecha).format('LL')}</div>
+                    <div><strong>Hora:</strong> {moment(selectedEvent.hora, 'HH:mm').format('h:mm A')}</div>
                   </Fragment>
                 ) : (
                   <Fragment>

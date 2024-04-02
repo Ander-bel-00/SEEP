@@ -8,47 +8,52 @@ exports.crearEvento = async (req, res) => {
     const { tipo_visita, fecha, hora } = req.body; // Obtener tipo_visita, fecha y hora del cuerpo de la solicitud
   
     try {
-
-        await Visitas.sync({ force: false });
-        const aprendices = await Aprendices.findOne({
-            where: { id_aprendiz: id_aprendiz }
+      await Visitas.sync({ force: false });
+      const aprendices = await Aprendices.findOne({
+        where: { id_aprendiz: id_aprendiz }
+      });
+  
+      if (aprendices) {
+        // Verificar si la fecha del evento es anterior a la fecha actual
+        const currentDate = moment();
+        if (moment(fecha).isBefore(currentDate, 'day')) {
+          return res.status(400).json({ error: "Solo se permiten agendar visitas en la fecha actual o en fechas posteriores." });
+        }
+  
+        // Verificar si ya existe una visita con el mismo tipo de visita para el aprendiz
+        const existeVisita = await Visitas.findOne({
+          where: {
+            tipo_visita: tipo_visita.toLowerCase(),
+            aprendiz: id_aprendiz
+          }
         });
-    
-        if (aprendices) {
-            // Verificar si ya existe una visita con el mismo tipo de visita para el aprendiz
-            const existeVisita = await Visitas.findOne({
-            where: {
-                tipo_visita: tipo_visita.toLowerCase(),
-                aprendiz: id_aprendiz
-            }
-            });
-    
-            if (existeVisita) {
-            return res.status(400).json({ error: "Ya existe una visita de este tipo para el aprendiz." });
-            }
-    
-            
-            const nuevoEvento = await Visitas.create({
-                tipo_visita: tipo_visita.toLowerCase(), // Convertir a minúsculas
-                fecha,
-                hora,
-                aprendiz: id_aprendiz,
-                documento_aprendiz: aprendices.numero_documento,
-                nombres_aprendiz: aprendices.nombres,
-                apellidos_aprendiz: aprendices.apellidos,
-                numero_ficha_aprendiz: aprendices.numero_ficha,
-                programa_formacion: aprendices.programa_formacion,
-            });
-    
-            res.json(nuevoEvento);
-        } else {
-            res.status(404).json({ mensaje: "No se encontró el aprendiz" });
+  
+        if (existeVisita) {
+          return res.status(400).json({ error: "Ya existe una visita de este tipo para el aprendiz." });
         }
-        } catch (error) {
-        console.error('Error creando el evento:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
-        }
+  
+        const nuevoEvento = await Visitas.create({
+          tipo_visita: tipo_visita.toLowerCase(), // Convertir a minúsculas
+          fecha,
+          hora,
+          aprendiz: id_aprendiz,
+          documento_aprendiz: aprendices.numero_documento,
+          nombres_aprendiz: aprendices.nombres,
+          apellidos_aprendiz: aprendices.apellidos,
+          numero_ficha_aprendiz: aprendices.numero_ficha,
+          programa_formacion: aprendices.programa_formacion,
+        });
+  
+        res.json(nuevoEvento);
+      } else {
+        res.status(404).json({ mensaje: "No se encontró el aprendiz" });
+      }
+    } catch (error) {
+      console.error('Error creando el evento:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
 };
+  
   
   
 

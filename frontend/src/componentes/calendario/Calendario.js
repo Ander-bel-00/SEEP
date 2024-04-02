@@ -92,6 +92,21 @@ function Calendario() {
   
     const formattedTime = moment(selectedTime, 'HH:mm').format('h:mm A');
   
+    // Obtener la fecha actual
+    const currentDate = moment();
+  
+    // Verificar si la fecha seleccionada es anterior a la fecha actual
+    if (moment(selectedDate).isBefore(currentDate, 'day')) {
+      console.error('No se pueden agregar eventos en fechas anteriores a hoy.');
+      // Mostrar mensaje de error en el frontend
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al agendar visita',
+        text: 'Solo se permiten agendar visitas en la fecha actual o en fechas posteriores.',
+      });
+      return;
+    }
+  
     try {
       const response = await clienteAxios.post(`/nuevaVisita/${id_aprendiz}`, {
         tipo_visita: eventTitle,
@@ -117,6 +132,7 @@ function Calendario() {
       });
     }
   };
+  
   
 
   const editarEvento = async () => {

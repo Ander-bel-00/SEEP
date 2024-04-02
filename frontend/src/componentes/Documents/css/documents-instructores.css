@@ -1,14 +1,18 @@
+.Docs-instru{
+  position: relative;
+  left: 5%;
+}
 /* Estilos generales para la tabla */
 .docsTab {
-    width: 100%;
-    border-collapse: collapse;
-  }
+  width: 100%;
+  border-collapse: collapse;
+}
   
-  .th, .td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
+.th, .td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
   
 .th {
   background-color: #f2f2f2;
@@ -74,6 +78,55 @@
   .td:nth-of-type(6):before { content: "Programa de Formación:"; }
   .td:nth-of-type(7):before { content: "Archivo:"; }
   .td:nth-of-type(8):before { content: "Acciones:"; }
-
-
 }
+
+@media screen and (min-width: 1024px) {
+  .Docs-instru{
+    position: relative;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1272px) {
+  .Docs-instru{
+    position: relative;
+    width: 1000px;
+    left: 10%;
+  }
+
+  .bloque-search{
+    width: 1000px;
+  }
+
+  .th, .td {
+    padding: 5px; /* Reduce el espacio entre el contenido de las celdas */
+  }
+}
+
+@media screen and (min-width: 1865px) {
+  .Docs-instru{
+    position: relative;
+    width: 2000px;
+    height: 600px;
+    left: 0%;
+  }
+
+  .bloque-search{
+    width: 1000px;
+  }
+
+  /* Estilos generales para la tabla */
+  .docsTab {
+    width: 100%;
+    height: 600px;
+    border-collapse: collapse;
+    position: relative;
+    top: 8px;
+  }
+
+  .th, .td {
+    padding: 12px; /* Reduce el espacio entre el contenido de las celdas */
+  }
+}
+
+

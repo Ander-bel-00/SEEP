@@ -1,5 +1,9 @@
+.instru-bitacoras-box{
+  position: relative;
+  left: 5%;
+}
 /* Estilos generales para la tabla */
-.docsTab {
+.docsTab-bitacoras {
     width: 100%;
     border-collapse: collapse;
 }
@@ -84,111 +88,10 @@
   margin-right: 5px; /* Espacio entre los botones */
 }
 
-@media screen and (max-width: 1358px) {
-    .button-container {
-      margin-top: 90px; /* Espacio entre el textarea y los botones */
-    }
-    
-    .button-container button {
-      margin-right: 5px; /* Espacio entre los botones */
-    }
-  
-    .btnEnviarObservacion{
-      position: relative;
-      top: 10px;
-      left: -5px;
-      text-wrap: nowrap;
-      font-size: 15px;
-      color: #39a900;
-    }
-  
-    .btnEnviarObservacion:hover{
-      text-decoration: underline;
-    }
-  
-    .btnAprobar{
-      position: relative;
-      top: -185px;
-      left: -4px;
-      margin-top: 90px;
-      color: #39a900;
-    }
-  
-    .btnAprobar:hover{
-      text-decoration: underline;
-    }
-
-    .btnAprobar p::after {content: " Bitácora";}
-  
-    .btnDownloadInstru{
-      position: relative;
-      color: #39a900;
-      top: -40px;
-      left: -5px;
-      text-wrap: nowrap;
-    }
-  
-    .btnDownloadInstru:hover{
-      text-decoration: underline;
-    }
-  
-  }
-
-@media screen and (max-width: 1272px) {
-  .button-container {
-    margin-top: 90px; /* Espacio entre el textarea y los botones */
-  }
-  
-  .button-container button {
-    margin-right: 5px; /* Espacio entre los botones */
-  }
-
-  .btnEnviarObservacion{
-    position: relative;
-    top: 10px;
-    left: -5px;
-    text-wrap: nowrap;
-    font-size: 15px;
-    color: #39a900;
-  }
-
-  .btnEnviarObservacion:hover{
-    text-decoration: underline;
-  }
-
-  .btnAprobar{
-    position: relative;
-    top: -185px;
-    left: -4px;
-    margin-top: 90px;
-    color: #39a900;
-  }
-
-  .btnAprobar:hover{
-    text-decoration: underline;
-  }
-
-  .btnAprobar p::after {content: " Bitácora";}
-
-  .btnDownloadInstru{
-    position: relative;
-    color: #39a900;
-    top: -40px;
-    left: -5px;
-    text-wrap: nowrap;
-  }
-
-  .btnDownloadInstru:hover{
-    text-decoration: underline;
-  }
-
-} 
-
-  
 /* Media query para dispositivos móviles */
 @media screen and (max-width: 780px) {
   /* Ocultar la tabla encabezados y mostrar celdas como bloques */
-  .docsTab, .Thead, .tbody, .th, .td-instru, .tr { 
+  .docsTab-bitacoras, .Thead, .tbody, .th, .td-instru, .tr { 
     display: block; 
   }
 
@@ -275,3 +178,139 @@
     color: #39a900;
   }
 }
+
+@media screen and(max-width: 1024px) {
+  .instru-bitacoras-box{
+    position: relative;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 1272px) {
+  .instru-bitacoras-box{
+    position: relative;
+    width: 1030px;
+    left: 10%;
+  }
+  .button-container {
+    margin-top: 90px; /* Espacio entre el textarea y los botones */
+  }
+  
+  .button-container button {
+    margin-right: 5px; /* Espacio entre los botones */
+  }
+
+  .btnEnviarObservacion{
+    position: relative;
+    top: 10px;
+    left: -5px;
+    text-wrap: nowrap;
+    font-size: 15px;
+    color: #39a900;
+  }
+
+  .btnEnviarObservacion:hover{
+    text-decoration: underline;
+  }
+
+  .btnAprobar{
+    position: relative;
+    top: -185px;
+    left: -4px;
+    margin-top: 90px;
+    color: #39a900;
+  }
+
+  .btnAprobar:hover{
+    text-decoration: underline;
+  }
+
+  .btnAprobar p::after {content: " Bitácora";}
+
+  .btnDownloadInstru{
+    position: relative;
+    color: #39a900;
+    top: -40px;
+    left: -5px;
+    text-wrap: nowrap;
+  }
+
+  .btnDownloadInstru:hover{
+    text-decoration: underline;
+  }
+
+}
+
+
+@media screen and (min-width: 1358px) {
+    .button-container {
+      margin-top: 90px; /* Espacio entre el textarea y los botones */
+    }
+    
+    .button-container button {
+      margin-right: 5px; /* Espacio entre los botones */
+    }
+  
+    .btnEnviarObservacion{
+      position: relative;
+      top: 10px;
+      left: -5px;
+      text-wrap: nowrap;
+      font-size: 15px;
+      color: #39a900;
+    }
+  
+    .btnEnviarObservacion:hover{
+      text-decoration: underline;
+    }
+  
+    .btnAprobar{
+      position: relative;
+      top: -185px;
+      left: -4px;
+      margin-top: 90px;
+      color: #39a900;
+    }
+  
+    .btnAprobar:hover{
+      text-decoration: underline;
+    }
+
+    .btnAprobar p::after {content: " Bitácora";}
+  
+    .btnDownloadInstru{
+      position: relative;
+      color: #39a900;
+      top: -40px;
+      left: -5px;
+      text-wrap: nowrap;
+    }
+  
+    .btnDownloadInstru:hover{
+      text-decoration: underline;
+    }
+  
+  }
+
+  @media screen and (min-width: 1865px) {
+    .instru-bitacoras-box{
+      position: relative;
+      width: 2000px;
+      height: 600px;
+      left: 0%;
+    }
+
+      /* Estilos generales para la tabla */
+      .docsTab-bitacoras {
+        width: 100%;
+        height: 600px;
+        border-collapse: collapse;
+        position: relative;
+        top: 8px;
+      }
+  }
+
+
+
+  
+

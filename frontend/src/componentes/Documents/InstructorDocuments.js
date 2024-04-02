@@ -66,11 +66,9 @@ function InstructorDocuments() {
 
 
     return (
-        <div>
+        <div className='Docs-instru'>
             <h2 className='text-center' style={{color: '#39a900'}}>Documentos de los Aprendices</h2>
-            <button className='relative left-10'><Link to={'/instructor'} className='Regresar'><IoArrowBackSharp 
-                className='inline-block'/> Regresar</Link></button>
-            <div>
+            <div className='bloque-search'>
                 <p className='inline-block pr-4'>Buscar por numero de ficha: 
                   <input 
                       type='search' 

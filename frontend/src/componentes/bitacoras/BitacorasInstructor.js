@@ -107,10 +107,8 @@ function BitacorasInstructor() {
     };
 
     return (
-        <div>
+        <div className='instru-bitacoras-box'>
             <h2 className='text-center' style={{ color: '#39a900' }}>Bitácoras de los aprendices</h2>
-            <button className='relative left-10'><Link to={'/instructor'} className='Regresar'><IoArrowBackSharp 
-                className='inline-block'/> Regresar</Link></button>
             <div>
                 <p className='inline-block pr-4'>Buscar por numero de ficha:
                     <input
@@ -131,7 +129,7 @@ function BitacorasInstructor() {
                     />
                 </p>
             </div>
-            <table className='docsTab'>
+            <table className='docsTab-bitacoras'>
                 <thead className='Thead'>
                     <tr className='tr'>
                         <th className='th'>N° bitácora</th>

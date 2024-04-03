@@ -132,7 +132,10 @@ function App() {
                       <Route path="/" element={<Instructor />} />
                       <Route path=":id_instructor/documents-instructor" 
                         element={
-                          <InstructorDocuments />
+                          <main className="main-ins-bitacoras">
+                            <InstructorDocuments />
+                          </main>
+                            
                         }
                       />
                       <Route path=":id_instructor/bitacoras-instructor"
@@ -150,9 +153,17 @@ function App() {
                       <Route 
                         path=":id_instructor/nuevaFicha"
                         element={
-                            <main className="">
+                            <main className="new-fichas-content">
                               <NuevaFicha />
                             </main>
+                        }
+                      />
+                      <Route 
+                        path=":id_instructor/aprendiz-add"
+                        element={
+                          <main className="new-aprendiz-content">
+                            <NuevoAprendiz />
+                          </main>
                         }
                       />
 
@@ -164,7 +175,7 @@ function App() {
                           </div>
                         }
                       />
-
+                      
                     </Routes>
                   </main>
                 </Fragment>

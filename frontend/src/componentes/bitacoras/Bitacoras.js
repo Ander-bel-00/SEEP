@@ -143,8 +143,6 @@ function Bitacoras() {
         <Fragment>
             <div className='docs-content'>
                 <h1 className='text-center upTitle'>Carga de bitácoras</h1>
-                <button className='relative left-10'><Link to={'/aprendiz'} className='Regresar'><IoArrowBackSharp 
-                className='inline-block'/> Regresar</Link></button>
                 <div className="form-docs">
                     <form onSubmit={handleSubmit}>
                         <p className='tipoDocumento'>Número de bitácora:

@@ -1,4 +1,8 @@
-.contenedor-formulario {
+.new-aprendiz-content{
+    position: relative;
+    left: 30%;
+}
+.contenedor-formulario-aprendiz {
     max-width: 600px; /* Ancho máximo del contenedor */
     width: 100%; /* Hacer que el contenedor ocupe todo el ancho disponible */
     margin: 20px auto; /* Margen superior e inferior de 20px y centrado horizontal */
@@ -9,11 +13,13 @@
     display: flex; /* Mostrar los elementos en línea (en una sola columna) */
     flex-direction: column; /* Establecer la dirección de los elementos en columna */
     align-items: center; /* Centrar los elementos horizontalmente */
+
 }
 .formulario-aprendiz {
     max-width: 500px; /* Ancho máximo del formulario */
     margin: 0 auto; /* Centra el formulario horizontalmente */
     padding: 20px; /* Espaciado interno del formulario */
+    
 }
 
 /* Estilos para los inputs */
@@ -39,4 +45,11 @@
 /* Estilos para el botón al pasar el cursor */
 .formulario-aprendiz button:hover {
     background-color: #2a7d00; /* Cambia el color de fondo al pasar el cursor */
+}
+
+@media screen and (max-width: 480px) {
+    .new-aprendiz-content{
+        position: relative;
+        left: 60%;
+    }
 }

@@ -37,6 +37,8 @@ function Calendario() {
   const [eventTitle, setEventTitle] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedEndTime, setSelectedEndTime] = useState('');
+
 
   useEffect(() => {
     cargarEventos();
@@ -81,16 +83,13 @@ function Calendario() {
   };
 
   const saveEvent = async () => {
-    if (!eventTitle || !selectedDate || !selectedTime) {
-      if (!selectedTime) {
-        console.error('Por favor, seleccione una hora.');
-      } else {
-        console.error('Por favor, complete todos los campos.');
-      }
+    if (!eventTitle || !selectedDate || !selectedTime || !selectedEndTime) {
+      console.error('Por favor, complete todos los campos.');
       return;
     }
   
-    const formattedTime = moment(selectedTime, 'HH:mm').format('h:mm A');
+    const formattedStartTime = moment(selectedTime, 'HH:mm').format('HH:mm');
+    const formattedEndTime = moment(selectedEndTime, 'HH:mm').format('HH:mm');
   
     // Obtener la fecha actual
     const currentDate = moment();
@@ -111,7 +110,8 @@ function Calendario() {
       const response = await clienteAxios.post(`/nuevaVisita/${id_aprendiz}`, {
         tipo_visita: eventTitle,
         fecha: selectedDate,
-        hora: selectedTime,
+        hora_inicio: formattedStartTime,
+        hora_fin: formattedEndTime,
       });
   
       setEvents((prevEvents) => [...prevEvents, response.data]);
@@ -132,7 +132,6 @@ function Calendario() {
       });
     }
   };
-  
   
 
   const editarEvento = async () => {
@@ -220,8 +219,8 @@ function Calendario() {
           title: (
             <div>
               <div>{event.tipo_visita}</div>
-              <div className='text-wrap'>Fecha: {moment(event.fecha).format('LL')}</div>
-              <div>Hora: {moment(event.hora, 'HH:mm').format('h:mm A')}</div>
+              <div>Hora: {moment(event.hora_inicio, 'HH:mm').format('h:mm A')}</div>
+              <div className='text-wrap'>Fin: {moment(event.hora_fin, 'HH:mm').format('h:mm A')}</div>
             </div>
           ),
         }))}
@@ -249,7 +248,8 @@ function Calendario() {
                   <Fragment>
                     <div><strong>Tipo de Visita:</strong> {selectedEvent.tipo_visita}</div>
                     <div><strong>Fecha:</strong> {moment(selectedEvent.fecha).format('LL')}</div>
-                    <div><strong>Hora:</strong> {moment(selectedEvent.hora, 'HH:mm').format('h:mm A')}</div>
+                    <div><strong>Hora:</strong> {moment(selectedEvent.hora_inicio, 'HH:mm').format('h:mm A')}</div>
+                    <div><strong>Hora Fin:</strong> {moment(selectedEvent.hora_fin, 'HH:mm').format('h:mm A')}</div>
                   </Fragment>
                 ) : (
                   <Fragment>
@@ -270,6 +270,14 @@ function Calendario() {
                       value={selectedTime}
                       onChange={(e) => setSelectedTime(e.target.value)}
                     />
+                      <label style={{ fontWeight: 'bold' }} className='flex'>Hora de fin:</label>
+                      <input
+                        type="time"
+                        value={selectedEndTime}
+                        onChange={(e) => setSelectedEndTime(e.target.value)}
+                        className="w-80 bg-white text-black px-4 py-2 rounded-md my-4 border ml-6"
+                      />
+
                   </Fragment>
                 )}
               </div>

@@ -56,10 +56,7 @@ function NuevaFicha() {
 
     return (
         <Fragment>
-            <button className='relative left-10 top-2'><Link to={'/instructor'} className='Regresar'><IoArrowBackSharp 
-                className='inline-block'/> Regresar</Link></button>
             <h1 className='text-center'>Agregar nueva Ficha</h1>
-
             <main className='form-fichas-contenido'>
                 <form className='formularioFichasInstructor' onSubmit={handleSubmit}>
                     <input type="text" placeholder='Ingresa el número de ficha' name="numero_ficha"

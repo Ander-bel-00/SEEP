@@ -1,7 +1,11 @@
-.Docs-instru{
+.Docs-instru {
   position: relative;
-  left: 5%;
+  margin: 0 auto; /* Centrar el contenido horizontalmente */
+  max-width: 100%; /* Ancho máximo igual al ancho de la pantalla */
+  overflow-x: auto; /* Añadir scroll horizontal si la tabla excede el ancho de la pantalla */
 }
+
+
 /* Estilos generales para la tabla */
 .docsTab {
   width: 100%;
@@ -27,12 +31,16 @@
 }
 
 /* Media query para dispositivos móviles */
-@media screen and (max-width: 780px) {
+@media screen and (max-width: 480px) {
   /* Ocultar la tabla encabezados y mostrar celdas como bloques */
   .docsTab, .Thead, .tbody, .th, .td, .tr { 
     display: block; 
   }
 
+  .bloque-search {
+    max-width: 100%; /* Ancho máximo igual al ancho de la pantalla */
+    margin: 0 auto; /* Centrar el bloque horizontalmente */
+  }
   /* Ocultar encabezados */
   .Thead .tr { 
     position: absolute;
@@ -42,7 +50,10 @@
   
   /* Establecer el ancho de las celdas */
   .td { 
-    width: 100%; 
+    width: 100%;
+    border: none;
+    position: relative;
+    padding-left: 50%;
   }
 
   /* Estilizar las filas */
@@ -54,21 +65,22 @@
 
   /* Establecer estilos para las celdas */
   .td { 
+    width: 100%; /* Ancho completo para dispositivos móviles */
     border: none;
-    position: relative;
-    padding-left: 50%; 
+    text-align: center; /* Centrar el contenido */
+    padding: 8px;
   }
 
-  /* Establecer estilos para los encabezados en dispositivos móviles */
+  /* Establecer estilos para las celdas antes del contenido */
   .td:before { 
     position: absolute;
     top: 6px;
     left: 6px;
-    width: 45%; /* Ancho relativo a la tabla */
-    padding-right: 10px; /* Espacio entre el contenido y el borde */
-    white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left; /* Alinear el texto a la izquierda */
   }
-
   /* Establecer estilos para el contenido en dispositivos móviles */
   .td:nth-of-type(1):before { content: "Tipo de archivo:"; }
   .td:nth-of-type(2):before { content: "Documento de Aprendiz: "; }
@@ -83,6 +95,7 @@
 @media screen and (min-width: 1024px) {
   .Docs-instru{
     position: relative;
+    left: 5%;
     width: 100%;
   }
 }

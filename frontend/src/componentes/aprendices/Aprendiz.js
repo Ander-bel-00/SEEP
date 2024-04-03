@@ -43,7 +43,7 @@ function Aprendiz() {
     const tipoVisitaNormalizado = visita.tipo_visita.toLowerCase(); // Convertir a minúsculas
     visitasPorTipo[tipoVisitaNormalizado] = true;
     fechasPorTipo[tipoVisitaNormalizado] = visita.fecha;
-    horasPorTipo[tipoVisitaNormalizado] = visita.hora;
+    horasPorTipo[tipoVisitaNormalizado] = visita.hora_inicio;
   });
 
   return (

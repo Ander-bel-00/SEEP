@@ -6,7 +6,9 @@ import clienteAxios from '../../api/axios';
 import Swal from 'sweetalert2';
 
 const InstructorForm = () => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    rol_usuario: 'instructor'
+  });
   const [fichasDisponibles, setFichasDisponibles] = useState([]);
   const [selectedFichas, setSelectedFichas] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -231,6 +233,8 @@ const fichasSeleccionadasTexto = Object.entries(selectedFichas)
             className="form-control"
             name='rol_usuario'
             onChange={handleChange}
+            value={formData.rol_usuario}
+            readOnly
             required
           />
         </div>

@@ -1,15 +1,23 @@
-/* Estilos para el formulario de carga de documentos */
-.form-docs {
-    margin-bottom: 20px;
+.docs-content{
+    position: relative;
+    left: 10%;
+    width: 1000px;
 }
-  
-.form-docs select,
-.form-docs input[type='file'],
-.form-docs button {
+/* Estilos para el formulario de carga de documentos */
+.form-docs-aprendiz {
+    width: 1000px;
+}
+
+.form-docs-aprendiz form{
+    width: 1000px;
+}
+.form-docs-aprendiz select,
+.form-docs-aprendiz input[type='file'],
+.form-docs-aprendiz button {
     margin-bottom: 15px;
 }
   
-.form-docs select {
+.form-docs-aprendiz select {
     width: 30%;
     padding: 8px;
     border-radius: 5px;
@@ -17,11 +25,11 @@
     background-color: #EEEEEE;
 }
   
-.form-docs input[type='file'] {
+.form-docs-aprendiz input[type='file'] {
     width: 100%;
 }
   
-.form-docs button {
+.form-docs-aprendiz button {
     background-color: #39a900; /* Verde */
     color: white;
     padding: 10px 20px;
@@ -30,19 +38,21 @@
     cursor: pointer;
 }
   
-.form-docs button:hover {
+.form-docs-aprendiz button:hover {
     background-color: #45a049; /* Verde más oscuro */
 }
   
 /* Estilos para la tabla de documentos */
 .table-container {
     margin-top: 20px;
+    position: relative;
+    left: 0%;
 }
   
-  .table-container table {
+.table-container table {
     width: 100%;
     border-collapse: collapse;
-  }
+}
   
 .table-container th,
 .table-container td {
@@ -71,40 +81,26 @@
 .upTitle{
     color: #39a900;
 }
-@media screen and (max-width: 1358px) {
-    .form-docs {
-        margin-bottom: 30px;
-        position: relative;
-        width: 1100px;
-        left: 20px;
-    }
-    .form-docs select {
-        position: relative;
-        left: 30px;
-        width: 35%;
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #EEEEEE;
-    }
-    .form-docs input[type='file'] {
-        width: 35%;
-        position: relative;
-        left: 10px;
-        background-color: #EEEEEE;
-        border-radius: 5px;
-        border: 1px solid #EEEEEE;
-    }
-}
+
 
 /* Para celulares grandes */
-@media screen and (max-width: 780px) {
-    .form-docs {
+@media screen and (max-width: 480px) {
+    .docs-content{
+        position: relative;
+        left: 5%;
+        width: 1000px;
+    }
+    .form-docs-aprendiz {
         margin-bottom: 30px;
         position: relative;
         width: 370px;
-        left: 20px;
+        left: 0px;
     }
-    .form-docs select {
+
+    .form-docs-aprendiz form{
+        width: 330px;
+    }
+    .form-docs-aprendiz select {
         display: flex;
         position: relative;
         left: -10px;
@@ -113,7 +109,7 @@
         border-radius: 5px;
         border: 1px solid #EEEEEE;
     }
-    .form-docs input[type='file'] {
+    .form-docs-aprendiz input[type='file'] {
         display: flex;
         position: relative;
         padding: 8px;
@@ -122,5 +118,12 @@
         border-radius: 5px;
         border: 1px solid #EEEEEE;
     }
+
+    .table-container {
+        margin-top: 20px;
+        position: relative;
+        left: 0%;
+    }
+    
 } 
 

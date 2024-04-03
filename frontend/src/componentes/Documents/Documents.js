@@ -97,12 +97,10 @@ function Documents() {
         <Fragment>
             <div className='docs-content'>
                 <h1 className='text-center upTitle'>Carga de documentos</h1>
-                <button className='relative left-10'><Link to={'/aprendiz'} className='Regresar'><IoArrowBackSharp 
-                className='inline-block'/> Regresar</Link></button>
-                <div className="form-docs">
+                <div className="form-docs-aprendiz my-4">
                     <form onSubmit={handleSubmit}>
                         <p className='tipoDocumento'>Tipo de documento:
-                            <select name="tipo_documento" onChange={handleDocumentoChange} required className=''>
+                            <select name="tipo_documento" onChange={handleDocumentoChange} required className='ml-2'>
                                 <option value="">Selecciona un tipo de documento</option>
                                 <option value="Documento de Identidad">Documento de Identidad</option>
                                 <option value="Carnet Destruido">Carnet Destruido</option>

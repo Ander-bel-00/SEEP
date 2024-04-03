@@ -7,7 +7,9 @@ import { IoArrowBackSharp } from "react-icons/io5";
 
 function NuevoAprendiz() {
     const { id_instructor } = useParams();
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({
+        rol_usuario: 'aprendiz'
+    });
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -66,9 +68,7 @@ function NuevoAprendiz() {
     return (
         <Fragment>
             <h1 className='text-center'>Agregar nuevo Aprendiz</h1>
-            <button className='relative left-10'><Link to={'/instructor'} className='Regresar'><IoArrowBackSharp 
-                className='inline-block'/> Regresar</Link></button>
-            <main className='contenedor-formulario'>
+            <main className='contenedor-formulario-aprendiz'>
                 <form className='formulario-aprendiz' onSubmit={handleSubmit}>
                     <input type='text' placeholder='Tipo de documento' name="tipo_documento"
                             onChange={handleChange} required />
@@ -108,8 +108,8 @@ function NuevoAprendiz() {
                         name='correo_electronico2' onChange={handleChange} />
                     <input type='number' placeholder='Número de ficha' required
                         name='numero_ficha' onChange={handleChange} />
-                    <input type='textr' placeholder='Rol de usuario(aprendiz)' required
-                    name='rol_usuario' onChange={handleChange} />
+                        <input type='textr' required
+                        name='rol_usuario' onChange={handleChange} readOnly value={formData.rol_usuario} hidden/>
                     <input type='password' placeholder='Contraseña' required
                     name='contrasena' onChange={handleChange} />
                     <button type="submit" className="btn btn-primary">Agregar nuevo aprendiz</button>

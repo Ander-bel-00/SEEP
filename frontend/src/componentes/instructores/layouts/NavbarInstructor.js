@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 import { IoHomeSharp } from "react-icons/io5";
+import { FaCalendar } from "react-icons/fa";
 
 import { FaUser } from "react-icons/fa";
 
@@ -45,10 +46,12 @@ const NavbarInstructor = ({showNav, handleLogout, setShowNav}) => {
                     <ul className="list-group menu-content">
                         <li className="menu-options"><Link to={'/'}><IoHomeSharp className="inline-block"/> Inicio</Link></li>
                         {/* <li className="menu-options"><a href="#"><FaUser className="inline-block"/> Perfil</a></li> */}
+                        <li className="menu-options text-nowrap"><Link to={`${usuario.id_instructor}/documents-instructor`}><FaCalendar className="inline-block mr-1"/>Agenda</Link></li>
                         <li className="menu-options text-nowrap"><Link to={`${usuario.id_instructor}/documents-instructor`}><IoDocuments className="inline-block mr-1"/>Documentos</Link></li>
                         <li className="menu-options text-nowrap"><Link to={`${usuario.id_instructor}/bitacoras-instructor`}><FaFileExcel className="inline-block mr-1"/>Bitacoras</Link></li>
-                        <li className="menu-options"><Link to={`${usuario.id_instructor}/nuevaFicha`}><HiUserAdd className="inline-block"/> Registrar Fichas</Link></li>
-                        <li className="menu-options"><Link to={`${usuario.id_instructor}/aprendiz-add`}><TiUserAdd className="inline-block"/> Registrar Aprendices</Link></li>
+                        <li className="menu-options"><Link to={`${usuario.id_instructor}/nuevaFicha`}><HiUserAdd className="inline-block mr-1"/>Registrar Fichas</Link></li>
+                        <li className="menu-options"><Link to={`${usuario.id_instructor}/aprendiz-add`}><TiUserAdd className="inline-block mr-1"/>Registrar Aprendices</Link></li>
+                        <li className="menu-options"><Link to={`evaluacion-EP/info-general`}><TiUserAdd className="inline-block mr-1"/>Planeacion</Link></li>
                         <li className="menu-options text-nowrap"><Link to="/login" onClick={handleLogout}><BiSolidLogOut className="inline-block mr-1"/>
                         Cerrar sesión</Link></li>
                     </ul>

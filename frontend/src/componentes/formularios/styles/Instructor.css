@@ -131,8 +131,9 @@
 @media screen and (max-width: 480px) {
   .form-container-instructor {
     max-width: 1900px;
-    width: 550px;
+    width: 390px;
     position: relative;
+    left: 10px;
     top: 300px;
     padding: 20px;
     border: 1px solid #ddd;

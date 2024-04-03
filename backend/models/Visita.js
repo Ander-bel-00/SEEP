@@ -16,9 +16,13 @@ const Visitas = sequelize.define('Visitas', {
         type: DataTypes.DATEONLY,
         allowNull: false
     },
-    hora: {
+    hora_inicio: {
         type: DataTypes.TIME,
         allowNull: false
+    },
+    hora_fin: {
+        type: DataTypes.TIME,
+        allowNull: true // Permitir valores nulos para la hora de finalización
     },
     aprendiz:{
         type: DataTypes.UUID,
@@ -50,3 +54,4 @@ const Visitas = sequelize.define('Visitas', {
 });
 
 module.exports = Visitas;
+

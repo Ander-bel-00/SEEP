@@ -1,5 +1,6 @@
-.contAdmin{
-  height: 450px;
+.fichasForm-main-box{
+  margin-top: 120px;
+  padding-top: 20px;
 }
 .contenedor-formulario-2 {
   max-width: 1900px;
@@ -52,4 +53,5 @@
 .formularioFichas button:hover {
   background-color: #00324de0;
 }
+
 

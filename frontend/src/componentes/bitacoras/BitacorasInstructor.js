@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import clienteAxios from '../../api/axios';
 import './css/BitacorasInstructor.css';
 import Modal from 'react-modal';
-import { Link } from 'react-router-dom';
-import { IoArrowBackSharp } from "react-icons/io5";
+
 
 function BitacorasInstructor() {
     const [bitacoras, setBitacoras] = useState([]);
@@ -109,7 +108,7 @@ function BitacorasInstructor() {
     return (
         <div className='instru-bitacoras-box'>
             <h2 className='text-center' style={{ color: '#39a900' }}>Bitácoras de los aprendices</h2>
-            <div>
+            <div className='Search-biatcorasInstructor-box'>
                 <p className='inline-block pr-4'>Buscar por numero de ficha:
                     <input
                         type='search'

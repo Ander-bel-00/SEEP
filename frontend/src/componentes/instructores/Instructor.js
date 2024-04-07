@@ -8,21 +8,17 @@ function Instructor() {
   const [usuario, setUsuario] = useState(null);
   const [fichasAsignadas, setFichasAsignadas] = useState([]);
   const [busqueda, setBusqueda] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [fichasPorPagina] = useState(3); // Número de fichas por página
 
   useEffect(() => {
     const obtenerUsuario = async () => {
       try {
-        // Hacer la solicitud GET al endpoint '/usuario' para obtener la información del usuario autenticado
         const response = await clienteAxios.get('/usuario');
-
-        // Establecer el usuario en el estado del componente
         setUsuario(response.data.usuario);
 
-        // Obtener las fichas asignadas al instructor
         const responseFichas = await clienteAxios.get(`/instructor/${response.data.usuario.numero_documento}/fichas-asignadas`);
-        // Ordenar Fichas desde la primera creada a la más reciente.
         const fichasOrdenadas = responseFichas.data.fichasAsignadas.sort((a, b) => {
-          // Convertir las fechas de creación a objetos Date y compararlas.
           return new Date(a.createdAt) - new Date(b.createdAt);
         });
         setFichasAsignadas(fichasOrdenadas);
@@ -32,7 +28,7 @@ function Instructor() {
     };
 
     obtenerUsuario();
-  }, []); // El array vacío como segundo argumento asegura que useEffect se ejecute solo una vez al montar el componente
+  }, []);
 
   // Función para formatear la fecha en el formato Año-mes-día
   const formatearFecha = (fechaString) => {
@@ -42,79 +38,151 @@ function Instructor() {
 
   // Función para manejar cambios en el campo de búsqueda
   const handleChangeBusqueda = (event) => {
-    // Obtener el valor ingresado en el campo de búsqueda
     let valor = event.target.value;
-
-    // Validar si el valor ingresado no es un número
     if (isNaN(valor)) {
-      // Si no es un número, eliminar todos los caracteres no numéricos del valor
       valor = valor.replace(/\D/g, '');
     }
-
-    // Actualizar el estado con el nuevo valor modificado
     setBusqueda(valor);
   };
-
 
   // Filtrar las fichas según el número de ficha ingresado en el campo de búsqueda
   const fichasFiltradas = fichasAsignadas.filter(ficha =>
     ficha.numero_ficha.toString().includes(busqueda)
   );
 
+  // Calcular el índice inicial y final de las fichas a mostrar en la página actual
+  const indexInicial = (currentPage - 1) * fichasPorPagina;
+  const indexFinal = currentPage * fichasPorPagina;
+
+  // Obtener las fichas a mostrar en la página actual
+  const fichasPagina = fichasFiltradas.slice(indexInicial, indexFinal);
+
+  // Funciones para cambiar de página
+  const pageBefore = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const pageAfter = () => {
+    const totalPages = Math.ceil(fichasFiltradas.length / fichasPorPagina);
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  
+
   return (
     <Fragment>
       <div className='titles'>
-      <h2 className='fichasAsignedTitle mt-11 text-center'>Agendamiento de visitas</h2>
-      <h5 className='text-center text-gray-500 selctFicha'>Selecciona una ficha</h5>
+        <h2 className='fichasAsignedTitle mt-11 text-center'>Agendamiento de visitas</h2>
+        <h5 className='text-center text-gray-500 selctFicha'>Selecciona una ficha</h5>
       </div>
       <div className='instru-content'>
         {usuario && usuario.rol_usuario ? (
-          
-          <Fragment>
-            
-            <div className="row my-2 fichas-content rounded-md">
-              <div className='searchContent'>
-              <input
-                type='search'
-                placeholder='Buscar Fichas...'
-                className='relative buscarFichas'
-                name='searchFichas'
-                value={busqueda}
-                onChange={handleChangeBusqueda}
-              />
-
-              </div>
-              {fichasFiltradas.length > 0 ? (
-                <div className="fichas-grid">
-                {fichasFiltradas.map(ficha => (
-                  <div key={ficha.numero_ficha} className="ficha-card" title='Presiona en cada ficha
-                  para acceder a su información'>
-                    <Link to={`/${usuario.rol_usuario}/aprendicesFicha/${ficha.numero_ficha}`} className='link-ficha'>
-                      <div className="card fichas">
-                        <div className="card-body carta-cuerpo">
-                          <h5 className="card-title">Ficha {ficha.numero_ficha}</h5>
-                          <img src={logoSena} className='w-9 logSenaFichas relative'/>
-                          <p className="card-text"><strong>Programa de formación: </strong>{ficha.programa_formacion}</p>
-                          <p className="card-text"><strong>Nivel de formación: </strong>{ficha.nivel_formacion}</p>
-                          <p className="card-text"><strong>Título obtenido: </strong>{ficha.titulo_obtenido}</p>
-                          <p className="card-text"><strong>Fecha fin lectiva: </strong>{formatearFecha(ficha.fecha_fin_lectiva)}</p>
-                        </div>
-                        <button className='btnVerFicha'>
-                          <Link to={`aprendicesFicha/${ficha.numero_ficha}`} className='verFichas'>
-                            Ver Ficha</Link>
-                        </button>
+          <>
+            {window.innerWidth >= 1024 ? (
+              <Fragment>
+              <div className="row my-2 fichas-content rounded-md">
+                <div className='searchContent'>
+                  <input
+                    type='search'
+                    placeholder='Buscar Fichas...'
+                    className='relative buscarFichas'
+                    name='searchFichas'
+                    value={busqueda}
+                    onChange={handleChangeBusqueda}
+                  />
+                </div>
+                {fichasPagina.length > 0 ? (
+                  <div className="fichas-grid">
+                    {fichasPagina.map(ficha => (
+                      <div key={ficha.numero_ficha} className="ficha-card" title='Presiona en cada ficha para acceder a su información'>
+                        <Link to={`/${usuario.rol_usuario}/aprendicesFicha/${ficha.numero_ficha}`} className='link-ficha'>
+                          <div className="card fichas">
+                            <div className="card-body carta-cuerpo">
+                              <h5 className="card-title">Ficha {ficha.numero_ficha}</h5>
+                              <img src={logoSena} className='w-9 logSenaFichas relative'/>
+                              <p className="card-text"><strong>Programa de formación: </strong>{ficha.programa_formacion}</p>
+                              <p className="card-text"><strong>Nivel de formación: </strong>{ficha.nivel_formacion}</p>
+                              <p className="card-text"><strong>Título obtenido: </strong>{ficha.titulo_obtenido}</p>
+                              <p className="card-text"><strong>Fecha fin lectiva: </strong>{formatearFecha(ficha.fecha_fin_lectiva)}</p>
+                            </div>
+                            <button className='btnVerFicha'>
+                              <Link to={`aprendicesFicha/${ficha.numero_ficha}`} className='verFichas'>
+                                Ver Ficha
+                              </Link>
+                            </button>
+                          </div>
+                        </Link>
                       </div>
-                    </Link>
+                    ))}
                   </div>
-                ))}
+                ) : (
+                  <div className='noFichas'> 
+                    <p>No hay fichas asignadas</p>
+                  </div>
+                )}
+              </div>
+              <div className={fichasPagina.length < 3 ? 'lessFichas' : 'pageFichas-content'}>
+                <button className="" onClick={pageBefore} disabled={currentPage === 1}>
+                  <i className="fas fa-chevron-left"></i>
+                </button>
+                <span>{currentPage} de {Math.ceil(fichasFiltradas.length / fichasPorPagina)}</span>
+                <button className="" onClick={pageAfter} disabled={currentPage === Math.ceil(fichasFiltradas.length / fichasPorPagina)}>
+                  <i className="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </Fragment>
+            ): (
+              // Para dispositivos moviles
+              <Fragment>
+            
+                <div className="row my-2 fichas-content rounded-md">
+                  <div className='searchContent'>
+                  <input
+                    type='search'
+                    placeholder='Buscar Fichas...'
+                    className='relative buscarFichas'
+                    name='searchFichas'
+                    value={busqueda}
+                    onChange={handleChangeBusqueda}
+                  />
+
+                  </div>
+                  {fichasFiltradas.length > 0 ? (
+                    <div className="fichas-grid">
+                    {fichasFiltradas.map(ficha => (
+                      <div key={ficha.numero_ficha} className="ficha-card" title='Presiona en cada ficha
+                      para acceder a su información'>
+                        <Link to={`/${usuario.rol_usuario}/aprendicesFicha/${ficha.numero_ficha}`} className='link-ficha'>
+                          <div className="card fichas">
+                            <div className="card-body carta-cuerpo">
+                              <h5 className="card-title">Ficha {ficha.numero_ficha}</h5>
+                              <img src={logoSena} className='w-9 logSenaFichas relative'/>
+                              <p className="card-text"><strong>Programa de formación: </strong>{ficha.programa_formacion}</p>
+                              <p className="card-text"><strong>Nivel de formación: </strong>{ficha.nivel_formacion}</p>
+                              <p className="card-text"><strong>Título obtenido: </strong>{ficha.titulo_obtenido}</p>
+                              <p className="card-text"><strong>Fecha fin lectiva: </strong>{formatearFecha(ficha.fecha_fin_lectiva)}</p>
+                            </div>
+                            <button className='btnVerFicha'>
+                              <Link to={`aprendicesFicha/${ficha.numero_ficha}`} className='verFichas'>
+                                Ver Ficha</Link>
+                            </button>
+                          </div>
+                        </Link>
+                      </div>
+                    ))}
+                    </div>
+                  ) : (
+                    <div className='noFichas'> 
+                      <p>No hay fichas asignadas</p>
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div className='noFichas'> 
-                  <p>No hay fichas asignadas</p>
-                </div>
-              )}
-            </div>
-          </Fragment>
+              </Fragment>
+            )}
+          </>
         ) : (
           <p>Cargando usuario...</p>
         )}

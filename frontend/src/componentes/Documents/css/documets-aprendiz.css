@@ -1,3 +1,7 @@
+.documents-aprendiz-main{
+    margin-top: 120px;
+    padding-top: 20px;
+}
 .docs-content{
     position: relative;
     left: 10%;
@@ -8,8 +12,8 @@
     width: 1000px;
 }
 
-.form-docs-aprendiz form{
-    width: 1000px;
+.form-docs-aprendiz{
+    width: 500px;
 }
 .form-docs-aprendiz select,
 .form-docs-aprendiz input[type='file'],
@@ -18,7 +22,7 @@
 }
   
 .form-docs-aprendiz select {
-    width: 30%;
+    width: 100%;
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #EEEEEE;
@@ -47,6 +51,7 @@
     margin-top: 20px;
     position: relative;
     left: 0%;
+    bottom: 10px;
 }
   
 .table-container table {
@@ -83,7 +88,7 @@
 }
 
 
-/* Para celulares grandes */
+/* Para dispositivos */
 @media screen and (max-width: 480px) {
     .docs-content{
         position: relative;

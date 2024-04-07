@@ -5,7 +5,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'moment/locale/es';
 import clienteAxios from '../../api/axios';
-import { IoArrowBackSharp } from 'react-icons/io5';
+import { FaThList } from "react-icons/fa";
 import { Link, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -38,6 +38,8 @@ function Calendario() {
   const [selectedTime, setSelectedTime] = useState('');
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedEndTime, setSelectedEndTime] = useState('');
+  const [selectedPlaceEvent, setSelectedPlaceEvent] = useState('');
+  const [selectedModalidadEvent, setSelectedModalidadEvent] = useState('');
 
 
   useEffect(() => {
@@ -63,7 +65,7 @@ function Calendario() {
   const openModalVerEvento = (event) => {
     setSelectedEvent(event);
     setSelectedDate(moment(event.fecha).toDate());
-    setSelectedTime(event.hora);
+    setSelectedTime(event.hora_inicio);
     setEventTitle(event.tipo_visita);
     setShowModal(true);
   };
@@ -112,6 +114,8 @@ function Calendario() {
         fecha: selectedDate,
         hora_inicio: formattedStartTime,
         hora_fin: formattedEndTime,
+        lugar_visita: selectedPlaceEvent,
+        modalidad_visita: selectedModalidadEvent
       });
   
       setEvents((prevEvents) => [...prevEvents, response.data]);
@@ -200,9 +204,10 @@ function Calendario() {
 
   return (
     <Fragment>
-      <button type='button' className="relative left-10 top-14 back__button-calendar">
+      <button type='button' className="relative left-10 top-14 back__button-calendar" 
+        title='Regresar a la lista de aprendices'>
         <Link to={`/instructor/aprendicesFicha/${numero_ficha}`} className="Regresar-calendar">
-          <IoArrowBackSharp className="inline-block" />
+          <FaThList className="inline-block"/>
         </Link>
       </button>
       <Calendar
@@ -214,13 +219,13 @@ function Calendario() {
         onSelectEvent={openModalVerEvento}
         events={events.map((event) => ({
           ...event,
-          start: moment(event.fecha).toDate(),
-          end: moment(event.fecha).add(1, 'hour').toDate(),
+          start: moment(event.fecha + ' ' + event.hora_inicio, 'YYYY-MM-DD HH:mm').toDate(),
+          end: moment(event.fecha + ' ' + event.hora_fin, 'YYYY-MM-DD HH:mm').toDate(),
           title: (
             <div>
               <div>{event.tipo_visita}</div>
-              <div>Hora: {moment(event.hora_inicio, 'HH:mm').format('h:mm A')}</div>
-              <div className='text-wrap'>Fin: {moment(event.hora_fin, 'HH:mm').format('h:mm A')}</div>
+              <div>Hora: {moment(event.fecha + ' ' + event.hora_inicio, 'YYYY-MM-DD HH:mm').format('h:mm A')}</div>
+              <div className='text-wrap'>Fin: {moment(event.fecha + ' ' + event.hora_fin, 'YYYY-MM-DD HH:mm').format('h:mm A')}</div>
             </div>
           ),
         }))}
@@ -229,14 +234,15 @@ function Calendario() {
       />
 
       {showModal && (
-        <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0.0.0.0.5)', position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, outline: '2px solid #ffffff' }}>
+        <div className="modal modal-calendario" style={{ display: 'block', backgroundColor: 'rgba(0.0.0.0.5)', position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, outline: '2px solid #ffffff' }}>
           <div className="modal-dialog" style={{ maxWidth: '600px', margin: 'auto', top: '100px' }}>
-            <div className="modal-content">
+            <div className="modal-content modal-calendar-content">
               <div className="modal-header" style={{ backgroundColor: '#39A900', color: '#ffffff' }}>
                 <h5 className="modal-title" style={{ marginLeft: '160px' }}>
                   {selectedEvent ? 'Información del Evento' : 'Agendar Visita'}
+                  <br />
                   {selectedDate && (
-                    <p style={{ fontWeight: 'bold', marginTop: '10px', fontSize: '32px' }}>
+                    <p style={{ fontWeight: 'bold', marginTop: '15px', fontSize: '32px' }}>
                       {`${moment(selectedDate).format('LL')}${selectedTime ? ` ${moment(selectedTime, 'HH:mm').format('h:mm A')}` : ' Selecciona hora'}`}
                     </p>
                   )}
@@ -253,7 +259,7 @@ function Calendario() {
                   </Fragment>
                 ) : (
                   <Fragment>
-                    <label style={{ fontWeight: 'bold' }}>Tipo de visita:</label>
+                    <label style={{ fontWeight: 'bold' }} className='inline-block'>Tipo de visita:</label>
                     <select
                       value={eventTitle}
                       onChange={(e) => setEventTitle(e.target.value)}
@@ -264,19 +270,42 @@ function Calendario() {
                       <option value="Segunda Visita">Segunda visita</option>
                       <option value="Tercera visita">Tercera visita</option>
                     </select>
-                    <label style={{ fontWeight: 'bold' }} className='flex'>Hora:</label>
+                    <br />
+                    <label style={{ fontWeight: 'bold' }} className='inline-block pr-5'>Hora de incio:</label>
                     <input
                       type="time"
                       value={selectedTime}
                       onChange={(e) => setSelectedTime(e.target.value)}
+                      className="w-40 bg-white text-black px-4 py-2 rounded-md my-4 border ml-6"
                     />
-                      <label style={{ fontWeight: 'bold' }} className='flex'>Hora de fin:</label>
-                      <input
-                        type="time"
-                        value={selectedEndTime}
-                        onChange={(e) => setSelectedEndTime(e.target.value)}
-                        className="w-80 bg-white text-black px-4 py-2 rounded-md my-4 border ml-6"
-                      />
+                    <br />
+                    <label style={{ fontWeight: 'bold' }} className='inline-block'>Hora de fin:</label>
+                    <input
+                      type="time"
+                      value={selectedEndTime}
+                      onChange={(e) => setSelectedEndTime(e.target.value)}
+                      className="w-40 bg-white text-black px-4 py-2 rounded-md my-4 border ml-6"
+                    />
+                    <br />
+                    <label style={{ fontWeight: 'bold' }} className='inline-block'>Lugar de la visita:</label>
+                    <input
+                      type="text"
+                      value={selectedPlaceEvent}
+                      onChange={(e) => setSelectedPlaceEvent(e.target.value)}
+                      className="w-80 bg-white text-black px-4 py-2 rounded-md my-4 border ml-6"
+                    />
+                    <br />
+                    <label style={{ fontWeight: 'bold' }} className='
+                    inline-block'>Modalidad de la Visita:</label>
+                    <select
+                      value={selectedModalidadEvent}
+                      onChange={(e) => setSelectedModalidadEvent(e.target.value)}
+                      className="w-80 bg-white text-black px-4 py-2 rounded-md my-4 border ml-6"
+                    >
+                      <option value="">Seleccione el tipo de modalidad...</option>
+                      <option value="Presencial">Presencial</option>
+                      <option value="Virtual">Virtual</option>
+                    </select>
 
                   </Fragment>
                 )}

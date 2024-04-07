@@ -1,3 +1,7 @@
+.Admin-main-box{
+  margin-top: 130px;
+  padding-top: 20px;
+}
 /* Agrega estilos para centrar los botones en la interfaz */
 .contAdmin {
   display: flex;

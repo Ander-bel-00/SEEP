@@ -1,3 +1,7 @@
+.instruMain{
+    position: relative;
+    top: 5px;
+}
 .fichas-content{
     position: relative;
     left: 180px;
@@ -56,60 +60,25 @@ body {
     background-color: #fff;
 }
 
+/* Estilos para el encabezado fijo */
 .Header-general {
+    width: 100%;
+    position: fixed;
+    top: 0;
     padding: 30px;
     background: #00324D;
     height: auto;
     border-bottom: 10px solid #39a900;
+    z-index: 1000; /* Asegura que el encabezado esté por encima del resto del contenido */
 }
 
 .tSeep{
     position: relative;
-    left: 30px;
+    left: 45%;
     color: #fff;
 }
 
-/* Ajuste de altura del menú de navegación */
-.sidenav {
-    width: 230px;
-    height: 100vh; /* Establece la altura al 100% de la altura de la ventana */
-    position: fixed; /* Cambia la posición a fija para que el menú se mantenga visible al desplazar la página */
-    top: 0; /* Alinea el menú en la parte superior */
-    left: 0; /* Alinea el menú en la parte izquierda */
-    padding: 30px; /* Añade relleno al menú */
-    background: #00324D;
-    overflow-y: auto; /* Añade desplazamiento vertical si el contenido es más grande que el menú */
-    z-index: 1000; /* Ajusta el índice z para que el menú aparezca encima del contenido */
-}
 
-/* Estilos adicionales para la lista de enlaces */
-ul {
-    padding: 10px;
-    margin: 0;
-    list-style: none;
-    position: relative;
-    right: 20px;
-    top: 40px;
-}
-.userWelcome{
-    color: #fff;
-}
-
-ul li a {
-    display: block;
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;
-    padding: 15px 14px;
-    border-radius: 6px;
-    transition: background-color 0.3s;
-}
-
-ul li a:hover,
-ul li a:active {
-    background: #787a7a4d;
-    color: #fff;
-}
 .content{
     display: flex;
     position: relative;
@@ -141,102 +110,9 @@ ul li a:active {
 }
 
 
-/* Para pantallas medianas */
-@media screen and (min-width: 1508.89px) {
-    .content{
-        display: flex;
-        position: relative;
-        left: 1%;
-        border-radius: 22px;
-    }
-    .instru-content{
-        position: relative;
-        right: 180px;
-    }
-    .fichas-content{
-        position: relative;
-        top: 120px;
-        left: 40px;
-    }
-    /* Estilos para las fichas */
-    .fichas-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Tres columnas por fila */
-        gap: 20px; /* Espacio entre las fichas */
-        position: relative;
-        left: 60px;
-    }
-    .searchContent{
-        position: relative;
-        right: 20px;
-        top: 15px;
-    }
-    .buscarFichas{
-        right: 10px;
-        padding: 4px;
-        border-bottom: 2px solid #808080;
-        top: 20%;
-    }
-    .noFichas{
-        position: relative;
-        right: 20px;
-        top: 70px;
-        font-weight: bold;
-    }
-    .titles{
-        position: relative;
-        bottom: 10px;
-        left: 30%;
-    }
-    .fichasAsignedTitle{
-        display: flex;
-        font-weight: bold;
-        color: #000;
-        white-space: nowrap;
-    }
-    .selctFicha{
-        position: relative;
-        left: 130px;
-    }
-    
-}
+
 
 @media screen and (min-width: 1024px) {
-    /* Ajuste de altura del menú de navegación */
-    .sidenav {
-        width: 162px;
-        height: 100vh; /* Establece la altura al 100% de la altura de la ventana */
-        position: fixed; /* Cambia la posición a fija para que el menú se mantenga visible al desplazar la página */
-        top: 0; /* Alinea el menú en la parte superior */
-        left: 0; /* Alinea el menú en la parte izquierda */
-        padding: 20px; /* Añade relleno al menú */
-        background: #00324D;
-        overflow-y: auto; /* Añade desplazamiento vertical si el contenido es más grande que el menú */
-        z-index: 1000; /* Ajusta el índice z para que el menú aparezca encima del contenido */
-    }
-    /* Estilos adicionales para la lista de enlaces */
-    ul {
-        padding: 3px;
-        margin: 0;
-        list-style: none;
-        position: relative;
-        right: 20px;
-        top: 0px;
-    }
-    ul li a {
-        display: block;
-        color: #fff;
-        text-decoration: none;
-        font-size: 16px;
-        border-radius: 6px;
-        transition: background-color 0.3s;
-    }
-
-    ul li a:hover,
-    ul li a:active {
-        background: #787a7a4d;
-        color: #fff;
-    }
     .content{
         display: flex;
         position: relative;
@@ -245,6 +121,7 @@ ul li a:active {
     }
     .instru-content{
         position: relative;
+        top: 120px;
         right: 380px;
     }
     .fichas{
@@ -302,7 +179,7 @@ ul li a:active {
     }
     .titles{
         position: relative;
-        bottom: 10px;
+        top: 95px;
         left: 30%;
     }
     .fichasAsignedTitle{
@@ -311,20 +188,63 @@ ul li a:active {
         color: #000;
         white-space: nowrap;
         position: relative;
-        left: 30px;
+        left: 55px;
         top: -15px;
     }
     .selctFicha{
         position: relative;
-        left: 30px;
+        left: 50px;
         top: -10px;
     }
+    .pageFichas-content{
+        width: 70%;
+        position: relative;
+        top: 80px;
+        left: 58%;
+    }
     
+    .pageFichas-content button{
+        color: #39a900;
+    }
+    .pageFichas-content span{
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    .lessFichas{
+        width: 70%;
+        position: relative;
+        top: 80px;
+        left: 75%;
+    }
+    
+    .lessFichas button{
+        color: #39a900;
+    }
+    
+    .lessFichas span{
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .ficha-card {
+        width: 75%;
+        height: 338px;
+        position: relative;
+        top: 0px;
+        left: 180px;
+        padding: 5px;
+        padding-bottom: 30px;
+    }
 }
 
-@media screen and (min-width: 1272px) {
+@media screen and (max-width: 1272px) {
+    .instruMain{
+        position: relative;
+        left: -40px;
+    }
     /* Estilos para las fichas */
     .fichas-grid {
+        height: 325px;
         display: grid;
         grid-template-columns: repeat(3, 1fr); /* Tres columnas por fila */
         gap: 10px; /* Espacio entre las fichas */
@@ -371,46 +291,12 @@ ul li a:active {
 
 /* Para celulares */
 @media screen and (max-width: 480px) {
-    /* Estilos para el menú hamburguesa */
-    .sidenav {
-        width: 230px;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        padding: 30px;
-        background: #00324D;
-        overflow-y: auto;
-        z-index: 1000;
-        transition: transform 0.3s ease-in-out;
-        transform: translateX(-100%);
-    }
-
-    .sidenav.active {
-        transform: translateX(0);
-    }
-    .menu-burguer{
-        display: inline-block;
-        font-size: 35px;
+    .instruMain{
         position: relative;
-        left: -28px;
-        color: #fff;
+        top: 5px;
+        margin-top: 130px;
+        padding-top: 20px;
     }
-    
-    .menu-burguer:hover{
-        cursor: pointer;
-    }
-    
-    .close-btn{
-        display: block;
-        position: relative;
-        left: 170px;
-        top: -25px;
-        padding: 9px;
-        font-size: 20px;
-        color: #fff;
-    }
-
     .tSeep{
         position: relative;
         left: 110px;

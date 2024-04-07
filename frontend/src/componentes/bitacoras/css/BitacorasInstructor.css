@@ -1,4 +1,6 @@
 .instru-bitacoras-box{
+  margin-top: 120px;
+  padding-top: 20px;
   position: relative;
   left: 5%;
 }
@@ -90,6 +92,21 @@
 
 /* Media query para dispositivos móviles */
 @media screen and (max-width: 780px) {
+  .instru-bitacoras-box{
+    margin-top: 130px;
+    padding-top: 20px;
+    position: relative;
+    left: 1%;
+  }
+  /* Estilos generales para la tabla */
+  .docsTab-bitacoras {
+    width: 90%;
+    border-collapse: collapse;
+  }
+
+  .Search-biatcorasInstructor-box{
+    width: 398px;
+  }
   /* Ocultar la tabla encabezados y mostrar celdas como bloques */
   .docsTab-bitacoras, .Thead, .tbody, .th, .td-instru, .tr { 
     display: block; 
@@ -118,7 +135,7 @@
   .td-instru { 
     border: none;
     position: relative;
-    padding-left: 50%; 
+    padding-left: 55%; 
   }
 
   /* Establecer estilos para los encabezados en dispositivos móviles */
@@ -189,8 +206,8 @@
 @media screen and (min-width: 1272px) {
   .instru-bitacoras-box{
     position: relative;
-    width: 1030px;
-    left: 10%;
+    width: 1100px;
+    left: 12%;
   }
   .button-container {
     margin-top: 90px; /* Espacio entre el textarea y los botones */

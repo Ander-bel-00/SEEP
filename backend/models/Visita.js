@@ -24,6 +24,14 @@ const Visitas = sequelize.define('Visitas', {
         type: DataTypes.TIME,
         allowNull: true // Permitir valores nulos para la hora de finalización
     },
+    lugar_visita: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    modalidad_visita: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     aprendiz:{
         type: DataTypes.UUID,
         allowNull: false

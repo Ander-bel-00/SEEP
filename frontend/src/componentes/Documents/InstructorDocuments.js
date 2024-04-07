@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './css/documents-instructores.css';
 import clienteAxios from '../../api/axios';
-import { IoArrowBackSharp } from "react-icons/io5";
 
 function InstructorDocuments() {
     const [documentosAprendiz, setDocumentosAprendiz] = useState([]);
@@ -66,9 +65,9 @@ function InstructorDocuments() {
 
 
     return (
-        <div className='Docs-instru'>
+        <div>
             <h2 className='text-center' style={{color: '#39a900'}}>Documentos de los Aprendices</h2>
-            <div className='bloque-search'>
+            <div className='Search-documents-box'>
                 <p className='inline-block pr-4'>Buscar por numero de ficha: 
                   <input 
                       type='search' 
@@ -97,7 +96,6 @@ function InstructorDocuments() {
                         <th className='th'>Apellidos</th>
                         <th className='th'>Número de Ficha</th>
                         <th className='th'>Programa de Formación</th>
-                        <th className='th'>Archivo</th>
                         <th className='th'>Acciones</th>
                     </tr>
                 </thead>
@@ -110,7 +108,6 @@ function InstructorDocuments() {
                             <td className='td'>{documento.apellidos}</td>
                             <td className='td'>{documento.numero_ficha}</td>
                             <td className='td'>{documento.programa_formacion}</td>
-                            <td className='td'>{documento.archivo}</td>
                             <td className='td'>
                                 <button onClick={() => handleDownload(documento.archivo)} className='btnDownloadInstruc'>Descargar</button>
                             </td>

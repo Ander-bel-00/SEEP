@@ -1,10 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import clienteAxios from '../../api/axios';
-import { Link, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import axios from 'axios';
 import './css/documets-aprendiz.css';
-import { IoArrowBackSharp } from "react-icons/io5";
+
 
 function Documents() {
     const [documento, setDocumento] = useState({

@@ -1,3 +1,7 @@
+.Aprendiz-main-content{
+    margin-top: 120px;
+    padding-top: 20px;
+}
 .tabla {
     display: block; /* Cambiar display a block */
     border-collapse: collapse;
@@ -15,59 +19,22 @@ body {
     background-color: #fff;
 }
 
+/* Estilos para el encabezado fijo */
 .Header-general {
+    width: 100%;
+    position: fixed;
+    top: 0;
     padding: 30px;
-    background: #f1eeee;
+    background: #00324D;
     height: auto;
+    border-bottom: 10px solid #39a900;
+    z-index: 1000; /* Asegura que el encabezado esté por encima del resto del contenido */
 }
 
 .tSeep{
     position: relative;
-    left: 30px;
-    color: #39a900;
-}
-
-/* Ajuste de altura del menú de navegación */
-.sidenav {
-    width: 230px;
-    height: 100vh; /* Establece la altura al 100% de la altura de la ventana */
-    position: fixed; /* Cambia la posición a fija para que el menú se mantenga visible al desplazar la página */
-    top: 0; /* Alinea el menú en la parte superior */
-    left: 0; /* Alinea el menú en la parte izquierda */
-    padding: 30px; /* Añade relleno al menú */
-    background: #00324D;
-    overflow-y: auto; /* Añade desplazamiento vertical si el contenido es más grande que el menú */
-    z-index: 1000; /* Ajusta el índice z para que el menú aparezca encima del contenido */
-    font-family: se;
-}
-
-/* Estilos adicionales para la lista de enlaces */
-ul {
-    padding: 10px;
-    margin: 0;
-    list-style: none;
-    position: relative;
-    right: 20px;
-    top: 40px;
-}
-.userWelcome{
+    left: 45%;
     color: #fff;
-}
-
-ul li a {
-    display: block;
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;
-    padding: 15px 14px;
-    border-radius: 6px;
-    transition: background-color 0.3s;
-}
-
-ul li a:hover,
-ul li a:active {
-    background: #fff;
-    color: #39a900;
 }
 
 .content{
@@ -136,44 +103,7 @@ ul li a:active {
 }
 
 
-@media screen and (max-width: 1280px) {
-    /* Ajuste de altura del menú de navegación */
-    .sidenav {
-        width: 180px;
-        height: 100vh; /* Establece la altura al 100% de la altura de la ventana */
-        position: fixed; /* Cambia la posición a fija para que el menú se mantenga visible al desplazar la página */
-        top: 0; /* Alinea el menú en la parte superior */
-        left: 0; /* Alinea el menú en la parte izquierda */
-        padding: 30px; /* Añade relleno al menú */
-        background: #00324D;
-        overflow-y: auto; /* Añade desplazamiento vertical si el contenido es más grande que el menú */
-        z-index: 1000; /* Ajusta el índice z para que el menú aparezca encima del contenido */
-    }
-    /* Estilos adicionales para la lista de enlaces */
-    ul {
-        padding: 3px;
-        margin: 0;
-        list-style: none;
-        position: relative;
-        right: 20px;
-        top: 40px;
-    }
-    ul li a {
-        display: block;
-        color: #39a900;
-        text-decoration: none;
-        font-size: 16px;
-        padding: 15px 14px;
-        border-radius: 6px;
-        transition: background-color 0.3s;
-    }
 
-    ul li a:hover,
-    ul li a:active {
-        background: #fff;
-    }
-    
-}
 
 @media screen and (max-width: 1508.89px) {
     .tabla {
@@ -226,46 +156,6 @@ ul li a:active {
 
 /* Para celulares */
 @media screen and (max-width: 780px) {
-    /* Estilos para el menú hamburguesa */
-    .sidenav {
-        width: 230px;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        padding: 30px;
-        background: #00324D;
-        overflow-y: auto;
-        z-index: 1000;
-        transition: transform 0.3s ease-in-out;
-        transform: translateX(-100%);
-    }
-
-    .sidenav.active {
-        transform: translateX(0);
-    }
-    .menu-burguer{
-        display: inline-block;
-        font-size: 28px;
-        position: relative;
-        left: -30px;
-        color: #fff;
-    }
-    
-    .menu-burguer:hover{
-        cursor: pointer;
-    }
-    
-
-    .close-btn{
-        display: block;
-        position: relative;
-        left: 180px;
-        top: -25px;
-        padding: 9px;
-        font-size: 20px;
-        color: #fff;
-    }
 
     .tSeep{
         position: relative;

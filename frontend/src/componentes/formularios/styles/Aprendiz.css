@@ -1,3 +1,7 @@
+.AprendizForm-main-box{
+  margin-top: 90px;
+  padding-top: 20px;
+}
 .contenedor-formulario {
   max-width: 600px; /* Ancho máximo del contenedor */
   width: 100%; /* Hacer que el contenedor ocupe todo el ancho disponible */

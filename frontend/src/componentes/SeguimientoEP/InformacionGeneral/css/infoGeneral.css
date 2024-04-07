@@ -1,0 +1,11 @@
+.info-general-main{
+    margin-top: 130px;
+    padding-top: 20px;
+}
+@media screen and (min-width: 1024px) {
+    .info-general-content-box{
+        width: 80%;
+        position: relative;
+        left: 10%;
+    }
+}

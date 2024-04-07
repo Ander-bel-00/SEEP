@@ -1,16 +1,24 @@
 .new-fichas-content{
     height: 480px;
     position: relative;
-    left: 35%;
+    left: 0%;
+    margin-top: 120px;
+    padding-top: 20px;
+}
+
+.title-nweFichas{
+    position: relative;
+    bottom: 8px;
 }
 
 .form-fichas-contenido {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 410px;
+    height: 400px;
     position: relative;
     top: 0px;
+    padding-top: 22px;
 }
 
 .formularioFichasInstructor {
@@ -66,5 +74,30 @@
         background-color: #f9f9f9;
         position: relative;
         top: 50px;
+    }
+}
+
+@media screen and (max-width: 1272px) {
+    .form-fichas-contenido {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 340px;
+        position: relative;
+        top: 28px;
+        padding-top: 0px;
+    }
+    
+    .formularioFichasInstructor {
+        width: 400px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .title-nweFichas{
+        position: relative;
+        bottom: 8px;
     }
 }

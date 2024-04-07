@@ -24,6 +24,8 @@ import FichasForm from "./componentes/formularios/FichasForm.js";
 import InstructorForm from "./componentes/formularios/InstructorForm.js";
 
 import { ProtectedRoute } from "./ProtectedRoute.js";
+import AgendaContainer from "./componentes/agenda/AgendaContainer/AgendaContainer.js";
+import InformacionGeneral from "./componentes/SeguimientoEP/InformacionGeneral/InformacionGeneral.js";
 
 
 function App() {
@@ -105,13 +107,22 @@ function App() {
               <Fragment>
                 <NavbarAprendiz showNav={showNav} handleLogout={handleLogout} setShowNav={setShowNav}/>
                 <Header showNav={showNav} setShowNav={setShowNav}/>
-                <main className="container content">
                   <Routes>
-                    <Route path="/" element={<Aprendices />} />
-                    <Route path=":id_aprendiz/bitacoras-aprendiz" element={<Bitacoras />} />
-                    <Route path=":id_aprendiz/documents-aprendiz"element={<Documents/>}/>
+                    <Route path="/" element={
+                      <main className="Aprendiz-main-content">
+                        <Aprendices />
+                      </main>} />
+                    <Route path=":id_aprendiz/bitacoras-aprendiz" element={
+                      <main className="bitacoras-aprendizUser-main">
+                        <Bitacoras />
+                      </main>
+                    } />
+                    <Route path=":id_aprendiz/documents-aprendiz"element={
+                      <main className="documents-aprendiz-main">
+                        <Documents/>
+                      </main>
+                    }/>
                   </Routes>
-                </main>
               </Fragment>
             </ProtectedRoute>
           }
@@ -127,15 +138,18 @@ function App() {
                 <Fragment>
                   <Header showNav={showNav} setShowNav={setShowNav}/>
                   <NavbarInstructor showNav={showNav} handleLogout={handleLogout} setShowNav={setShowNav}/>
-                  <main className="container content instruMain">
+
                     <Routes>
-                      <Route path="/" element={<Instructor />} />
+                      <Route path="/" element={
+                        <main className="container content instruMain">
+                          <Instructor />
+                        </main>
+                      } />
                       <Route path=":id_instructor/documents-instructor" 
                         element={
                           <main className="main-ins-bitacoras">
                             <InstructorDocuments />
-                          </main>
-                            
+                          </main>   
                         }
                       />
                       <Route path=":id_instructor/bitacoras-instructor"
@@ -147,7 +161,9 @@ function App() {
                       <Route 
                         path="aprendicesFicha/:numero_ficha"
                         element={
+                          <main className="list-aprendices-box">
                             <ListaAprendices isAuthenticated={isAuthenticated}/>
+                          </main>
                         }
                       />
                       <Route 
@@ -175,9 +191,34 @@ function App() {
                           </div>
                         }
                       />
-                      
+                      <Route 
+                        path="agenda/visitas"
+                        element={
+                          <main className="agenda-main-container">
+                            <AgendaContainer />
+                          </main>
+                        }
+                      />
+                      <Route 
+                        path="agenda/visitas/visitas-add/:numero_ficha/:id_aprendiz"
+                        element={
+                          <div className="calendar-box">
+                            <Calendario />
+                          </div>
+                        }
+                      />
+
+                      <Route 
+                        path="evaluacion-EP/info-general"
+                        element={
+                          <main className="info-general-main">
+                            <InformacionGeneral />
+                          </main>
+                        }
+                      />
+
+
                     </Routes>
-                  </main>
                 </Fragment>
               </ProtectedRoute>
           }
@@ -194,12 +235,16 @@ function App() {
                   <NavbarAdmin showNav={showNav} handleLogout={handleLogout} setShowNav={setShowNav}/>
                   <main className="container contAdmin">
                     <Routes>
-                      <Route path="/" element={<Administrador />} />
+                      <Route path="/" element={
+                        <main className="Admin-main-box">
+                          <Administrador />
+                        </main>
+                      } />
                       <Route
                         path="/crear-ficha"
                         element={
                             <div>
-                              <main className="container contAdmin">
+                              <main className="fichasForm-main-box">
                                 <FichasForm />
                               </main>
                             </div>
@@ -209,7 +254,7 @@ function App() {
                         path="/crear-aprendiz"
                         element={
                             <div>
-                              <main className="container content">
+                              <main className="AprendizForm-main-box">
                                 <AprendizForm />
                               </main>
                             </div>
@@ -219,7 +264,7 @@ function App() {
                         path="/crear-instructor"
                         element={
                               <div>
-                                <main className="container contAdmin">
+                                <main className="InstructorForm-main-box">
                                   <InstructorForm />
                                 </main>
                               </div>

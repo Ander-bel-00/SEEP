@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 
 exports.crearEvento = async (req, res) => {
   const id_aprendiz = req.params.id_aprendiz;
-  const { tipo_visita, fecha, hora_inicio, hora_fin } = req.body;
+  const { tipo_visita, fecha, hora_inicio, hora_fin, lugar_visita, modalidad_visita } = req.body;
 
   try {
     await Visitas.sync({ force: false });
@@ -56,6 +56,8 @@ exports.crearEvento = async (req, res) => {
         fecha,
         hora_inicio,
         hora_fin,
+        lugar_visita,
+        modalidad_visita,
         aprendiz: id_aprendiz,
         documento_aprendiz: aprendices.numero_documento,
         nombres_aprendiz: aprendices.nombres,

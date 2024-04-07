@@ -11,7 +11,7 @@ const Header = ({showNav, setShowNav}) => {
             <div onClick={toogleNav}>
                 <HiMenuAlt1 className='menu-burguer'/>
             </div>
-            <h1 className="text-center tSeep">S.E.E.P</h1>
+            <h1 className="tSeep">S.E.E.P</h1>
         </header>
     )
 }

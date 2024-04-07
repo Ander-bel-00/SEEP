@@ -1,3 +1,7 @@
+.bitacoras-aprendizUser-main{
+  margin-top: 120px;
+  padding-top: 20px;
+}
 /* Estilos generales para la tabla */
 .docsAprendicesTab {
   width: 100%;
@@ -9,7 +13,16 @@
   text-align: left;
   padding: 8px;
 }
-    
+
+.seletBitacoraNumber{
+  width: 80%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #EEEEEE;
+  background-color: #EEEEEE;
+  margin-left: 10px;
+}
+
 .thh {
   background-color: #f2f2f2;
 }
@@ -30,6 +43,52 @@
   position: relative;
   right: 75px;
 }
+
+.btn-upload-biatcora{
+  background-color: #39a900;
+  color: #fff;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.btn-upload-biatcora:hover{
+  background-color: #2e8602;
+}
+
+.modal-aprendiz-update {
+  width: 60%; /* Ancho personalizado para el modal de actualización */
+  max-width: 500px; /* Ancho máximo del modal */
+  margin: 0 auto; /* Centrar el modal horizontalmente */
+  padding: 20px; /* Espaciado interno del modal */
+  background-color: #fff; /* Color de fondo del modal */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra */
+  margin-top: 150px;
+  padding-top: 20px;
+}
+
+/* Estilos adicionales para el contenido del modal */
+.modal-aprendiz-update h2 {
+  margin-bottom: 10px;
+}
+
+.modal-aprendiz-update input[type='file'] {
+  margin-bottom: 10px;
+}
+
+.modal-aprendiz-update button {
+  background-color: #39a900;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-aprendiz-update button:hover {
+  background-color: #2e8602;
+}
+
 
 
 /* Media query para dispositivos móviles */

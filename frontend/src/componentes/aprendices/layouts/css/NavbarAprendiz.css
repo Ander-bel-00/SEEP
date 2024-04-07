@@ -1,0 +1,63 @@
+@media screen and (min-width: 1024px) {
+    .sidenavAprendiz{
+        width: 70px;
+        height: 100vh;
+        position: fixed;
+        top: 125.6px;
+        left: 0;
+        padding: 20px;
+        background: #00324d;
+        overflow-y: auto;
+        z-index: 1000;
+    }
+
+    .sidenavAprendiz ul {
+        padding: 0px;
+        margin: 0;
+        list-style: none;
+        position: relative;
+        right: 20px;
+        top: -10px;
+    }
+
+    .sidenavAprendiz ul li {
+        width: 90px;
+    }
+        
+    .sidenavAprendiz ul li a {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+        font-size: 20px;
+        padding: 10px;
+        padding-right: 30px;
+        border-radius: 6px;
+        transition: background-color 0.3s;
+    }
+
+    .sidenavAprendiz ul li a:hover,
+    .sidenavAprendiz ul li a:active {
+        background: #787a7a4d;
+        color: #fff;
+    }
+    
+    /* Estilos para el componente hovered-options */
+    .hovered-options {
+        position: fixed;
+        /* Ajusta el margen superior para desplazar hacia abajo el texto del hover */
+        top: 80px; /* Por ejemplo, puedes probar con 80px */
+        left: calc(70px + 20px); /* 70px del menú + 20px de padding */
+        transform: translateY(-50%);
+        z-index: 1001;
+    }
+
+    /* Estilos para el texto dentro de hovered-options */
+    .hovered-text {
+        background-color: #00324d;
+        color: #fff;
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+}

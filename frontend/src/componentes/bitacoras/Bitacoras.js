@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import clienteAxios from '../../api/axios';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './css/BitacorasAprendices.css';
 import Swal from 'sweetalert2';
 import Modal from 'react-modal';
-import { IoArrowBackSharp } from "react-icons/io5";
 
 function Bitacoras() {
     const [documento, setDocumento] = useState({
@@ -146,7 +145,7 @@ function Bitacoras() {
                 <div className="form-docs">
                     <form onSubmit={handleSubmit}>
                         <p className='tipoDocumento'>Número de bitácora:
-                            <select name="numero_de_bitacora" onChange={handleDocumentoChange} required className=''>
+                            <select name="numero_de_bitacora" onChange={handleDocumentoChange} required className='seletBitacoraNumber'>
                                 <option value="">Selecciona un número de bitácora</option>
                                 {[...Array(12).keys()].map(num => (
                                     <option key={num + 1} value={num + 1}>{num + 1}</option>
@@ -154,7 +153,7 @@ function Bitacoras() {
                             </select>
                         </p>
                         <p>Selecciona un archivo: <input type='file' name="archivo" onChange={handleArchivoChange} required /></p>
-                        <button type='submit'>Cargar Bitácora</button>
+                        <button type='submit' className='btn-upload-biatcora'>Cargar Bitácora</button>
                     </form>
                 </div>
                 <div>
@@ -190,8 +189,8 @@ function Bitacoras() {
                     </table>
                 </div>
             </div>
-            <Modal isOpen={modalIsOpen} onRequestClose={handleCloseModal}>
-                <h2>Selecciona un nuevo archivo</h2>
+            <Modal isOpen={modalIsOpen} onRequestClose={handleCloseModal} className="custom-modal modal-aprendiz-update">
+                <h2>Selecciona tu bitácora actualizada</h2>
                 <input type='file' name='nuevoArchivo' onChange={handleFileSelected} required />
                 <button onClick={handleCloseModal}>Cancelar</button>
             </Modal>

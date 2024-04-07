@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react';
 import clienteAxios from '../../api/axios';
-import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './styles/Aprendiz.css';
 
@@ -127,7 +126,9 @@ function AprendizForm() {
                         name='numero_ficha' onChange={handleChange} />
 
                     <input type='textr' required
-                    name='rol_usuario' onChange={handleChange} readOnly value={formData.rol_usuario} />
+                        name='rol_usuario' onChange={handleChange} readOnly value={formData.rol_usuario} 
+                        hidden
+                    />
 
                     <input type='password' placeholder='Contraseña' required
                     name='contrasena' onChange={handleChange}/>

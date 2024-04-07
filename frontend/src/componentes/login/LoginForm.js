@@ -19,6 +19,10 @@ const LoginForm = ({ onLogin }) => {
 
   const onChange = e => {
     const { name, value } = e.target;
+    // Validar que solo se ingresen números
+    if (name === 'numero_documento' && !/^\d*$/.test(value)) {
+      return; // Si se ingresa un valor no numérico, se ignora
+    }
     setFormData({ ...formData, [name]: value });
   };
   

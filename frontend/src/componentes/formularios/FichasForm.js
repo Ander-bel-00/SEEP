@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react';
 import clienteAxios from '../../api/axios';
-import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './styles/Fichas.css';
 

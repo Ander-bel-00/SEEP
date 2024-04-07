@@ -1,3 +1,7 @@
+.list-aprendices-box{
+    margin-top: 120px;
+    padding-top: 20px;
+}
 .lista-aprendices {
     list-style: none;
     padding: 0;
@@ -10,54 +14,49 @@
 
 .aprendices-fichas {
     border-bottom: 2px solid #000;
-    padding: 8px;
+    padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #fff;
 }
-.Regresar{
-    color: #39a900;
-    text-decoration: none;
-    font-size: 20px;
-}
-
-.Regresar:hover{
-    background-color: #39a900;
-    color: #fff;
-    padding: 8px;
-    
-}
 
 .agendarVisita{
-    color: #39a900
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 8px;
+    color: #39a900;
 }
 
 .agendarVisita:hover{
     background-color: #39a900;
+    padding: 8px;
     color: #fff;
 }
 
 @media screen and (min-width: 1024px) {
     .lista-aprendices {
         list-style: none;
-        padding: 0;
         margin: 20px auto;
         max-width: 600px;
         background-color: #f1EEEE;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-        padding: 6px;
+        padding: 7px;
         position: relative;
-        left: 50%;
+        left: 0%;
     }
 
     .list-title{
         position: relative;
-        left: 50%;
+        left: 0%;
     }
 }
 
 @media screen and (max-width: 480px) {
+    .list-aprendices-box{
+        margin-top: 140px;
+        padding-top: 20px;
+    }
     .lista-aprendices {
         list-style: none;
         padding: 0;
@@ -65,19 +64,19 @@
         max-width: 600px;
         background-color: #f1EEEE;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-        padding: 3px;
+        padding: 8px;
         position: relative;
-        left: 60%;
+        left: 0%;
     }
 
     .list-title{
         position: relative;
-        left: 60%;
+        left: 0%;
     }
     
     .aprendices-fichas {
         border-bottom: 2px solid #000;
-        padding: 4px;
+        padding: 15px;
         display: flex;
         justify-content: space-between;
         align-items: center;

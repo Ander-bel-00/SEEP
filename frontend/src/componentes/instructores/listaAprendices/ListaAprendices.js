@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import clienteAxios from '../../../api/axios';
 import { Link, useParams } from 'react-router-dom';
-import { IoArrowBackSharp } from "react-icons/io5";
 import './css/ListaAprendices.css';
 
 function ListaAprendices() {

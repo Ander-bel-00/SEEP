@@ -30,7 +30,6 @@ function Administrador() {
           <span>Crear Aprendiz</span>
         </div>
       </Link>
-      <Footer/>
     </div>
   )
 }

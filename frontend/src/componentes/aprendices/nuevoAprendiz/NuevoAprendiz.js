@@ -1,9 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import clienteAxios from '../../../api/axios';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './css/NuevoAprendiz.css';
 import Swal from 'sweetalert2';
-import { IoArrowBackSharp } from "react-icons/io5";
 
 function NuevoAprendiz() {
     const { id_instructor } = useParams();
@@ -30,8 +29,7 @@ function NuevoAprendiz() {
             const response = await clienteAxios.post('/aprendices-add', formData);
 
             Swal.fire({
-                title: 'Aprendiz registrado exitosamente, se ha enviado \n\
-                un correo al aprendiz con los pasos para iniciar sesión',
+                title: 'Aprendiz registrado exitosamente, se ha enviado un correo al aprendiz con los pasos para iniciar sesión',
                 icon: 'success',
                 showCancelButton: false,
                 confirmButtonText: 'Aceptar',

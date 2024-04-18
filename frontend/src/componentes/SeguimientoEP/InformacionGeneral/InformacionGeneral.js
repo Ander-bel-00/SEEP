@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import './css/infoGeneral.css';
 import PlanEP from '../PlaneacionEP/PlanEP';
+import { Link } from 'react-router-dom';
 
 
 
 function InformacionGeneral() {
-const [showNextComponent, setShowNextComponent] = useState(false); // Estado para controlar la visibilidad del siguiente componente
-
-  const handleNextButtonClick = () => {
-    setShowNextComponent(true); // Al hacer clic en el botón, se muestra el siguiente componente
-  };
   return (
     <div className='info-general-content-box'>
         <h1 className='text-center'>Información General</h1>
-        <form>
+        <form className='infor-general-fomr-box'>
             <label htmlFor='Regional'>Regional: </label>
             <input type='text' required className='ml-4 border'/>
             <label htmlFor='Regional'>Centro de formacion: </label>
@@ -64,8 +60,7 @@ const [showNextComponent, setShowNextComponent] = useState(false); // Estado par
             <label htmlFor='Regional'>E-mail: </label>
             <input type='email' required className='ml-4 border'/>
 
-            <button type="button" onClick={handleNextButtonClick}>Siguiente</button>
-            {showNextComponent && <PlanEP />}
+            <Link to="/instructor/planeacion-ep">Siguiente</Link>
         </form>
     </div>
   )

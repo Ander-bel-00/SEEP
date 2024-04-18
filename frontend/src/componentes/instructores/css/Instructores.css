@@ -78,13 +78,13 @@ body {
     color: #fff;
 }
 
-
 .content{
     display: flex;
     position: relative;
     left: 5%;
     border-radius: 22px;
 }
+
 .Regresar{
     color: #39a900;
     text-decoration: none;
@@ -108,9 +108,6 @@ body {
 .close-btn{
     display: none;
 }
-
-
-
 
 @media screen and (min-width: 1024px) {
     .content{
@@ -237,7 +234,7 @@ body {
     }
 }
 
-@media screen and (max-width: 1272px) {
+@media screen and (min-width: 1272px) {
     .instruMain{
         position: relative;
         left: -40px;

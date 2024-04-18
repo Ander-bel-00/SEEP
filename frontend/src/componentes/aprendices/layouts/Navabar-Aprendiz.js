@@ -45,46 +45,62 @@ const NavbarAprendiz = ({ showNav, handleLogout, setShowNav }) => {
     return (
         <Fragment>
         {usuario && usuario.rol_usuario ? (
-          <div className={showNav ? "sidenav active" : "sidenavAprendiz"}>
-            <button className="close-btn" onClick={handleCloseMenu}>
-              X
-            </button>
-            <ul className="list-group menu-content">
-              <MenuItem
-                title="Inicio"
-                icon={<IoHomeSharp className="inline-block" />}
-                link="/"
-                handleHover={handleHover}
-                handleHoverEnd={handleHoverEnd}
-              />
-              <MenuItem
-                title="Documentos"
-                icon={<IoDocuments className="inline-block mr-1" />}
-                link={`${usuario.id_aprendiz}/documents-aprendiz`}
-                handleHover={handleHover}
-                handleHoverEnd={handleHoverEnd}
-              />
-              <MenuItem
-                title="Bitácoras"
-                icon={<FaFileExcel className="inline-block mr-1" />}
-                link={`${usuario.id_aprendiz}/bitacoras-aprendiz`}
-                handleHover={handleHover}
-                handleHoverEnd={handleHoverEnd}
-              />
-              <MenuItem
-                title="Cerrar Sesión"
-                icon={<BiSolidLogOut className="inline-block mr-1" />}
-                handleHover={handleHover}
-                handleHoverEnd={handleHoverEnd}
-                handleLogout={handleLogout}
-              />
-            </ul>
-            {hoveredOption && (
-              <div className="hovered-options" style={{ top: hoveredPosition.top, left: hoveredPosition.left }}>
-                <div className="hovered-text">{hoveredOption}</div>
-              </div>
+          <>
+            {window.innerWidth >= 1024 ? (
+              <div className={showNav ? "sidenav active" : "sidenavAprendiz"}>
+              <button className="close-btn" onClick={handleCloseMenu}>
+                X
+              </button>
+              <ul className="list-group menu-content">
+                <MenuItem
+                  title="Inicio"
+                  icon={<IoHomeSharp className="inline-block" />}
+                  link="/"
+                  handleHover={handleHover}
+                  handleHoverEnd={handleHoverEnd}
+                />
+                <MenuItem
+                  title="Documentos"
+                  icon={<IoDocuments className="inline-block mr-1" />}
+                  link={`${usuario.id_aprendiz}/documents-aprendiz`}
+                  handleHover={handleHover}
+                  handleHoverEnd={handleHoverEnd}
+                />
+                <MenuItem
+                  title="Bitácoras"
+                  icon={<FaFileExcel className="inline-block mr-1" />}
+                  link={`${usuario.id_aprendiz}/bitacoras-aprendiz`}
+                  handleHover={handleHover}
+                  handleHoverEnd={handleHoverEnd}
+                />
+                <MenuItem
+                  title="Cerrar Sesión"
+                  icon={<BiSolidLogOut className="inline-block mr-1" />}
+                  handleHover={handleHover}
+                  handleHoverEnd={handleHoverEnd}
+                  handleLogout={handleLogout}
+                />
+              </ul>
+              {hoveredOption && (
+                <div className="hovered-options" style={{ top: hoveredPosition.top, left: hoveredPosition.left }}>
+                  <div className="hovered-text">{hoveredOption}</div>
+                </div>
+              )}
+            </div>
+            ): (
+              <div className={showNav ? 'sidenav active' : 'sidenav'}>
+                    <button className="close-btn" onClick={handleCloseMenu}>X</button>
+                    <h3 className="text-xl userWelcome">¡Bienvenido {usuario.nombres}!</h3>
+                    <ul className="list-group menu-content">
+                        <li className="menu-options text-nowrap"><a href="/"><IoHomeSharp className="inline-block"/> Inicio</a></li>
+                        {/* <li className="menu-options text-nowrap"><a href="#"><FaUser className="inline-block"/> Perfil</a></li> */}
+                        <li className="menu-options text-nowrap"><Link to={`/${usuario.rol_usuario}/${usuario.id_aprendiz}/documents-aprendiz`}><IoDocuments className="inline-block"/> Documentos</Link></li>
+                        <li className="menu-options text-nowrap"><Link to={`/${usuario.rol_usuario}/${usuario.id_aprendiz}/bitacoras-aprendiz`}><FaFileExcel className="inline-block"/> Bitacoras</Link></li>
+                        <li className="menu-options text-nowrap"><Link to="/login" onClick={handleLogout}><BiSolidLogOut className="inline-block"/> Cerrar sesión</Link></li>
+                    </ul>
+                </div>
             )}
-          </div>
+          </>
         ) : (
           <p>Cargando usuario...</p>
         )}

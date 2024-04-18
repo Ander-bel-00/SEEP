@@ -22,17 +22,16 @@ import RecuperaContrasena from "./componentes/login/recuperarContrasena/Recupera
 import AprendizForm from "./componentes/formularios/AprendizForm.js";
 import FichasForm from "./componentes/formularios/FichasForm.js";
 import InstructorForm from "./componentes/formularios/InstructorForm.js";
-
 import { ProtectedRoute } from "./ProtectedRoute.js";
 import AgendaContainer from "./componentes/agenda/AgendaContainer/AgendaContainer.js";
 import InformacionGeneral from "./componentes/SeguimientoEP/InformacionGeneral/InformacionGeneral.js";
+import PlanEP from "./componentes/SeguimientoEP/PlaneacionEP/PlanEP.js";
 
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null);
   const [showNav, setShowNav] = useState(false);
-
   useEffect(() => {
     const checkToken = async () => {
       try {
@@ -43,8 +42,8 @@ function App() {
           if (response.status === 200) {
             setIsAuthenticated(true);
             setUserRole(response.data.usuario.rol_usuario);
-            console.log("isAuthenticated:", isAuthenticated);
-            console.log("userRole:", userRole);
+            // console.log("isAuthenticated:", isAuthenticated);
+            // console.log("userRole:", userRole);
           }
         }
       } catch (error) {
@@ -213,6 +212,15 @@ function App() {
                         element={
                           <main className="info-general-main">
                             <InformacionGeneral />
+                          </main>
+                        }
+                      />
+
+                      <Route 
+                        path="/planeacion-ep"
+                        element={
+                          <main className="PlaneacionEP-main-content">
+                            <PlanEP />
                           </main>
                         }
                       />

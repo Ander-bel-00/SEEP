@@ -85,7 +85,7 @@
 @media screen and (max-width: 480px) {
   /* Estilos para el menú hamburguesa */
   .sidenav {
-    width: 230px;
+    width: 210px;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -116,7 +116,7 @@
   .sidenav .close-btn{
     display: block;
     position: relative;
-    left: 170px;
+    left: 150px;
     top: -25px;
     padding: 9px;
     font-size: 20px;

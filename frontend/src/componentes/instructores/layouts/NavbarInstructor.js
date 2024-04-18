@@ -52,92 +52,93 @@ const NavbarInstructor = ({ showNav, handleLogout, setShowNav }) => {
     <Fragment>
       {usuario && usuario.rol_usuario ? (
         <>
-          {window.innerWidth <= 780? (
-            <div className={showNav ? 'sidenav active' : 'sidenav'}>
-            <button className="close-btn" onClick={handleCloseMenu}>X</button>
-            <h3 className="text-xl userWelcome">¡Bienvenido {usuario.nombres}!</h3>
+          {window.innerWidth >= 1024? (
+            <div className= "sidenavInstructor">
+            <button className="close-btn" onClick={handleCloseMenu}>
+              X
+            </button>
             <ul className="list-group menu-content">
-                <li className="menu-options"><Link to={'/'}><IoHomeSharp className="inline-block"/> Inicio</Link></li>
-                {/* <li className="menu-options"><a href="#"><FaUser className="inline-block"/> Perfil</a></li> */}
-                <li className="menu-options text-nowrap"><Link to={`agenda/visitas`}><FaCalendar className="inline-block mr-1"/>Agenda</Link></li>
-                <li className="menu-options text-nowrap"><Link to={`${usuario.id_instructor}/documents-instructor`}><IoDocuments className="inline-block mr-1"/>Documentos</Link></li>
-                <li className="menu-options text-nowrap"><Link to={`${usuario.id_instructor}/bitacoras-instructor`}><FaFileExcel className="inline-block mr-1"/>Bitacoras</Link></li>
-                <li className="menu-options"><Link to={`${usuario.id_instructor}/nuevaFicha`}><HiUserAdd className="inline-block mr-1"/>Registrar Fichas</Link></li>
-                <li className="menu-options"><Link to={`${usuario.id_instructor}/aprendiz-add`}><TiUserAdd className="inline-block mr-1"/>Registrar Aprendices</Link></li>
-                <li className="menu-options"><Link to={`evaluacion-EP/info-general`}><PiExamFill className="inline-block mr-1"/>Planeacion</Link></li>
-                <li className="menu-options text-nowrap"><Link to="/login" onClick={handleLogout}><BiSolidLogOut className="inline-block mr-1"/>
-                Cerrar sesión</Link></li>
+              <MenuItem
+                title="Inicio"
+                icon={<IoHomeSharp className="inline-block" />}
+                link="/"
+                handleHover={handleHover}
+                handleHoverEnd={handleHoverEnd}
+              />
+              <MenuItem
+                title="Agenda"
+                icon={<FaCalendar className="inline-block mr-1" />}
+                link={`agenda/visitas`}
+                handleHover={handleHover}
+                handleHoverEnd={handleHoverEnd}
+              />
+              <MenuItem
+                title="Documentos"
+                icon={<IoDocuments className="inline-block mr-1" />}
+                link={`${usuario.id_instructor}/documents-instructor`}
+                handleHover={handleHover}
+                handleHoverEnd={handleHoverEnd}
+              />
+              <MenuItem
+                title="Bitácoras"
+                icon={<FaFileExcel className="inline-block mr-1" />}
+                link={`${usuario.id_instructor}/bitacoras-instructor`}
+                handleHover={handleHover}
+                handleHoverEnd={handleHoverEnd}
+              />
+              <MenuItem
+                title="Registrar Fichas"
+                icon={<HiUserAdd className="inline-block mr-1" />}
+                link={`${usuario.id_instructor}/nuevaFicha`}
+                handleHover={handleHover}
+                handleHoverEnd={handleHoverEnd}
+              />
+              <MenuItem
+                title="Registrar Aprendices"
+                icon={<TiUserAdd className="inline-block mr-1" />}
+                link={`${usuario.id_instructor}/aprendiz-add`}
+                handleHover={handleHover}
+                handleHoverEnd={handleHoverEnd}
+              />
+              <MenuItem
+                title="Planeación"
+                icon={<PiExamFill className="inline-block mr-1" />}
+                link={`evaluacion-EP/info-general`}
+                handleHover={handleHover}
+                handleHoverEnd={handleHoverEnd}
+              />
+              <MenuItem
+                title="Cerrar Sesión"
+                icon={<BiSolidLogOut className="inline-block mr-1" />}
+                handleHover={handleHover}
+                handleHoverEnd={handleHoverEnd}
+                handleLogout={handleLogout}
+              />
             </ul>
-        </div>
+            {hoveredOption && (
+              <div className="hovered-options" style={{ top: hoveredPosition.top, left: hoveredPosition.left }}>
+                <div className="hovered-text">{hoveredOption}</div>
+              </div>
+            )}
+          </div>
+
         ): (
-          <div className= "sidenavInstructor">
-          <button className="close-btn" onClick={handleCloseMenu}>
-            X
-          </button>
+          <div className={showNav ? 'sidenav active' : 'sidenav'}>
+          <button className="close-btn" onClick={handleCloseMenu}>X</button>
+          <h3 className="text-xl userWelcome">¡Bienvenido {usuario.nombres}!</h3>
           <ul className="list-group menu-content">
-            <MenuItem
-              title="Inicio"
-              icon={<IoHomeSharp className="inline-block" />}
-              link="/"
-              handleHover={handleHover}
-              handleHoverEnd={handleHoverEnd}
-            />
-            <MenuItem
-              title="Agenda"
-              icon={<FaCalendar className="inline-block mr-1" />}
-              link={`agenda/visitas`}
-              handleHover={handleHover}
-              handleHoverEnd={handleHoverEnd}
-            />
-            <MenuItem
-              title="Documentos"
-              icon={<IoDocuments className="inline-block mr-1" />}
-              link={`${usuario.id_instructor}/documents-instructor`}
-              handleHover={handleHover}
-              handleHoverEnd={handleHoverEnd}
-            />
-            <MenuItem
-              title="Bitácoras"
-              icon={<FaFileExcel className="inline-block mr-1" />}
-              link={`${usuario.id_instructor}/bitacoras-instructor`}
-              handleHover={handleHover}
-              handleHoverEnd={handleHoverEnd}
-            />
-            <MenuItem
-              title="Registrar Fichas"
-              icon={<HiUserAdd className="inline-block mr-1" />}
-              link={`${usuario.id_instructor}/nuevaFicha`}
-              handleHover={handleHover}
-              handleHoverEnd={handleHoverEnd}
-            />
-            <MenuItem
-              title="Registrar Aprendices"
-              icon={<TiUserAdd className="inline-block mr-1" />}
-              link={`${usuario.id_instructor}/aprendiz-add`}
-              handleHover={handleHover}
-              handleHoverEnd={handleHoverEnd}
-            />
-            <MenuItem
-              title="Planeación"
-              icon={<PiExamFill className="inline-block mr-1" />}
-              link={`evaluacion-EP/info-general`}
-              handleHover={handleHover}
-              handleHoverEnd={handleHoverEnd}
-            />
-            <MenuItem
-              title="Cerrar Sesión"
-              icon={<BiSolidLogOut className="inline-block mr-1" />}
-              handleHover={handleHover}
-              handleHoverEnd={handleHoverEnd}
-              handleLogout={handleLogout}
-            />
+              <li className="menu-options"><Link to={'/'}><IoHomeSharp className="inline-block"/> Inicio</Link></li>
+              {/* <li className="menu-options"><a href="#"><FaUser className="inline-block"/> Perfil</a></li> */}
+              <li className="menu-options text-nowrap"><Link to={`agenda/visitas`}><FaCalendar className="inline-block mr-1"/>Agenda</Link></li>
+              <li className="menu-options text-nowrap"><Link to={`${usuario.id_instructor}/documents-instructor`}><IoDocuments className="inline-block mr-1"/>Documentos</Link></li>
+              <li className="menu-options text-nowrap"><Link to={`${usuario.id_instructor}/bitacoras-instructor`}><FaFileExcel className="inline-block mr-1"/>Bitacoras</Link></li>
+              <li className="menu-options"><Link to={`${usuario.id_instructor}/nuevaFicha`}><HiUserAdd className="inline-block mr-1"/>Registrar Fichas</Link></li>
+              <li className="menu-options"><Link to={`${usuario.id_instructor}/aprendiz-add`}><TiUserAdd className="inline-block mr-1"/>Registrar Aprendices</Link></li>
+              <li className="menu-options"><Link to={`evaluacion-EP/info-general`}><PiExamFill className="inline-block mr-1"/>Planeacion</Link></li>
+              <li className="menu-options text-nowrap"><Link to="/login" onClick={handleLogout}><BiSolidLogOut className="inline-block mr-1"/>
+              Cerrar sesión</Link></li>
           </ul>
-          {hoveredOption && (
-            <div className="hovered-options" style={{ top: hoveredPosition.top, left: hoveredPosition.left }}>
-              <div className="hovered-text">{hoveredOption}</div>
-            </div>
-          )}
-        </div>
+      </div>
         )}
         </>
       ) : (

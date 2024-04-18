@@ -230,7 +230,7 @@ function Calendario() {
           ),
         }))}
         messages={messages}
-        className='calendar-container relative bottom-44'
+        className='calendar-container'
       />
 
       {showModal && (

@@ -1,0 +1,82 @@
+.PlaneacionEP-main-content {
+    margin-top: 130px;
+    padding-top: 20px;
+}
+
+@media screen and (min-width: 1024px) {
+    /* Estilos para el formulario de Planeación Etapa Productiva */
+    .PlaneacionEP-box {
+        margin-top: 50px; /* Ajusta según sea necesario */
+        padding: 20px;
+        background-color: #f8f9fa; /* Color de fondo */
+        border-radius: 8px; /* Bordes redondeados */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+        width: 80%;
+        margin: 0 auto; /* Centrar horizontalmente */
+    }
+
+    .PlaneacionEP-box h1 {
+        text-align: center; /* Centrar el título */
+    }
+
+    .planEP-main-box {
+        max-width: 800px; /* Ancho máximo del formulario */
+        margin: 0 auto; /* Centrar horizontalmente */
+    }
+
+    .planEP-main-box table {
+        width: 100%; /* Ancho completo de la tabla */
+        margin-top: 20px; /* Espacio entre la tabla y otros elementos */
+        border-collapse: collapse; /* Colapsar los bordes de la tabla */
+    }
+
+    .planEP-main-box th,
+    .planEP-main-box td {
+        border: 1px solid #ced4da; /* Borde de las celdas */
+        padding: 8px; /* Espaciado interno de las celdas */
+        text-align: left; /* Alinear texto a la izquierda */
+    }
+
+    .planEP-main-box th {
+        background-color: #f0f0f0; /* Color de fondo de las celdas de encabezado */
+        font-weight: bold; /* Texto en negrita */
+    }
+
+    .planEP-main-box textarea,
+    .planEP-main-box input[type='date'],
+    .planEP-main-box input[type='text'] {
+        width: calc(100% - 10px); /* Ancho del input */
+        padding: 8px; /* Espaciado interno */
+        margin-top: 5px; /* Espacio entre inputs */
+        border: 1px solid #ced4da; /* Borde del input */
+        border-radius: 4px; /* Bordes redondeados */
+    }
+
+    .planEP-main-box textarea:focus,
+    .planEP-main-box input[type='date']:focus,
+    .planEP-main-box input[type='text']:focus {
+        outline: none; /* Eliminar el contorno al enfocar */
+        border-color: #80bdff; /* Cambiar el color del borde al enfocar */
+    }
+
+    .planEP-main-box .columnas {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 3px; /* Espacio entre la línea y los elementos */
+    }
+
+    .planEP-main-box .columnas > div {
+        width: 48%; /* Ancho de las columnas (aprox. 50%) */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .planEP-main-box .columnas > div:first-child {
+        margin-right: 4%; /* Espacio entre las columnas */
+    }
+
+    .Observaciones-PlanEP {
+        width: 100%;
+    }
+}

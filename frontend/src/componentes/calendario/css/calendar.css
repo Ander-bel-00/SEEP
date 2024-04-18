@@ -44,10 +44,17 @@
 }
 /* Celulares con breakpoint de 480px */
 
-@media screen and (max-width: 780px) {
+@media screen and (max-width: 480px) {
+  .calendar-box{
+    margin-top: 150px;
+    padding-top: 20px;
+    width: 400px;
+    position: relative;
+    left: -2px;
+  }
   .calendar-container {
     height: 90vh; /* Ajusta la altura en pantallas aún más pequeñas */
-    width: 100vw;
+    width: 90vw;
     top: -10px;
 }
   .calendar-container .rbc-event{
@@ -57,8 +64,10 @@
     color: #fff;
   }
 
-  .back {
-    display: none;
+  .back__button-calendar{
+    position: relative;
+    left: 0px;
+    top: -9px;
   }
 
   .modal-title {
@@ -96,7 +105,7 @@
   }
 }
 
-@media screen and (max-width: 1272px) {
+@media screen and (min-width: 1272px) {
     .calendar-box{
       position: relative;
       left: 15%;
@@ -124,6 +133,17 @@
       position: relative;
       left: -90px;
     }
+}
+
+@media screen and (min-width: 1358px) {
+  .calendar-box{
+    position: relative;
+    left: 18%;
+  }
+  .back__button-calendar{
+    position: relative;
+    left: -150px;
+  }
 }
 
 @media screen and (min-width: 1545px) {

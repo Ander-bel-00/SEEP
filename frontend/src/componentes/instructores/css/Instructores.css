@@ -1,36 +1,97 @@
-.instruMain{
+.titles{
+    display: block;
     position: relative;
-    top: 5px;
+    bottom: 1.3rem;
 }
+.fichasAsignedTitle{
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    position: relative;
+    right: 1rem;
+}
+
+.selctFicha{
+    position: relative;
+    right: 1rem;
+    text-align: center;
+}
+
+.searchContent{
+    position: relative;
+    bottom: 1rem;
+    width: 10%;
+}
+
+.buscarFichas{
+    position: relative;
+    left: 3rem;
+    top: 1rem;
+    border-bottom: 1px solid #ccc;
+}
+
 .fichas-content{
     position: relative;
-    left: 180px;
+    left: 0rem;
+    width: 100%;
+    height: 80vh;
+    bottom: 2rem;
 }
-.link-ficha{
-    text-decoration: none;
-}
+
 /* Estilos para las fichas */
 .fichas-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Tres columnas por fila */
     gap: 20px; /* Espacio entre las fichas */
     position: relative;
-    left: 80px;
+    left: 0.8rem;
+    height: 85%;
+    bottom: 1rem;
 }
-  
+
 .ficha-card {
-    width: 100%; /* Asegura que cada ficha ocupe el ancho completo del contenedor */
-}
-
-.fichasAsignedTitle{
-    font-weight: bold;
-    color: #000;
     position: relative;
-    left: 140px;
+    top: 2rem;
+    width: 100%; /* Asegura que cada ficha ocupe el ancho completo del contenedor */
+    height: 85%;
 }
 
+.ficha-card:hover{
+    transform: scale(1.04);
+}
+
+.link-ficha{
+    position: relative;
+    text-decoration: none;
+    height: 100vh;
+}
+
+.fichas{
+    position: relative;
+    top: -0.1rem;
+    left: 2rem;
+    box-shadow: -1px 3px 5px 6px rgba(0,0,0,0.09);
+}
+
+.fichas p{
+    margin-top: 8px;
+}
+
+.noFichas{
+    position: relative;
+    left: 0rem;
+    bottom: 4rem;
+}
+.noFichas p{
+    font-weight: 500;
+    position: relative;
+    left: 3rem;
+    width: 8rem;
+    text-wrap: nowrap;
+}
 .logSenaFichas{
-    left: 270px;
+    left: 17rem;
     top: -40px;
 }
 .verFichas{
@@ -47,42 +108,6 @@
 .btnVerFicha{
     position: relative;
     top: -9px;
-}
-
-.selctFicha{
-    position: relative;
-    left: 130px;
-}
-body {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    background-color: #fff;
-}
-
-/* Estilos para el encabezado fijo */
-.Header-general {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    padding: 30px;
-    background: #00324D;
-    height: auto;
-    border-bottom: 10px solid #39a900;
-    z-index: 1000; /* Asegura que el encabezado esté por encima del resto del contenido */
-}
-
-.tSeep{
-    position: relative;
-    left: 45%;
-    color: #fff;
-}
-
-.content{
-    display: flex;
-    position: relative;
-    left: 5%;
-    border-radius: 22px;
 }
 
 .Regresar{
@@ -109,191 +134,32 @@ body {
     display: none;
 }
 
-@media screen and (min-width: 1024px) {
-    .content{
-        display: flex;
-        position: relative;
-        left: 10px;
-        border-radius: 22px;
-    }
-    .instru-content{
-        position: relative;
-        top: 120px;
-        right: 380px;
-    }
-    .fichas{
-        width: 300px;
-        position: relative;
-        top: -5px;
-    }
-    .logSenaFichas{
-        left: 230px;
-        top: -40px;
-    }
-    .fichas-content{
-        position: relative;
-        left: -20px;
-    }
-    .ficha-card {
-        width: 75%;
-        position: relative;
-        top: 0px;
-        left: 180px;
-        padding: 5px;
-        padding-bottom: 30px;
-    }
-    .ficha-card:hover{
-        transform: scale(1.04);
-    }
-    /* Estilos para las fichas */
-    .fichas-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Tres columnas por fila */
-        gap: 10px; /* Espacio entre las fichas */
-        position: relative;
-        left: 5px;
-        top: 90px;
-    }
-    .ficha-card:hover{
-        transform: scale(1.04);
-    }
-    .searchContent{
-        position: relative;
-        left: 15px;
-        top: 15px;
-    }
-    .buscarFichas{
-        left: 90px;
-        padding: 4px;
-        border-bottom: 2px solid #808080;
-        top: 65px;
-    }
-    .noFichas{
-        position: relative;
-        left: 20px;
-        top: 70px;
-        font-weight: bold;
-    }
-    .titles{
-        position: relative;
-        top: 95px;
-        left: 30%;
-    }
-    .fichasAsignedTitle{
-        display: flex;
-        font-weight: bold;
-        color: #000;
-        white-space: nowrap;
-        position: relative;
-        left: 55px;
-        top: -15px;
-    }
-    .selctFicha{
-        position: relative;
-        left: 50px;
-        top: -10px;
-    }
-    .pageFichas-content{
-        width: 70%;
-        position: relative;
-        top: 80px;
-        left: 58%;
-    }
-    
-    .pageFichas-content button{
-        color: #39a900;
-    }
-    .pageFichas-content span{
-        padding-left: 8px;
-        padding-right: 8px;
-    }
-    .lessFichas{
-        width: 70%;
-        position: relative;
-        top: 80px;
-        left: 75%;
-    }
-    
-    .lessFichas button{
-        color: #39a900;
-    }
-    
-    .lessFichas span{
-        padding-left: 8px;
-        padding-right: 8px;
-    }
-
-    .ficha-card {
-        width: 75%;
-        height: 338px;
-        position: relative;
-        top: 0px;
-        left: 180px;
-        padding: 5px;
-        padding-bottom: 30px;
-    }
+.pageFichas-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
 }
 
-@media screen and (min-width: 1272px) {
-    .instruMain{
-        position: relative;
-        left: -40px;
-    }
-    /* Estilos para las fichas */
-    .fichas-grid {
-        height: 325px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Tres columnas por fila */
-        gap: 10px; /* Espacio entre las fichas */
-        position: relative;
-        left: 55px;
-        top: 90px;
-    }
-    .ficha-card:hover{
-        transform: scale(1.04);
-    }
-    .searchContent{
-        position: relative;
-        left: 25px;
-        top: 15px;
-    }
-    .buscarFichas{
-        left: 130px;
-        padding: 4px;
-        border-bottom: 2px solid #808080;
-        top: 65px;
-    }
-    .noFichas{
-        position: relative;
-        left: 155px;
-        top: 90px;
-        font-weight: bold;
-    }
+.btn-pages{
+    background-color: #39a900;
+    color: #fff;
+    padding: 8px;
+    border-radius: 8px;
+    margin-left: 9px;
+    margin-right: 9px;
 }
 
-/* Para firefox */
-
-/* @media screen and (min-width: 1262.67px) {
-    .fichasAsignedTitle{
-        display: flex;
-        font-weight: bold;
-        color: #cb0000;
-        white-space: nowrap;
-        position: relative;
-        left: 30px;
-        top: -15px;
-    }
-} */
-
+.btn-pages:hover{
+    background-color: #2f8a02;
+}
 
 /* Para celulares */
 @media screen and (max-width: 480px) {
-    .instruMain{
-        position: relative;
-        top: 5px;
-        margin-top: 130px;
-        padding-top: 20px;
+    .pageFichas-content{
+        display: none;
     }
+
     .tSeep{
         position: relative;
         left: 110px;
@@ -302,55 +168,15 @@ body {
         color: #fff;
     }
 
-    .info-aprendiz{
-        top: 60px;
-        left: 10px;
-        width: 21rem;
-        height: auto;
-        margin-bottom: 10px;
-    }
-
-    .tabla {
-        display: block;
-        border-collapse: collapse;
-        width: 100%;
-        position: relative;
-        left: 5px;
-    }
-    .tabla th, .tabla td {
-        border: 1px solid black;
-        padding: 25px;
-        text-align: center;
-    }
-
-    .visitas-cont{
-        position: relative;
-        top: 40px;
-    }
-    .container{
-        position: relative;
-        left: -6px;
-    }
-    .instruMain {
-        position: relative;
-        left: -220px;
-    }
-
-    .instru-content{
-        position: relative;
-        left: -150px;
-        width: 2000px;
-    }
-
     .fichas-content{
         position: relative;
-        left: 90px;
+        right: 8rem;
     }
 
     .fichas-grid {
         grid-template-columns: repeat(1, 1fr); /* Cambiar a una sola columna */
         position: relative;
-        left: 34px;
+        right: 10rem;
         top: 80px;
     }
 
@@ -358,7 +184,7 @@ body {
         width: 50%; /* Asegurar que cada ficha ocupe el ancho completo */
         margin-bottom: 20px; /* Agregar margen inferior para separar las fichas */
         position: relative;
-        left: 70px;
+        right: 4.5rem;
     }
 
     .fichasAsignedTitle {
@@ -367,31 +193,56 @@ body {
 
     .fichasAsignedTitle {
         left: 0; /* Alinear el título a la izquierda */
+    }
+
+    .titles{
+        position: relative;
+        top: 2rem;
+        right: 2rem;
     }
 
     .fichasAsignedTitle{
         font-weight: bold;
         color: #000;
-        position: relative;
-        left: 400px;
         white-space: nowrap;
+        position: relative;
+        
     }
 
     .selctFicha{
         position: relative;
-        left: 400px;
+        
     }
-    .titles{
+
+    .searchContent{
         position: relative;
-        bottom: 10px;
-        left: -140px;
+        width: 8%;
+        top: 4rem;
     }
-    
+
     .buscarFichas{
-        left: 5px;
+        position: relative;
+        left: -1rem;
         padding: 8px;
         border-bottom: 2px solid #808080;
-        top: 90px;
+    }   
+}
+
+@media screen and (min-width: 1280px) {
+    .fichas-content{
+        position: relative;
+        left: 0rem;
+        width: 100%;
+        height: 80vh;
+        bottom: 3rem;
     }
-    
+
+    .pageFichas-content{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        position: relative;
+        bottom: 0.9rem;
+    }
 }

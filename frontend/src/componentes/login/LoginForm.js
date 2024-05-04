@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import clienteAxios from '../../api/axios';
-import Cookies from 'js-cookie';
-import logoSena from './img/sena-verde.png';
-import './css/login.styles.css';
+import React, { Fragment, useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import clienteAxios from "../../api/axios";
+import Cookies from "js-cookie";
+import logoSena from "./img/sena-verde.png";
+import logoSEEP from "./img/LOGO_SEEP-removebg-preview.png";
+import "./css/login.styles.css";
 
 const LoginForm = ({ onLogin }) => {
   const [formData, setFormData] = useState({
-    rol_usuario: '',
-    numero_documento: '',
-    contrasena: ''
+    rol_usuario: "",
+    numero_documento: "",
+    contrasena: "",
   });
 
   const [errors, setErrors] = useState([]);
@@ -17,20 +18,20 @@ const LoginForm = ({ onLogin }) => {
 
   const { rol_usuario, numero_documento, contrasena } = formData;
 
-  const onChange = e => {
+  const onChange = (e) => {
     const { name, value } = e.target;
     // Validar que solo se ingresen números
-    if (name === 'numero_documento' && !/^\d*$/.test(value)) {
+    if (name === "numero_documento" && !/^\d*$/.test(value)) {
       return; // Si se ingresa un valor no numérico, se ignora
     }
     setFormData({ ...formData, [name]: value });
   };
-  
-  const onSubmit = async e => {
+
+  const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await clienteAxios.post('/login', formData);
-      Cookies.set('token', res.data.token);
+      const res = await clienteAxios.post("/login", formData);
+      Cookies.set("token", res.data.token);
       onLogin({ role: formData.rol_usuario }); // Notifica al componente padre sobre el inicio de sesión exitoso
       navigate(`/${formData.rol_usuario.toLowerCase()}`); // Redirigir al usuario a la página correspondiente a su rol
     } catch (error) {
@@ -53,68 +54,79 @@ const LoginForm = ({ onLogin }) => {
   }, [errors]);
 
   return (
-    <div className='body-login-form'>
-      <header className="flex justify-between header-login">
-        <img src={logoSena} alt="logo-sena" id="logo-sena" className="logo-sena w-16 ml-2 my-1" />
-        <h2 className="text-4xl seepTitle">S.E.E.P</h2>
-      </header>
-
-      <div className="flex h-[calc(100vh-100px)] items-center justify-center login-content">
-        <div className="bg-white max-w-md w-full p-10 rounded-md form-container mb-4">
-          <h1 className="text-center text-2xl font-bold my-4">Iniciar sesión</h1>
-          <form onSubmit={onSubmit} className='form-options'>
-            <p className="selectRol">
-              <select
-                name="rol_usuario"
-                value={rol_usuario}
-                onChange={onChange}
-                className="w-80 bg-white text-black px-4 py-2 rounded-md my-4 border ml-6 options"
-              >
-                <option value="" disabled>Selecciona un rol...</option>
-                <option value="instructor">Instructor</option>
-                <option value="aprendiz">Aprendiz</option>
-                <option value="admin">Administrador</option>
-              </select>
-            </p>
-            <div className="input-container">
-              <input
-                placeholder="Número de documento"
-                type="text"
-                name="numero_documento"
-                value={numero_documento}
-                onChange={onChange}
-                className="flex items-center justify-center w-80 bg-white text-black px-4 py-2 rounded-md my-2 border ml-6 options"
-              />
-            </div>
-            <div className="input-container">
-              <input
-                placeholder="Contraseña"
-                type="password"
-                name="contrasena"
-                value={contrasena}
-                onChange={onChange}
-                className="w-80 bg-white text-black px-4 py-2 rounded-md my-2 border ml-6 options"
-              />
-            </div>
+    <Fragment>
+      <div className="login-body">
+        <header className="header-login">
+          <h1 className="text-center cditi-title">
+            Centro de Diseño e Innovación Tecnológica Industrial
+          </h1>
+          <img src={logoSEEP} alt="Logo SEEP" className="logo-seep" />
+        </header>
+        <h1 className="text-center welcome-title">¡Bienvenidos!</h1>
+        <main className="main-login-content">
+          <form onSubmit={onSubmit} className="form-login-content">
+            <h1 className="text-center">Iniciar Sesión</h1>
+            <select
+              name="rol_usuario"
+              value={rol_usuario}
+              onChange={onChange}
+              className="form-login-content-input"
+            >
+              <option value="" disabled>
+                Selecciona un rol...
+              </option>
+              <option value="instructor">Instructor</option>
+              <option value="aprendiz">Aprendiz</option>
+              <option value="admin">Administrador</option>
+            </select>
+            <label className="form-login-content-label">
+              Número de Documento
+            </label>
+            <input
+              placeholder="Número de documento"
+              type="text"
+              name="numero_documento"
+              value={numero_documento}
+              onChange={onChange}
+              className="form-login-content-input"
+            />
+            <label className="form-login-content-label">Contraseña</label>
+            <input
+              placeholder="Contraseña"
+              type="password"
+              name="contrasena"
+              value={contrasena}
+              onChange={onChange}
+              className="form-login-content-input"
+            />
             {errors.map((error, i) => (
-              <div key={i} className="text-red-600 ml-6">
+              <div
+                key={i}
+                className="text-red-600 ml-6 form-login-content-errors"
+              >
                 {error}
               </div>
             ))}
 
-            <div>
-              <Link to="/restablecimiento-contrasena" className='forget'>
-                ¿Olvidaste tu contraseña?
-              </Link>
+            <Link
+              to="/restablecimiento-contrasena"
+              className="form-login-content-forget"
+            >
+              ¿Olvidaste tu contraseña?
+            </Link>
+            <div className="form-login-content-btn-box">
+              <button type="submit" className="form-login-content-loginBtn">
+                Iniciar Sesión
+              </button>
             </div>
-            <button type="submit" className="loginButton rounded-md p-3 ml-32 mt-4">
-              Iniciar Sesión
-            </button>
           </form>
-        </div>
-        <footer className="piePagina">© SENA - Todos los derechos reservados</footer>
+
+          <footer className="piePagina">
+            © SENA - Todos los derechos reservados
+          </footer>
+        </main>
       </div>
-    </div>
+    </Fragment>
   );
 };
 

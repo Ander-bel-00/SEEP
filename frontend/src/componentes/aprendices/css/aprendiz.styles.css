@@ -19,24 +19,6 @@ body {
     background-color: #fff;
 }
 
-/* Estilos para el encabezado fijo */
-.Header-general {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    padding: 30px;
-    background: #00324D;
-    height: auto;
-    border-bottom: 10px solid #39a900;
-    z-index: 1000; /* Asegura que el encabezado esté por encima del resto del contenido */
-}
-
-.tSeep{
-    position: relative;
-    left: 45%;
-    color: #fff;
-}
-
 .content{
     display: flex;
     position: relative;

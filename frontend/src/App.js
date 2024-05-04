@@ -140,7 +140,7 @@ function App() {
 
                     <Routes>
                       <Route path="/" element={
-                        <main className="container content instruMain">
+                        <main className="main-container">
                           <Instructor />
                         </main>
                       } />
@@ -185,7 +185,7 @@ function App() {
                       <Route 
                         path="visitas-add/:numero_ficha/:id_aprendiz"
                         element={
-                          <div className="calendar-box">
+                          <div className="main-container">
                             <Calendario />
                           </div>
                         }
@@ -201,7 +201,7 @@ function App() {
                       <Route 
                         path="agenda/visitas/visitas-add/:numero_ficha/:id_aprendiz"
                         element={
-                          <div className="calendar-box">
+                          <div className="main-container">
                             <Calendario />
                           </div>
                         }

@@ -8,12 +8,13 @@
     margin: 20px auto;
     max-width: 600px;
     background-color: #f1EEEE;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 8px rgba(0.1, 0.1, 0.1, 0.2);
     padding: 6px;
 }
 
 .aprendices-fichas {
-    border-bottom: 2px solid #000;
+    border-bottom: 1px solid #ddd;
+    border-top: 2px solid #ddd;
     padding: 15px;
     display: flex;
     justify-content: space-between;
@@ -32,24 +33,6 @@
     background-color: #39a900;
     padding: 8px;
     color: #fff;
-}
-
-@media screen and (min-width: 1024px) {
-    .lista-aprendices {
-        list-style: none;
-        margin: 20px auto;
-        max-width: 600px;
-        background-color: #f1EEEE;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-        padding: 7px;
-        position: relative;
-        left: 0%;
-    }
-
-    .list-title{
-        position: relative;
-        left: 0%;
-    }
 }
 
 @media screen and (max-width: 480px) {

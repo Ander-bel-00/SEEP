@@ -1,4 +1,5 @@
 import React from "react";
+import './css/Header.css';
 import { HiMenuAlt1 } from "react-icons/hi";
 
 const Header = ({showNav, setShowNav}) => {

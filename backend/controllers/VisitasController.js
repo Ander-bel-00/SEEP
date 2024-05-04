@@ -5,7 +5,14 @@ const { Op } = require("sequelize");
 
 exports.crearEvento = async (req, res) => {
   const id_aprendiz = req.params.id_aprendiz;
-  const { tipo_visita, fecha, hora_inicio, hora_fin, lugar_visita, modalidad_visita } = req.body;
+  const {
+    tipo_visita,
+    fecha,
+    hora_inicio,
+    hora_fin,
+    lugar_visita,
+    modalidad_visita,
+  } = req.body;
 
   try {
     await Visitas.sync({ force: false });
@@ -14,45 +21,66 @@ exports.crearEvento = async (req, res) => {
     });
 
     if (aprendices) {
-      // Validar tipo de visita
-      if (tipo_visita.toLowerCase() === 'primera visita' || tipo_visita.toLowerCase() === 'segunda visita' || tipo_visita.toLowerCase() === 'tercera visita') {
-        // Verificar si hay una visita del mismo tipo para el aprendiz en cualquier fecha
-        const visitaTipoExistente = await Visitas.findOne({
-          where: {
-            aprendiz: id_aprendiz,
-            tipo_visita: tipo_visita.toLowerCase(),
-          },
-        });
+      // Verificar si hay una visita del mismo tipo para el aprendiz en cualquier fecha
+      const visitaTipoExistente = await Visitas.findOne({
+        where: {
+          aprendiz: id_aprendiz,
+          tipo_visita: tipo_visita,
+        },
+      });
 
-        if (visitaTipoExistente) {
-          return res.status(400).json({
-            error: "Ya está agendada una visita de este tipo para el aprendiz",
-          });
-        }
-
-        // Verificar si hay una visita agendada en el mismo día con horas posteriores
-        const visitaPrevia = await Visitas.findOne({
-          where: {
-            aprendiz: id_aprendiz,
-            fecha: fecha,
-            hora_fin: { [Op.gte]: hora_inicio }, // Verificar si la hora de inicio es posterior o igual a la hora de finalización de alguna visita previa
-          },
-        });
-
-        if (visitaPrevia) {
-          return res.status(400).json({
-            error: "La nueva visita debe ser programada en horas posteriores a la hora de inicio y de finalización de la visita anterior.",
-          });
-        }
-      } else {
+      if (visitaTipoExistente) {
         return res.status(400).json({
-          error: "El tipo de visita debe ser 'Primera visita', 'Segunda visita' o 'Tercera visita'.",
+          error: "Ya está agendada una visita de este tipo para el aprendiz",
+        });
+      }
+
+      // Verificar si hay una visita agendada en el mismo día con horas posteriores
+      const visitaPrevia = await Visitas.findOne({
+        where: {
+          aprendiz: id_aprendiz,
+          fecha: fecha,
+        },
+      });
+
+      if (visitaPrevia) {
+        return res.status(400).json({
+          error:
+            "No se pueden agendar varias visitas en un día a un mismo aprendiz",
+        });
+      }
+
+      // Verificar si hay una visita agendada en la misma fecha y hora que otra visita existente
+      const visitaExistente = await Visitas.findOne({
+        where: {
+          fecha: fecha,
+          [Op.or]: [
+            {
+              hora_inicio: { [Op.lte]: hora_inicio },
+              hora_fin: { [Op.gte]: hora_inicio },
+            }, // La nueva visita inicia durante una visita existente
+            {
+              hora_inicio: { [Op.lte]: hora_fin },
+              hora_fin: { [Op.gte]: hora_fin },
+            }, // La nueva visita finaliza durante una visita existente
+            {
+              hora_inicio: { [Op.gte]: hora_inicio },
+              hora_fin: { [Op.lte]: hora_fin },
+            }, // La nueva visita se superpone completamente con una visita existente
+          ],
+        },
+      });
+
+      if (visitaExistente) {
+        return res.status(400).json({
+          error:
+            "Ya existe una visita agendada en este horario para otro aprendiz, Verifica que la hora de inicio y la hora de finalización de la visita no esté en el rango de una visita de otro aprendiz para este mismo día.",
         });
       }
 
       // Permitir la creación de la nueva visita si no hay visitas del mismo tipo para el aprendiz en cualquier fecha
       const nuevaVisita = await Visitas.create({
-        tipo_visita: tipo_visita.toLowerCase(),
+        tipo_visita: tipo_visita,
         fecha,
         hora_inicio,
         hora_fin,
@@ -75,8 +103,6 @@ exports.crearEvento = async (req, res) => {
     res.status(500).json({ error: "Error interno del servidor" });
   }
 };
-
-
 
 // Obtener todos los eventos del calendario
 exports.obtenerEventos = async (req, res) => {

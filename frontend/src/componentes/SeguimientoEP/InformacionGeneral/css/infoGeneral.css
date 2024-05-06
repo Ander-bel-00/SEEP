@@ -1,61 +1,21 @@
-.info-general-main {
-    margin-top: 130px;
-    padding-top: 20px;
+.info-general-content-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #F1F1F1;
+    border-radius: 8px;
 }
 
-@media screen and (min-width: 1024px) {
-    .info-general-content-box {
-        margin-top: 50px; /* Ajusta según sea necesario */
-        padding: 20px;
-        background-color: #f8f9fa; /* Color de fondo */
-        border-radius: 8px; /* Bordes redondeados */
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra */
-        width: 80%;
-        margin: 0 auto; /* Centrar horizontalmente */
-    }
-      
-    .info-general-content-box h1 {
-        text-align: center; /* Centrar el título */
-    }
-      
-    .info-general-content-box form {
-        max-width: 600px; /* Ancho máximo del formulario */
-        margin: 0 auto; /* Centrar horizontalmente */
-    }
-      
-    .info-general-content-box label {
-        display: block; /* Mostrar cada etiqueta en una línea */
-        margin-top: 15px; /* Espacio entre etiquetas */
-    }
-      
-    .info-general-content-box input[type='text'],
-    .info-general-content-box input[type='email'] {
-        width: calc(100% - 10px); /* Ancho del input */
-        padding: 8px; /* Espaciado interno */
-        margin-top: 5px; /* Espacio entre inputs */
-        border: 1px solid #ced4da; /* Borde del input */
-        border-radius: 4px; /* Bordes redondeados */
-    }
-      
-    .info-general-content-box input[type='text']:focus,
-    .info-general-content-box input[type='email']:focus {
-        outline: none; /* Eliminar el contorno al enfocar */
-        border-color: #80bdff; /* Cambiar el color del borde al enfocar */
-    }
-      
-    .info-general-content-box h2 {
-        margin-top: 20px; /* Espacio entre secciones */
-    }
-      
-    .info-general-content-box a {
-        display: block; /* Convertir el enlace en un bloque */
-        text-align: center; /* Centrar el enlace */
-        margin-top: 20px; /* Espacio entre el contenido y el enlace */
-        text-decoration: none; /* Eliminar el subrayado */
-        color: #007bff; /* Color del enlace */
-    }
-      
-    .info-general-content-box a:hover {
-        text-decoration: underline; /* Subrayar al pasar el mouse */
-    }
+.info-general-content-box__logo-sena{
+    width: 5rem;
+    height: 5;
+    position: relative;
+    top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.info-general-content-box__main-title{
+    text-align: center;
+    font-size: 25px;
 }

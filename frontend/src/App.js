@@ -210,7 +210,7 @@ function App() {
                       <Route 
                         path="evaluacion-EP/info-general"
                         element={
-                          <main className="info-general-main">
+                          <main className="main-container">
                             <InformacionGeneral />
                           </main>
                         }
@@ -219,7 +219,7 @@ function App() {
                       <Route 
                         path="/planeacion-ep"
                         element={
-                          <main className="PlaneacionEP-main-content">
+                          <main className="main-container">
                             <PlanEP />
                           </main>
                         }

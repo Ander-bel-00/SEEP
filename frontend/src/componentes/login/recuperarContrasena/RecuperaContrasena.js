@@ -4,7 +4,6 @@ import Swal from 'sweetalert2';
 import './css/recuperar.css';
 
 function RecuperaContrasena() {
-    const [rolUsuario, setRolUsuario] = useState('');
     const [numeroDocumento, setNumeroDocumento] = useState('');
     const [correoElectronico, setCorreoElectronico] = useState('');
     const [codigoVerificacion, setCodigoVerificacion] = useState(['', '', '', '', '', '']);
@@ -23,7 +22,6 @@ function RecuperaContrasena() {
         setShowLoader(true);
         try {
             const response = await clienteAxios.post('/verificar-correo-electronico', {
-                rol_usuario: rolUsuario,
                 numero_documento: numeroDocumento,
                 correo_electronico1: correoElectronico
             });
@@ -37,7 +35,6 @@ function RecuperaContrasena() {
     
             // Si el correo electrónico coincide, continúa con la solicitud de restablecimiento de contraseña
             const responseSolicitud = await clienteAxios.post('/solicitar-restablecimiento-contrasena', {
-                rol_usuario: rolUsuario,
                 numero_documento: numeroDocumento,
                 correo_electronico1: correoElectronico
             });
@@ -106,21 +103,17 @@ function RecuperaContrasena() {
     return (
         <Fragment>
             <div className="recupera-contrasena-container">
-                <h1 className="recupera-titulo">Recupera tu contraseña</h1>
+                <h1 className="recupera-titulo text-center">Recupera tu contraseña</h1>
 
-                <h4>Selecciona tu rol</h4>
+                
                 {successMessage && <p className="recupera-mensaje">{successMessage}</p>}
                 {error && <p className="recupera-mensaje">{error}</p>}
                 {!codigoEnviado && showSolicitarCodigo ? (
                     <div className="recupera-formulario">
                         <form onSubmit={handleSolicitarCodigo}>
-                            <select className="recupera-input" name='rol_usuario' value={rolUsuario} onChange={(e) => setRolUsuario(e.target.value)} required>
-                                <option value="" disabled>Selecciona un rol...</option>
-                                <option value="instructor">Instructor</option>
-                                <option value="aprendiz">Aprendiz</option>
-                                <option value="administrador">Administrador</option>
-                            </select>
+                            <label><strong>Ingresa tu número de documento</strong></label>
                             <input className="recupera-input" type='text' name='numero_documento' value={numeroDocumento} onChange={(e) => setNumeroDocumento(e.target.value)} required placeholder='Número de documento'/>
+                            <label><strong>Ingresa tu correo electrónico</strong></label>
                             <input className="recupera-input" type='email' name='correo_electronico1' value={correoElectronico} onChange={(e) => setCorreoElectronico(e.target.value)} required placeholder='correo electronico'/>
                             {showLoader ? (
                                 <div className="loader"></div> // Indicador de carga

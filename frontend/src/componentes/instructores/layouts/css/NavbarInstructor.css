@@ -3,14 +3,14 @@
   width: 70px;
   height: 100vh;
   position: fixed;
-  top: 5.61rem;
+  top: 15%;
   left: 0;
   padding: 20px;
   background: #00324d;
   overflow-y: auto;
   z-index: 1000;
 }
-  
+
 /* Estilos adicionales para la lista de enlaces */
 .sidenavInstructor ul {
   padding: 0px;
@@ -31,7 +31,7 @@
   color: #fff;
   text-decoration: none;
   font-size: 20px;
-  padding: 10px;
+  padding: 9%;
   padding-right: 30px;
   border-radius: 6px;
   transition: background-color 0.3s;
@@ -67,58 +67,6 @@
 .menu-option-wrapper {
   display: inline-block;
   padding: 8px;
-}
-
-@media screen and (max-width: 1272px) {
-  .sidenavInstructor ul li a {
-    display: block;
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;
-    padding: 5px;
-    padding-right: 30px;
-    border-radius: 6px;
-    transition: background-color 0.3s;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  /* Ajuste de altura del menú de navegación */
-  .sidenavInstructor {
-    width: 70px;
-    height: 100vh;
-    position: fixed;
-    top: 6rem;
-    left: 0;
-    padding: 20px;
-    background: #00324d;
-    overflow-y: auto;
-    z-index: 1000;
-  }
-
-  .sidenavInstructor ul li a {
-    display: block;
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;
-    padding: 8px;
-    padding-right: 30px;
-    border-radius: 6px;
-    transition: background-color 0.3s;
-  }
-}
-
-@media screen and (min-width: 1358px) {
-  .sidenavInstructor ul li a {
-    display: block;
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;
-    padding: 10px;
-    padding-right: 30px;
-    border-radius: 6px;
-    transition: background-color 0.3s;
-  }
 }
 
 @media screen and (max-width: 480px) {

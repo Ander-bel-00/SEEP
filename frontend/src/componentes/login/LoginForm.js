@@ -5,10 +5,12 @@ import Cookies from "js-cookie";
 import logoSena from "./img/sena-verde.png";
 import logoSEEP from "./img/LOGO_SEEP-removebg-preview.png";
 import "./css/login.styles.css";
+import { useAuth } from "../../context/AuthContext";
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = () => {
+  const { handleLogin } = useAuth();
+
   const [formData, setFormData] = useState({
-    rol_usuario: "",
     numero_documento: "",
     contrasena: "",
   });
@@ -16,7 +18,7 @@ const LoginForm = ({ onLogin }) => {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
-  const { rol_usuario, numero_documento, contrasena } = formData;
+  const { numero_documento, contrasena } = formData;
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -30,11 +32,9 @@ const LoginForm = ({ onLogin }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await clienteAxios.post("/login", formData);
-      Cookies.set("token", res.data.token);
-      onLogin({ role: formData.rol_usuario }); // Notifica al componente padre sobre el inicio de sesión exitoso
-      navigate(`/${formData.rol_usuario.toLowerCase()}`); // Redirigir al usuario a la página correspondiente a su rol
+      await handleLogin(navigate, formData);
     } catch (error) {
+      console.log(error);
       if (Array.isArray(error.response.data)) {
         setErrors(error.response.data);
       } else {
@@ -62,23 +62,10 @@ const LoginForm = ({ onLogin }) => {
           </h1>
           <img src={logoSEEP} alt="Logo SEEP" className="logo-seep" />
         </header>
-        <h1 className="text-center welcome-title">¡Bienvenidos!</h1>
         <main className="main-login-content">
+          <h1 className="text-center welcome-title">¡Bienvenidos!</h1>
           <form onSubmit={onSubmit} className="form-login-content">
             <h1 className="text-center">Iniciar Sesión</h1>
-            <select
-              name="rol_usuario"
-              value={rol_usuario}
-              onChange={onChange}
-              className="form-login-content-input"
-            >
-              <option value="" disabled>
-                Selecciona un rol...
-              </option>
-              <option value="instructor">Instructor</option>
-              <option value="aprendiz">Aprendiz</option>
-              <option value="admin">Administrador</option>
-            </select>
             <label className="form-login-content-label">
               Número de Documento
             </label>
@@ -115,7 +102,7 @@ const LoginForm = ({ onLogin }) => {
               ¿Olvidaste tu contraseña?
             </Link>
             <div className="form-login-content-btn-box">
-              <button type="submit" className="form-login-content-loginBtn">
+              <button type="submit" className={`form-login-content-loginBtn ${errors.length > 0 ? 'btn-with-errors' : ''}`}>
                 Iniciar Sesión
               </button>
             </div>

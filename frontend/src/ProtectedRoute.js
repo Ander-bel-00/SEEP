@@ -2,7 +2,8 @@ import React from "react";
 // Aquí se importará Navigate y Outlet de react-router-dom para manejar la navegación
 import { Navigate, Outlet } from "react-router-dom";
 
-export const ProtectedRoute = ({ children, isAllowed, redirectTo="/login" }) => {
+export const ProtectedRoute = ({ isAllowed, children, redirectTo="/login" }) => {
+
   // Define el componente funcional ProtectedRoute que recibe tres props: isAllowed, children y redirectTo
   if (!isAllowed) { // Verifica si el usuario no está autorizado para acceder a la ruta
 

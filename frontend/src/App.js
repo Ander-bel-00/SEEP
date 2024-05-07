@@ -26,71 +26,24 @@ import { ProtectedRoute } from "./ProtectedRoute.js";
 import AgendaContainer from "./componentes/agenda/AgendaContainer/AgendaContainer.js";
 import InformacionGeneral from "./componentes/SeguimientoEP/InformacionGeneral/InformacionGeneral.js";
 import PlanEP from "./componentes/SeguimientoEP/PlaneacionEP/PlanEP.js";
+import { useAuth } from "./context/AuthContext.js";
 
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userRole, setUserRole] = useState(null);
-  const [showNav, setShowNav] = useState(false);
-  useEffect(() => {
-    const checkToken = async () => {
-      try {
-        const token = Cookies.get('token');
-        if (token) {
-          clienteAxios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-          const response = await clienteAxios.get('/verify-token');
-          if (response.status === 200) {
-            setIsAuthenticated(true);
-            setUserRole(response.data.usuario.rol_usuario);
-            // console.log("isAuthenticated:", isAuthenticated);
-            // console.log("userRole:", userRole);
-          }
-        }
-      } catch (error) {
-        console.error('Error al verificar el token:', error);
-      }
-    };
-    checkToken();
-  }, []);
-  
-  const handleLogin = ({ role }) => {
-    setIsAuthenticated(true);
-    setUserRole(role);
-    Cookies.set('isAuthenticated', true);
-    Cookies.set('userRole', role);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await clienteAxios.post('/logout');
-      Cookies.remove('token');
-      Cookies.remove('isAuthenticated');
-      Cookies.remove('userRole');
-      setIsAuthenticated(false);
-      setUserRole(null);
-      setShowNav(false);
-      return <Navigate to="/login" />;
-    } catch (error) {
-      console.error('Error al cerrar sesión:', error);
-    }
-  };
+  const { isAuthenticated, userRole, handleLogout, showNav, setShowNav } = useAuth();
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/login"
-          element={
-            isAuthenticated ? (
-              <Navigate to={`/${userRole}`} /> // Redirige al usuario a la página de su rol
-            ) : (
-              <LoginForm onLogin={handleLogin} />
-            )
-          }
-        />
+      <Route
+            path="/login"
+            element={
+              isAuthenticated ? <Navigate to={`/${userRole}`} /> : <LoginForm />
+            }
+          />
         <Route
           path="/"
-          element={!isAuthenticated ? <Navigate to="/login" /> : <ProtectedRoute userRole={Cookies.get('userRole')} />}
+          element={!isAuthenticated ? <Navigate to="/login" /> : <ProtectedRoute userRole={localStorage.getItem('userRole')} />}
         />
 
         <Route path="/restablecimiento-contrasena" element={<RecuperaContrasena />} />
@@ -100,7 +53,7 @@ function App() {
           path="/aprendiz/*"
           element={
             <ProtectedRoute
-              isAllowed={!!Cookies.get('isAuthenticated') && Cookies.get('userRole') === 'aprendiz'}
+              isAllowed={!!localStorage.getItem('isAuthenticated') && localStorage.getItem('userRole') === 'aprendiz'}
               redirectTo="/login"
             >
               <Fragment>
@@ -131,7 +84,7 @@ function App() {
           path="/instructor/*"
           element={
               <ProtectedRoute
-                isAllowed={!!Cookies.get('isAuthenticated') && Cookies.get('userRole') === 'instructor'}
+                isAllowed={!!localStorage.getItem('isAuthenticated') && localStorage.getItem('userRole') === 'instructor'}
                 redirectTo="/login"
               >
                 <Fragment>
@@ -235,7 +188,7 @@ function App() {
         <Route path="/admin/*"
           element={
             <ProtectedRoute
-                isAllowed={!!Cookies.get('isAuthenticated') && Cookies.get('userRole') === 'admin'}
+                isAllowed={!!localStorage.getItem('isAuthenticated') && localStorage.getItem('userRole') === 'admin'}
                 redirectTo="/login"
               >
                 <Fragment>

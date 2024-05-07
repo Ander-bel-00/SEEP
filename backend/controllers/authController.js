@@ -10,32 +10,15 @@ const plantillasController = require('../controllers/templatesController');
 // Función para iniciar sesión
 exports.iniciarSesion = async (req, res, next) => {
     try {
-        const { rol_usuario, numero_documento, contrasena } = req.body;
-
-        if (!rol_usuario) {
-            return res.status(400).json({ message: 'El rol de usuario es requerido' });
-        }
+        const { numero_documento, contrasena } = req.body;
 
         // Verificar si el número de documento y la contraseña están vacíos
-        if (!numero_documento) {
-            return res.status(400).json({ message: 'El número de documento es requerido' });
+        if (!numero_documento || !contrasena) {
+            return res.status(400).json({ message: 'El número de documento y la contraseña son requeridos' });
         }
 
-        if ( numero_documento.length < 7 ) {
-            return res.status(400).json({ message: 'El numero de documento debe contener al menos 8 dígitos' });
-        }
-
-        if (!contrasena) {
-            return res.status(400).json({ message: 'La contraseña es requerida' });
-        }
-
-        if ( contrasena.length < 8 ) {
-            return res.status(400).json({ message: 'La contraseña debe contener al menos 8 dígitos' });
-        }
-
-
-        // Buscar al usuario por número de documento y rol
-        const usuario = await obtenerUsuarioPorNumeroDocumento(numero_documento, rol_usuario);
+        // Buscar al usuario por número de documento
+        const usuario = await obtenerUsuarioPorNumeroDocumento(numero_documento);
 
         if (!usuario) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
@@ -86,23 +69,19 @@ exports.iniciarSesion = async (req, res, next) => {
 };
 
 // Función para obtener usuario por número de documento y rol
-async function obtenerUsuarioPorNumeroDocumento(numero_documento, rol_usuario) {
+async function obtenerUsuarioPorNumeroDocumento(numero_documento) {
     let usuario;
-    switch (rol_usuario) {
-        case 'aprendiz':
-            usuario = await Aprendiz.findOne({ where: { numero_documento } });
-            break;
-        case 'admin':
-            usuario = await Admin.findOne({ where: { numero_documento } });
-            break;
-        case 'instructor':
-            usuario = await Instructores.findOne({ where: { numero_documento } });
-            break;
-        default:
-            usuario = null;
+    // Busca al usuario en todas las colecciones sin importar el rol
+    usuario = await Aprendiz.findOne({ where: { numero_documento } });
+    if (!usuario) {
+        usuario = await Admin.findOne({ where: { numero_documento } });
+    }
+    if (!usuario) {
+        usuario = await Instructores.findOne({ where: { numero_documento } });
     }
     return usuario;
 }
+
 exports.logout = (req, res) => {
     res.cookie("token", "", {
         expires: new Date(0),
@@ -147,10 +126,10 @@ function generarCodigoVerificacion() {
 // En el controlador de solicitud de restablecimiento de contraseña
 exports.solicitarRestablecimientoContrasena = async (req, res, next) => {
     try {
-        const { numero_documento, rol_usuario, correo_electronico1 } = req.body;
+        const { numero_documento, correo_electronico1 } = req.body;
 
         // Verificar si el usuario existe en la base de datos
-        const usuario = await obtenerUsuarioPorNumeroDocumento(numero_documento, rol_usuario);
+        const usuario = await obtenerUsuarioPorNumeroDocumento(numero_documento,);
 
         if (!usuario) {
             return res.status(404).json({ mensaje: 'No se encontró ninguna cuenta asociada a este número de documento' });

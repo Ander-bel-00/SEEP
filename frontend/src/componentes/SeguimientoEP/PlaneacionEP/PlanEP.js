@@ -1,104 +1,39 @@
-import React from 'react';
-import './css/PlaneacionEP.css';
+import React from "react";
+import "./css/PlaneacionEP.css";
 
 function PlanEP() {
   return (
-    <div className='PlaneacionEP-box'>
-        <h1>2. PLANEACIÓN ETAPA PRODUCTIVA</h1>
-        <form className='planEP-main-box'>
-            <table>
-                <thead>
-                    <tr>
-                        <th>
-                            <h5>ACTIVIDADES A DESARROLLAR</h5>
-                            <p>
-                                Relacione las actividades que el aprendiz va a realizar. 
-                                (Estas deben corresponder al Perfil del egresado 
-                                establecido en el programa de formación que el aprendiz 
-                                está desarrollando)
-                            </p>
-                        </th>
-                        <th>EVIDENCIAS DE APRENDIZAJE</th>
-                        <th>RECOLECCIÓN DE EVIDENCIAS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <textarea required className='ml-4 border'/>
-                        </td>
-                        <td>
-                            <textarea required className='ml-4 border'/>
-                        </td>
-                        <td>
-                            <div className="columnas">
-                                <div>
-                                    <label htmlFor="fecha">Fecha:</label>
-                                    <input type='date' id="fecha" required className='ml-4 border'/>
-                                </div>
-                                <div>
-                                    <label htmlFor="lugar">Lugar:</label>
-                                    <textarea id="lugar" required className='ml-4 border'/>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <textarea required className='ml-4 border'/>
-                        </td>
-                        <td>
-                            <textarea required className='ml-4 border'/>
-                        </td>
-                        <td>
-                            <div className="columnas">
-                                <div>
-                                    <label htmlFor="fecha">Fecha:</label>
-                                    <input type='date' id="fecha" required className='ml-4 border'/>
-                                </div>
-                                <div>
-                                    <label htmlFor="lugar">Lugar:</label>
-                                    <textarea id="lugar" required className='ml-4 border'/>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <textarea required className='ml-4 border'/>
-                        </td>
-                        <td>
-                            <textarea required className='ml-4 border'/>
-                        </td>
-                        <td>
-                            <div className="columnas">
-                                <div>
-                                    <label htmlFor="fecha">Fecha:</label>
-                                    <input type='date' id="fecha" required className='ml-4 border'/>
-                                </div>
-                                <div>
-                                    <label htmlFor="lugar">Lugar:</label>
-                                    <textarea id="lugar" required className='ml-4 border'/>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colSpan={3}>
-                            <h3>Observaciones: </h3>
-                            <textarea className='Observaciones-PlanEP'></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colSpan={3}>
-
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
+    <div className="main-container__contenedor-hijo">
+      <div className="plan-content-box">
+        <table className="planEP-table">
+          <thead>
+            <tr className="planEP-table__tr">
+              <td className="planEP-table__td" colSpan={3}>
+                <h3 className="text-center">2. PLANEACIÓN ETAPA PRODUCTIVA</h3>
+              </td>
+            </tr>
+            <tr className="planEP-table__td">
+              <th className="planEP-table__th text-center" colSpan={3}>
+                CONCERTACIÓN PLAN DE TRABAJO DURANTE LA ETAPA PRODUCTIVA DEL
+                APRENDIZ
+              </th>
+            </tr>
+            <tr className="planEP-table__td">
+              <th className="planEP-table__th">
+                Text
+              </th>
+              <th className="planEP-table__th">
+                Text
+              </th>
+              <th className="planEP-table__th">
+                Text
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
     </div>
-  )
+  );
 }
 
 export default PlanEP;

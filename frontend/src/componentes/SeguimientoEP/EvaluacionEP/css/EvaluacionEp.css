@@ -1,0 +1,7 @@
+.info-evaluacion-content-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 8px;
+}

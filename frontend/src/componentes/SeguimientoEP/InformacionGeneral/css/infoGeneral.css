@@ -50,4 +50,5 @@
 .info-general-table_td textarea {
     width: 100%;
     padding: 10px;
+    resize: vertical;
 }

@@ -50,7 +50,7 @@ exports.cargarBitacora = async (req, res, next) => {
             if (existingBitacora) {
                 // Eliminar el archivo subido si ya existe una bitácora con el mismo número para este aprendiz
                 fs.unlinkSync(req.file.path);
-                return res.status(400).json({ mensaje: 'Ya se ha subido una bitácora con el mismo número para este aprendiz' });
+                return res.status(400).json({ mensaje: 'Ya se ha subido una bitácora con ese mismo número' });
             }
 
             const aprendiz = await Aprendices.findOne({

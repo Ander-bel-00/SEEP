@@ -34,18 +34,18 @@ export const AuthProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState(null);
 
   useEffect(() => {
-    const isAuthenticatedLocalStorage = localStorage.getItem("isAuthenticated");
-    const userRoleLocalStorage = localStorage.getItem("userRole");
-    const userProfileLocalStorage = localStorage.getItem("userProfile");
+    const isAuthenticatedSesionStorage = sessionStorage.getItem("isAuthenticated");
+    const userRoleSesionStorage = sessionStorage.getItem("userRole");
+    const userProfileSesionStorage = sessionStorage.getItem("userProfile");
 
     if (
-      isAuthenticatedLocalStorage &&
-      userRoleLocalStorage &&
-      userProfileLocalStorage
+      isAuthenticatedSesionStorage &&
+      userRoleSesionStorage &&
+      userProfileSesionStorage
     ) {
       setIsAuthenticated(true);
-      setUserRole(userRoleLocalStorage);
-      const decryptedProfile = decryptUserProfile(userProfileLocalStorage);
+      setUserRole(userRoleSesionStorage);
+      const decryptedProfile = decryptUserProfile(userProfileSesionStorage);
       setUserProfile(decryptedProfile);
     }
   }, []);
@@ -57,11 +57,11 @@ export const AuthProvider = ({ children }) => {
       setUserRole(res.data.usuario.rol_usuario);
       setUserProfile(res.data.usuario);
       const token = res.data.token;
-      localStorage.setItem("token", token);
-      localStorage.setItem("isAuthenticated", true);
-      localStorage.setItem("userRole", res.data.usuario.rol_usuario);
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("isAuthenticated", true);
+      sessionStorage.setItem("userRole", res.data.usuario.rol_usuario);
       const encryptedProfile = encryptUserProfile(res.data.usuario);
-      localStorage.setItem("userProfile", encryptedProfile);
+      sessionStorage.setItem("userProfile", encryptedProfile);
       navigate(`/${res.data.usuario.rol_usuario}`);
     } catch (error) {
       console.error("Error al inciar Sesión: ", error);
@@ -72,10 +72,8 @@ export const AuthProvider = ({ children }) => {
   const handleLogout = async () => {
     try {
       await clienteAxios.post('/logout');
-      localStorage.removeItem('token');
-      localStorage.removeItem('isAuthenticated');
-      localStorage.removeItem('userRole');
-      localStorage.removeItem('userProfile');
+      // Limpiar todos los datos de sessionStorage
+      sessionStorage.clear();
       setIsAuthenticated(false);
       setUserRole(null);
       setShowNav(false);

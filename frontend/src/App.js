@@ -43,7 +43,7 @@ function App() {
           />
         <Route
           path="/"
-          element={!isAuthenticated ? <Navigate to="/login" /> : <ProtectedRoute userRole={localStorage.getItem('userRole')} />}
+          element={!isAuthenticated ? <Navigate to="/login" /> : <ProtectedRoute userRole={sessionStorage.getItem('userRole')} />}
         />
 
         <Route path="/restablecimiento-contrasena" element={<RecuperaContrasena />} />
@@ -53,7 +53,7 @@ function App() {
           path="/aprendiz/*"
           element={
             <ProtectedRoute
-              isAllowed={!!localStorage.getItem('isAuthenticated') && localStorage.getItem('userRole') === 'aprendiz'}
+              isAllowed={!!sessionStorage.getItem('isAuthenticated') && sessionStorage.getItem('userRole') === 'aprendiz'}
               redirectTo="/login"
             >
               <Fragment>
@@ -84,7 +84,7 @@ function App() {
           path="/instructor/*"
           element={
               <ProtectedRoute
-                isAllowed={!!localStorage.getItem('isAuthenticated') && localStorage.getItem('userRole') === 'instructor'}
+                isAllowed={!!sessionStorage.getItem('isAuthenticated') && sessionStorage.getItem('userRole') === 'instructor'}
                 redirectTo="/login"
               >
                 <Fragment>
@@ -188,7 +188,7 @@ function App() {
         <Route path="/admin/*"
           element={
             <ProtectedRoute
-                isAllowed={!!localStorage.getItem('isAuthenticated') && localStorage.getItem('userRole') === 'admin'}
+                isAllowed={!!sessionStorage.getItem('isAuthenticated') && sessionStorage.getItem('userRole') === 'admin'}
                 redirectTo="/login"
               >
                 <Fragment>

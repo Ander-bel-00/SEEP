@@ -43,7 +43,7 @@ exports.iniciarSesion = async (req, res, next) => {
         numero_ficha: usuario.numero_ficha,
         },
         'SECRETKEY', {
-            expiresIn: '4h'
+            expiresIn: '1h'
         });
         res.cookie('token', token);
         // Enviar respuesta con token

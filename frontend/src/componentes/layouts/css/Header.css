@@ -3,15 +3,58 @@
     width: 100%;
     position: fixed;
     top: 0;
-    padding: 30px;
+    padding: 0 30px;
     background: #00324D;
     height: 15vh;
     border-bottom: 10px solid #39a900;
     z-index: 1000; /* Asegura que el encabezado esté por encima del resto del contenido */
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
 }
 
-.tSeep{
+.header-section {
+    display: flex;
+    align-items: center;
+}
+
+.left-section, .right-section {
+    flex: 0 0 auto; /* Evita que las secciones crezcan */
+}
+
+.center-section {
+    flex: 1; /* Hace que esta sección crezca para ocupar el espacio restante */
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+}
+
+.tSeep {
     font-size: 28px;
-    text-align: center;
     color: #fff;
+    margin: 0; /* Remover márgenes */
+}
+
+.user-info-box {
+    position: relative;
+    right: 1rem;
+}
+
+.user-info-box__rol{
+    font-weight: bold;
+}
+
+.user-info-box__rol, .user-info-box__names {
+    color: #fff;
+    margin: 0; /* Remover márgenes */
+}
+
+.logo-sena-header {
+    width: 4rem;
+    height: 3.2rem;
+}
+
+@media screen and (min-width: 1024px) {
+    .menu-box {
+        display: none;
+    }
 }

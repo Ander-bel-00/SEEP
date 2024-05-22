@@ -1,0 +1,45 @@
+/* PopupFirmas.css */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .firma-item {
+    margin: 10px;
+    cursor: pointer;
+    width: 100px;  /* Ajusta el tamaño de las firmas */
+    height: 50px;  /* Ajusta el tamaño de las firmas */
+  }
+  
+  .firma-draw {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sigCanvas {
+    border: 1px solid #000;
+  }
+  
+  /* PlaneacionEP.css */
+  .td__firmas_inputs div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .td__firmas_inputs button {
+    margin-top: 5px;
+  }
+  
+  .td__firmas_inputs img {
+    width: 100px;  /* Ajusta el tamaño de las firmas */
+    height: 50px;  /* Ajusta el tamaño de las firmas */
+    border: 1px solid #000;
+  }
+  

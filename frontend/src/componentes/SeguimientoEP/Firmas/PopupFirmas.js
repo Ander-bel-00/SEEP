@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import SignatureCanvas from "react-signature-canvas";
 import "./css/PopupFirmas.css";
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
 const PopupFirmas = ({ show, onClose, onSave, onSelect, firmas }) => {
   const sigCanvas = useRef({});
@@ -47,7 +47,7 @@ const PopupFirmas = ({ show, onClose, onSave, onSelect, firmas }) => {
       onRequestClose={onClose}
       contentLabel="Seleccionar o Crear Firma"
       className="modal-firmas"
-      overlayClassName="modal-overlay"
+      overlayClassName="modal-overlay-firmas"
     >
       <button className="close-button" onClick={onClose}>
         &times;
@@ -65,9 +65,19 @@ const PopupFirmas = ({ show, onClose, onSave, onSelect, firmas }) => {
                   className="firma-item"
                   onClick={() => handleSelectFirma(firma, index)}
                 />
-                <div className="button-container">
-                  <button className="edit-button" onClick={() => handleEdit(index)}>Editar</button>
-                  <button className="delete-button" onClick={() => handleDelete(index)}>Eliminar</button>
+                <div className="button-firmas-container">
+                  <button
+                    className="btn-edit-firma"
+                    onClick={() => handleEdit(index)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="btn-delete-firma"
+                    onClick={() => handleDelete(index)}
+                  >
+                    Eliminar
+                  </button>
                 </div>
               </div>
             ))}
@@ -79,8 +89,14 @@ const PopupFirmas = ({ show, onClose, onSave, onSelect, firmas }) => {
             ref={sigCanvas}
             canvasProps={{ width: 300, height: 150, className: "sigCanvas" }}
           />
-          <button onClick={clearCanvas}>Limpiar</button>
-          <button onClick={saveFirma}>{editIndex !== null ? "Actualizar Firma" : "Guardar Firma"}</button>
+          <div className="modal-firma-actions">
+            <button onClick={clearCanvas} className="btn-clean-firma">
+              Limpiar
+            </button>
+            <button onClick={saveFirma} className="btn-save-firma">
+              {editIndex !== null ? "Actualizar Firma" : "Guardar Firma"}
+            </button>
+          </div>
         </div>
       </div>
     </Modal>

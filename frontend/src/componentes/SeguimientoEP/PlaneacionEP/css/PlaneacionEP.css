@@ -65,12 +65,12 @@
   right: 10px; /* Adjust this as needed */
 }
 
-.add-icon{
-    background-color: #39a900;
+.add-icon {
+  background-color: #39a900;
 }
 
-.remove-icon{
-    background-color: #ff0000;
+.remove-icon {
+  background-color: #ff0000;
 }
 
 .add-icon,
@@ -90,8 +90,8 @@
   background-color: #2d8a00;
 }
 
-.remove-icon:hover{
-    background-color: #d30404;
+.remove-icon:hover {
+  background-color: #d30404;
 }
 
 .btn-add-inputs {
@@ -125,4 +125,15 @@
 
 .planEP-table__tr.hover-visible:hover .action-icons {
   display: flex;
+}
+
+.btn-add-firma {
+  background-color: #39a900;
+  color: #fff;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.btn-add-firma:hover {
+  background-color: #2d8a00;
 }

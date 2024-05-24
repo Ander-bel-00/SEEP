@@ -174,7 +174,7 @@ function PlanEP() {
                     <label>
                       <strong>Firma del Ente Conformador:</strong>
                     </label>
-                    <button onClick={() => handleAddFirma(0)}>
+                    <button onClick={() => handleAddFirma(0)} className={campos[0].firma ? '' : 'btn-add-firma'}>
                       {campos[0].firma ? (
                         <img
                           src={campos[0].firma}
@@ -190,7 +190,7 @@ function PlanEP() {
                     <label>
                       <strong>Firma del Aprendiz</strong>
                     </label>
-                    <button onClick={() => handleAddFirma(1)}>
+                    <button onClick={() => handleAddFirma(1)} className={campos[1].firma ? '' : 'btn-add-firma'}>
                       {campos[1].firma ? (
                         <img
                           src={campos[1].firma}
@@ -210,7 +210,7 @@ function PlanEP() {
                     <label>
                       <strong>Firma Instructor seguimiento</strong>
                     </label>
-                    <button onClick={() => handleAddFirma(2)}>
+                    <button onClick={() => handleAddFirma(2)} className={campos[2].firma ? '' : 'btn-add-firma'}>
                       {campos[2].firma ? (
                         <img
                           src={campos[2].firma}

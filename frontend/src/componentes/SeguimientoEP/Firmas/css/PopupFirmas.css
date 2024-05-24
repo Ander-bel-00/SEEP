@@ -25,7 +25,7 @@
 }
 
 
-.button-container {
+.button-firmas-container {
   display: flex;
   align-items: center;
   margin-top: 5px; /* Ajusta este valor según sea necesario */
@@ -34,8 +34,8 @@
 }
 
 
-.edit-button,
-.delete-button {
+.btn-edit-firma,
+.btn-delete-firma {
   background-color: transparent;
   color: white;
   border: none;
@@ -45,12 +45,20 @@
   border-radius: 5px;
 }
 
-.edit-button {
+.btn-edit-firma {
   background-color: blue;
 }
 
-.delete-button {
+.btn-edit-firma:hover{
+  background-color: rgb(3, 3, 206);
+}
+
+.btn-delete-firma {
   background-color: red;
+}
+
+.btn-delete-firma:hover{
+  background-color: rgb(186, 6, 6);
 }
 
 .firma-draw {
@@ -77,7 +85,7 @@
   border-radius: 10px;
 }
 
-.modal-overlay {
+.modal-overlay-firmas {
   position: fixed;
   top: 0;
   left: 0;
@@ -113,7 +121,36 @@
 }
 
 .td__firmas_inputs img {
-  width: 100px;
+  width: 120px;
   height: 50px;
   border-bottom: 1px solid #000;
+}
+
+.modal-firma-actions{
+  margin-top: 1rem;
+}
+
+.btn-clean-firma{
+  background-color: #ff0000;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  margin-right: 2rem;
+}
+
+.btn-clean-firma:hover{
+  background-color: #ca0505;
+  transform: scale(1.02);
+}
+
+.btn-save-firma{
+  background-color: #39a900;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.btn-save-firma:hover{
+  background-color: #2d8a00;
+  transform: scale(1.02);
 }

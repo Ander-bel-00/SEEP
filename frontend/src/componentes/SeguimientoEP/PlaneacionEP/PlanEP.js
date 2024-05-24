@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./css/PlaneacionEP.css";
 import PopupFirmas from "../Firmas/PopupFirmas";
+import Swal from "sweetalert2";
 
 function PlanEP() {
-  const [campos, setCampos] = useState([{ firma: null }, { firma: null }, { firma: null }]);
+  const [campos, setCampos] = useState([
+    { firma: null },
+    { firma: null },
+    { firma: null },
+  ]);
   const [firmas, setFirmas] = useState([]);
   const [currentFirmaField, setCurrentFirmaField] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
 
-  // Cargar firmas almacenadas al iniciar la página
   useEffect(() => {
     const storedFirmas = localStorage.getItem("firmas");
     if (storedFirmas) {
@@ -20,20 +24,41 @@ function PlanEP() {
     setCampos([...campos, { id: campos.length, firma: null }]);
   };
 
+  const eliminarCampos = (index) => {
+    // Evitar la eliminación si solo están presentes los campos iniciales
+    if (campos.length > 3) {
+      setCampos(campos.filter((_, i) => i !== index));
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "Recuerda",
+        text: "No se pueden eliminar las filas iniciales",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
+
   const handleAddFirma = (fieldId) => {
     setCurrentFirmaField(fieldId);
     setShowPopup(true);
   };
 
-  const handleSaveFirma = (firma) => {
+  const handleSaveFirma = (firma, editIndex = null) => {
     setFirmas((prevFirmas) => {
-      if (!prevFirmas.includes(firma)) {
-        const newFirmas = [...prevFirmas, firma];
-        // Almacenar las firmas actualizadas en el almacenamiento local
-        localStorage.setItem("firmas", JSON.stringify(newFirmas));
-        return newFirmas;
+      let newFirmas;
+      if (editIndex !== null) {
+        if (firma) {
+          newFirmas = prevFirmas.map((f, index) =>
+            index === editIndex ? firma : f
+          );
+        } else {
+          newFirmas = prevFirmas.filter((_, index) => index !== editIndex);
+        }
+      } else {
+        newFirmas = [...prevFirmas, firma];
       }
-      return prevFirmas;
+      localStorage.setItem("firmas", JSON.stringify(newFirmas));
+      return newFirmas;
     });
 
     if (currentFirmaField !== null) {
@@ -41,6 +66,18 @@ function PlanEP() {
         index === currentFirmaField ? { ...campo, firma } : campo
       );
       setCampos(updatedCampos);
+      setCurrentFirmaField(null);
+    }
+  };
+
+  const handleSelectFirma = (firma) => {
+    if (currentFirmaField !== null) {
+      const updatedCampos = campos.map((campo, index) =>
+        index === currentFirmaField ? { ...campo, firma } : campo
+      );
+      setCampos(updatedCampos);
+      setCurrentFirmaField(null);
+      setShowPopup(false);
     }
   };
 
@@ -56,7 +93,8 @@ function PlanEP() {
             </tr>
             <tr className="planEP-table__tr">
               <th className="planEP-table__th text-center" colSpan={6}>
-                CONCERTACIÓN PLAN DE TRABAJO DURANTE LA ETAPA PRODUCTIVA DEL APRENDIZ
+                CONCERTACIÓN PLAN DE TRABAJO DURANTE LA ETAPA PRODUCTIVA DEL
+                APRENDIZ
               </th>
             </tr>
             <tr className="planEP-table__tr">
@@ -83,7 +121,12 @@ function PlanEP() {
           </thead>
           <tbody>
             {campos.map((campo, index) => (
-              <tr key={index} className="planEP-table__tr">
+              <tr
+                key={index}
+                className={`planEP-table__tr ${
+                  index === campos.length - 1 ? "hover-visible" : ""
+                }`}
+              >
                 <td colSpan={3} className="planEP-table__td">
                   <textarea required></textarea>
                 </td>
@@ -94,7 +137,21 @@ function PlanEP() {
                   <input type="date" required />
                 </td>
                 <td className="planEP-table__td">
-                  <input type="text" required />
+                  <textarea required></textarea>
+                  {index === campos.length - 1 && (
+                    <div className="action-icons">
+                      <button onClick={agregarCampos} className="add-icon" title="Añadir fila">
+                        +
+                      </button>
+                      <button
+                        onClick={() => eliminarCampos(index)}
+                        className="remove-icon"
+                        title="Eliminar fila"
+                      >
+                        -
+                      </button>
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}
@@ -168,22 +225,19 @@ function PlanEP() {
                 </div>
               </td>
             </tr>
-            <tr>
-              <td colSpan={6} className="">
-                <div className="btn-add-inputs">
-                  <button onClick={agregarCampos}>Añadir Actividad</button>
-                </div>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
       <PopupFirmas
         show={showPopup}
         onClose={() => setShowPopup(false)}
-        onSave={(firma) => {
-          handleSaveFirma(firma);
-          setShowPopup(false); // Cerrar el modal después de guardar la firma
+        onSave={(firma, editIndex) => {
+          handleSaveFirma(firma, editIndex);
+          setShowPopup(false);
+        }}
+        onSelect={(firma) => {
+          handleSelectFirma(firma);
+          setShowPopup(false);
         }}
         firmas={firmas}
       />

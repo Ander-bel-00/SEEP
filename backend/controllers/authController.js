@@ -62,8 +62,11 @@ exports.iniciarSesion = async (req, res, next) => {
             }
         });
         } catch (error) {
+        // Mostrar error en consola en caso de error al inciar sesion.
         console.error('Error al iniciar sesión', error);
+        // Mostar mensaje de error 500 si hubo error al procesar la solicitud.
         res.status(500).json({ message: 'Hubo un error al procesar la solicitud', error });
+        // Continuar a la siguiente función después de error.
         next();
     }
 };

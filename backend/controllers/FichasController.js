@@ -4,25 +4,28 @@ const Instructores = require('../models/Instructor');
 const { Op } = require('sequelize');
 
 
-// Controlador para crear fichas en la base de datos.
+// Función para crear una nueva ficha
 exports.nuevaFicha = async (req, res, next) => {
     try {
         // Crea la tabla fichas en la base de datos si no existe.
         await Fichas.sync({ force: false });
 
+        // Busca si ya existe una ficha con el número proporcionado en el cuerpo de la solicitud.
         const fichaExistente = await Fichas.findOne({
             where: {
                 numero_ficha: req.body.numero_ficha
             }
         });
 
+        // Verifica si ya existe una ficha con el número proporcionado.
         if (fichaExistente) {
+            // Si ya existe una ficha con el mismo número, devuelve un estado 500 con un mensaje de error.
             res.status(500).json({ mensaje: 'La ficha ya se encuentra registrada' });
         } else {
-            // Crea la ficha con los datos proporcionados desde el cuerpo del formulario.
+            // Si no existe una ficha con el mismo número, crea una nueva ficha con los datos proporcionados desde el cuerpo de la solicitud.
             const ficha = await Fichas.create(req.body);
 
-            // Actualizar el campo fichas_asignadas del instructor que está creando la ficha
+            // Actualiza el campo 'fichas_asignadas' del instructor que está creando la ficha.
             const instructor = await Instructores.findOne({
                 where: {
                     id_instructor: req.body.id_instructor
@@ -30,19 +33,22 @@ exports.nuevaFicha = async (req, res, next) => {
             });
 
             if (instructor) {
+                // Concatena el número de ficha a la lista de fichas asignadas al instructor.
                 let nuevasFichasAsignadas = instructor.fichas_asignadas || '';
                 nuevasFichasAsignadas += (nuevasFichasAsignadas ? ',' : '') + req.body.numero_ficha;
                 await instructor.update({ fichas_asignadas: nuevasFichasAsignadas });
             }
 
-            // Envíar un mensaje con los datos de la ficha que se ha creado.
+            // Envía un mensaje con los datos de la ficha que se ha creado.
             res.status(201).json({ mensaje: 'La ficha se ha registrado exitosamente', ficha });
         }
     } catch (error) {
+        // Si ocurre un error durante el proceso, devuelve un estado 500 con un mensaje de error.
         console.error(error);
         res.status(500).json({ mensaje: 'Hubo un error en la solicitud', error });
     }
 };
+
 
 // Controlador para crear fichas en la base de datos.
 exports.nuevaFichaAdmin = async (req, res, next) => {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import LogoSena from "./img/sena-verde.png";
 import "./css/SegumientoEP.css";
+import EvaluacionEp from "../EvaluacionEP/EvaluacionEp";
 
 function SeguimientoEp() {
   const [selected, setSelected] = useState(""); // Estado para almacenar la selección
@@ -395,6 +396,11 @@ function SeguimientoEp() {
           </tbody>
         </table>
       </div>
+      <div className="footer-box">
+        <footer className="footer-EP">GFPI-F-023 V04</footer>
+      </div>
+      {/* Cuarta sección */}
+      <EvaluacionEp />
     </div>
   );
 }

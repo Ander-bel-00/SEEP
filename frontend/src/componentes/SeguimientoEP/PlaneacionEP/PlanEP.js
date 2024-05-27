@@ -258,6 +258,7 @@ function PlanEP() {
       <div className="footer-box">
         <footer className="footer-EP">GFPI-F-023 V04</footer>
       </div>
+      {/* Tercera sección */}
       <SeguimientoEp />
     </div>
   );

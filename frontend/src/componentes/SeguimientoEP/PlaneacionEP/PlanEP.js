@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./css/PlaneacionEP.css";
 import PopupFirmas from "../Firmas/PopupFirmas";
 import Swal from "sweetalert2";
+import SeguimientoEp from "../SeguimientoEP/SeguimientoEp";
 
 function PlanEP() {
   const [campos, setCampos] = useState([
@@ -140,7 +141,11 @@ function PlanEP() {
                   <textarea required></textarea>
                   {index === campos.length - 1 && (
                     <div className="action-icons">
-                      <button onClick={agregarCampos} className="add-icon" title="Añadir fila">
+                      <button
+                        onClick={agregarCampos}
+                        className="add-icon"
+                        title="Añadir fila"
+                      >
                         +
                       </button>
                       <button
@@ -174,7 +179,10 @@ function PlanEP() {
                     <label>
                       <strong>Firma del Ente Conformador:</strong>
                     </label>
-                    <button onClick={() => handleAddFirma(0)} className={campos[0].firma ? '' : 'btn-add-firma'}>
+                    <button
+                      onClick={() => handleAddFirma(0)}
+                      className={campos[0].firma ? "" : "btn-add-firma"}
+                    >
                       {campos[0].firma ? (
                         <img
                           src={campos[0].firma}
@@ -190,7 +198,10 @@ function PlanEP() {
                     <label>
                       <strong>Firma del Aprendiz</strong>
                     </label>
-                    <button onClick={() => handleAddFirma(1)} className={campos[1].firma ? '' : 'btn-add-firma'}>
+                    <button
+                      onClick={() => handleAddFirma(1)}
+                      className={campos[1].firma ? "" : "btn-add-firma"}
+                    >
                       {campos[1].firma ? (
                         <img
                           src={campos[1].firma}
@@ -210,7 +221,10 @@ function PlanEP() {
                     <label>
                       <strong>Firma Instructor seguimiento</strong>
                     </label>
-                    <button onClick={() => handleAddFirma(2)} className={campos[2].firma ? '' : 'btn-add-firma'}>
+                    <button
+                      onClick={() => handleAddFirma(2)}
+                      className={campos[2].firma ? "" : "btn-add-firma"}
+                    >
                       {campos[2].firma ? (
                         <img
                           src={campos[2].firma}
@@ -241,6 +255,10 @@ function PlanEP() {
         }}
         firmas={firmas}
       />
+      <div className="footer-box">
+        <footer className="footer-EP">GFPI-F-023 V04</footer>
+      </div>
+      <SeguimientoEp />
     </div>
   );
 }

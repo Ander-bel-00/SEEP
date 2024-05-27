@@ -1,3 +1,4 @@
+// index.js
 const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars').create({
@@ -12,6 +13,8 @@ const cors = require('cors');
 const routes = require('./routes');
 const { sequelize, testConnection } = require('./config/database');
 
+// Importar los modelos desde el archivo centralizado
+const models = require('./models');
 
 const app = express();
 
@@ -39,15 +42,25 @@ app.engine('hbs', exphbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-
-
-
 // Rutas
 app.use('/', routes());
 
 const port = process.env.PORT || 5000;
 
-// Listening on port 5000
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
+// Sincronizar los modelos con la base de datos
+async function startServer() {
+    try {
+        await sequelize.sync({ force: false }); // Cambia a true si quieres que se eliminen y vuelvan a crearse las tablas en cada reinicio del servidor
+        console.log('Database synchronized');
+
+        // Escuchar en el puerto
+        app.listen(port, () => {
+            console.log(`Server running on port ${port}`);
+        });
+    } catch (error) {
+        console.error('Error starting server:', error);
+    }
+}
+
+// Iniciar el servidor
+startServer();

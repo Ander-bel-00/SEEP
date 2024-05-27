@@ -1,6 +1,6 @@
-// Event.js
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
+const Aprendiz = require('./Aprendices');
 
 const Visitas = sequelize.define('Visitas', {
     id_visita:{
@@ -34,7 +34,11 @@ const Visitas = sequelize.define('Visitas', {
     },
     aprendiz:{
         type: DataTypes.UUID,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: Aprendiz,
+            key: 'id_aprendiz'
+        }
     },
     documento_aprendiz: {
         type: DataTypes.INTEGER,

@@ -14,8 +14,8 @@ function InformacionGeneral() {
           className="info-general-content-box__logo-sena"
         />
         <h2 className="info-general-content-box__main-title">
-          PROCESO GESTIÓN DE FORMACIÓN PROFESIONAL INTEGRAL FORMATO PLANEACIÓN,
-          SEGUIMIENTO Y EVALUACIÓN ETAPA PRODUCTIVA
+          PROCESO GESTIÓN DE FORMACIÓN PROFESIONAL INTEGRAL <br />
+          FORMATO PLANEACIÓN, SEGUIMIENTO Y EVALUACIÓN ETAPA PRODUCTIVA
         </h2>
 
         <h3 className="mt-4">1. INFORMACIÓN GENERAL</h3>

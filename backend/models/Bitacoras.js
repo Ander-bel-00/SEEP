@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
+const Aprendiz = require('./Aprendices');
 
 const Bitacoras = sequelize.define('Bitacoras', {
     id_bitacora: {
@@ -17,7 +18,11 @@ const Bitacoras = sequelize.define('Bitacoras', {
     },
     id_aprendiz: {
         type: DataTypes.UUID,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: Aprendiz,
+            key: 'id_aprendiz'
+        }
     },
     numero_documento: {
         type: DataTypes.INTEGER,

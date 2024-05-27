@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
-
+const Aprendiz = require('./Aprendices');
 
 // Crear modelo de documentos para crear la tabla en la base de datos.
 
@@ -20,7 +20,11 @@ const Documentos = sequelize.define('Documentos', {
     },
     id_aprendiz: {
         type: DataTypes.UUID,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: Aprendiz,
+            key: 'id_aprendiz'
+        }
     },
     numero_documento: {
         type: DataTypes.INTEGER,

@@ -1,23 +1,21 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
-const Fichas = require('../models/Fichas');
 
-
-
-// Crear el modelo aprendiz con el que se creará la tabla con los campos necesarios.
+// Crear el modelo Instructor con los campos necesarios.
 const Instructor = sequelize.define('Instructores', {
-    id_instructor:{
+    id_instructor: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
     },
     numero_documento: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true,
+        unique: true, // Asegúrate de que el número de documento sea único
         validate: {
             len: {
-                args: [7,10],
-                msg: 'El número de documento debe ser de 7 a 10 dígitos'
+                args: [7, 10],
+                msg: 'El número de documento debe tener entre 7 y 10 dígitos'
             }
         }
     },
@@ -38,11 +36,11 @@ const Instructor = sequelize.define('Instructores', {
         allowNull: false,
     },
     numero_celular1: {
-        type: DataTypes.STRING,  
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             len: {
-                args: [10,10],
+                args: [10, 10],
                 msg: 'El número de celular debe tener 10 dígitos'
             }
         }
@@ -52,7 +50,7 @@ const Instructor = sequelize.define('Instructores', {
         allowNull: true,
         validate: {
             len: {
-                args: [10,10],
+                args: [10, 10],
                 msg: 'El número de celular debe tener 10 dígitos'
             }
         }
@@ -73,7 +71,7 @@ const Instructor = sequelize.define('Instructores', {
                 this.setDataValue('fichas_asignadas', '');
             }
         }
-    },    
+    },
     rol_usuario: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -90,11 +88,16 @@ const Instructor = sequelize.define('Instructores', {
             },
         }
     },
-
-},{
+}, {
     sequelize,
-    modelName: 'Instructores'
+    modelName: 'Instructores',
+    indexes: [
+        // Agregar un índice a la columna id_instructor
+        {
+            unique: true,
+            fields: ['id_instructor']
+        }
+    ]
 });
-
 
 module.exports = Instructor;

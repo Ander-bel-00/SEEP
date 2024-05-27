@@ -137,3 +137,11 @@
 .btn-add-firma:hover {
   background-color: #2d8a00;
 }
+
+.footer-box{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+

@@ -101,6 +101,10 @@ const Aprendiz = sequelize.define('Aprendices', {
     numero_ficha: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: Fichas,
+            key: 'numero_ficha'
+        }
     },
     programa_formacion: {
         type: DataTypes.STRING,
@@ -137,11 +141,15 @@ const Aprendiz = sequelize.define('Aprendices', {
 
 },{
     sequelize,
-    modelName: 'Aprendices'
+    modelName: 'Aprendices',
+    indexes: [
+        // Agregar un índice a la columna id_instructor
+        {
+            unique: true,
+            fields: ['id_aprendiz']
+        }
+    ]
 });
-
-
-
 
 // Exportar el modelo para permitir su uso.
 module.exports = Aprendiz;

@@ -16,7 +16,8 @@
 
 .info-general-content-box__main-title {
     text-align: center;
-    font-size: 25px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .info-general-table {

@@ -5,24 +5,6 @@ import PopupFirmas from "../Firmas/PopupFirmas";
 import { PDFViewer } from "@react-pdf/renderer"; // Importa PDFViewer
 import PDFDocument from "../DocumentoPDF/PDFDocument";
 function EvaluacionEp() {
-  const handleGenerarPDF = () => {
-    // Genera el PDF
-    const pdf = <PDFDocument />;
-  
-    // Convertir el PDF a Blob
-    const blob = new Blob([pdf], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-  
-    // Crear un enlace temporal y simular un clic para descargar el PDF
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "documento.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-  
-  
   const [selected, setSelected] = useState(""); // Estado para almacenar la selección
   const [reconoSelected, setReconoSelected] = useState("");
   const [firmas, setFirmas] = useState([]);
@@ -291,7 +273,7 @@ function EvaluacionEp() {
         <footer className="footer-EP">GFPI-F-023 V04</footer>
       </div>
       <div className="generar-pdf-btn-box">
-      <button className="btn-generar-pdf" onClick={handleGenerarPDF}>
+      <button className="btn-generar-pdf"  type="submit">
           Generar PDF
         </button>
         </div>

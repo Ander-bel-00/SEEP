@@ -35,6 +35,7 @@ function InformacionGeneral() {
   };
   return (
     <div className="main-container__contenedor-hijo">
+      <form>
       <div className="info-general-content-box">
         <img
           src={LogoSena}
@@ -175,6 +176,7 @@ function InformacionGeneral() {
       </div>
       {/* Segunda seccion */}
       <PlanEP />
+      </form>
     </div>
   );
 }

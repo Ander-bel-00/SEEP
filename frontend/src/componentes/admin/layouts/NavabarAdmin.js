@@ -119,4 +119,3 @@ const MenuItem = ({ title, icon, link, handleHover, handleHoverEnd, handleLogout
 };
 
 export default NavbarAdmin;
-

@@ -27,6 +27,7 @@ import AgendaContainer from "./componentes/agenda/AgendaContainer/AgendaContaine
 import InformacionGeneral from "./componentes/SeguimientoEP/InformacionGeneral/InformacionGeneral.js";
 import PlanEP from "./componentes/SeguimientoEP/PlaneacionEP/PlanEP.js";
 import { useAuth } from "./context/AuthContext.js";
+import PDFDocument from "./componentes/SeguimientoEP/DocumentoPDF/PDFDocument.js";
 
 
 function App() {
@@ -177,6 +178,7 @@ function App() {
                           </main>
                         }
                       />
+                      <Route path="/pdf" element={<PDFDocument />} />
 
 
                     </Routes>

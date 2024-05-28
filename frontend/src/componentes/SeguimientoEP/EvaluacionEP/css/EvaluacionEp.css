@@ -44,6 +44,13 @@
     justify-content: space-between;
 }
 
+.selectable-container-ep{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
 .selectable-box-evaluation {
     width: 50px;
     height: 20px;
@@ -70,4 +77,65 @@
 .evaluation-op_2{
     position: relative;
     right: 25%;
+}
+
+.reconocimientos-section{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.selectable-container-recono{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
+.selectable-box-recono{
+    width: 50px;
+    height: 20px;
+    border-bottom: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    right: 9%;
+    bottom: 3px;
+}
+
+.selected-recono {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.recono-op_1{
+    position: relative;
+    right: 15%;
+}
+
+.recono-op_2{
+    position: relative;
+    right: 25%;
+}
+
+.generar-pdf-btn-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 1.5rem;
+}
+
+.btn-generar-pdf{
+    background-color: #39a900;
+    color: #fff;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.btn-generar-pdf:hover{
+    background-color: #2d8a00;
 }

@@ -1,10 +1,38 @@
 import React, { useState } from "react";
 import "./css/infoGeneral.css";
 import LogoSena from "./img/sena-verde.png";
-import EvaluacionEp from "../EvaluacionEP/EvaluacionEp";
 import PlanEP from "../PlaneacionEP/PlanEP";
+import { Document, Page, View, Text, StyleSheet, Image } from "@react-pdf/renderer";
 
 function InformacionGeneral() {
+  const [informacionGeneralData, setInformacionGeneralData] = useState({
+    regional: "",
+    centroFormacion: "",
+    programaFormacion: "",
+    noFicha: "",
+    nombreAprendiz: "",
+    identificacionAprendiz: "",
+    telefonoAprendiz: "",
+    emailAprendiz: "",
+    alternativaSofiaPlus: "",
+    razonSocialEmpresa: "",
+    nitEmpresa: "",
+    direccionEmpresa: "",
+    nombreJefeInmediato: "",
+    cargoJefeInmediato: "",
+    telefonoJefeInmediato: "",
+    emailJefeInmediato: "",
+  });
+
+
+  const handleInputChange = (e, key) => {
+    //Se refiere al elemento html de donde vienen los valores(name y value)
+    const { name, value } = e.target; 
+    setInformacionGeneralData((prevData) => ({
+      ...prevData,
+      [key]: value,
+    }));
+  };
   return (
     <div className="main-container__contenedor-hijo">
       <div className="info-general-content-box">
@@ -18,18 +46,26 @@ function InformacionGeneral() {
           FORMATO PLANEACIÓN, SEGUIMIENTO Y EVALUACIÓN ETAPA PRODUCTIVA
         </h2>
 
-        <h3 className="mt-4">1. INFORMACIÓN GENERAL</h3>
+        <h3 className="mt-4 font-bold">1. INFORMACIÓN GENERAL</h3>
 
         <table className="info-general-table">
           <thead>
             <tr className="info-general-table_tr">
               <th className="info-general-table_th">Regional: </th>
               <td className="info-general-table_td">
-                <input type="text" required />
+              <input
+                  type="text"
+                  required
+                  onChange={(e) => handleInputChange(e, "regional")}
+                />
               </td>
               <th className="info-general-table_th">Centro de Formación: </th>
               <td className="info-general-table_td" colSpan={2}>
-                <input type="text" required />
+              <input
+                  type="text"
+                  required
+                  onChange={(e) => handleInputChange(e, "centroFormacion")}
+                />
               </td>
             </tr>
             <tr className="info-general-table_tr">

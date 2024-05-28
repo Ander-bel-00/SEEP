@@ -25,6 +25,10 @@
     padding: 8px;
 }
 
+.col_parcial{
+    width: 5rem;
+}
+
 .seguimientoEP-table__th p {
     margin: 0;
 }
@@ -48,11 +52,20 @@
     left: 0.5rem;
 }
 
+.seguimientoEP-table__td textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
 .selectable-container {
     display: flex;
     align-items: center;
     cursor: pointer;
     margin-bottom: 0.5rem;
+    width: 5rem;
+    height: 1rem;
 }
 
 .selectable-box {

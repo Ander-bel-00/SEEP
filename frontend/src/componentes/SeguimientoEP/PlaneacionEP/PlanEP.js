@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import SeguimientoEp from "../SeguimientoEP/SeguimientoEp";
 
 function PlanEP() {
+  
   const [campos, setCampos] = useState([
     { firma: null },
     { firma: null },
@@ -89,7 +90,7 @@ function PlanEP() {
           <thead>
             <tr className="planEP-table__tr">
               <td className="planEP-table__td" colSpan={6}>
-                <h3 className="text-center">2. PLANEACIÓN ETAPA PRODUCTIVA</h3>
+                <h3 className="text-center font-bold">2. PLANEACIÓN ETAPA PRODUCTIVA</h3>
               </td>
             </tr>
             <tr className="planEP-table__tr">

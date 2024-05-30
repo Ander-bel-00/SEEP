@@ -17,7 +17,7 @@ const Instructor = sequelize.define('Instructores', {
                 args: [7, 10],
                 msg: 'El número de documento debe tener entre 7 y 10 dígitos'
             }
-        }
+        },
     },
     tipo_documento: {
         type: DataTypes.STRING,
@@ -95,7 +95,7 @@ const Instructor = sequelize.define('Instructores', {
         // Agregar un índice a la columna id_instructor
         {
             unique: true,
-            fields: ['id_instructor']
+            fields: ['id_instructor', 'numero_documento']
         }
     ]
 });

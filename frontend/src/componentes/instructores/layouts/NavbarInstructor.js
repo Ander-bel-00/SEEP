@@ -101,13 +101,6 @@ const NavbarInstructor = ({ showNav, handleLogout, setShowNav }) => {
                 handleHoverEnd={handleHoverEnd}
               />
               <MenuItem
-                title="Planeación"
-                icon={<PiExamFill className="inline-block mr-1" />}
-                link={`evaluacion-EP/info-general`}
-                handleHover={handleHover}
-                handleHoverEnd={handleHoverEnd}
-              />
-              <MenuItem
                 title="Cerrar Sesión"
                 icon={<BiSolidLogOut className="inline-block mr-1" />}
                 handleHover={handleHover}
@@ -134,7 +127,6 @@ const NavbarInstructor = ({ showNav, handleLogout, setShowNav }) => {
               <li className="menu-options text-nowrap"><Link to={`${usuario.id_instructor}/bitacoras-instructor`}><FaFileExcel className="inline-block mr-1"/>Bitacoras</Link></li>
               <li className="menu-options"><Link to={`${usuario.id_instructor}/nuevaFicha`}><HiUserAdd className="inline-block mr-1"/>Registrar Fichas</Link></li>
               <li className="menu-options"><Link to={`${usuario.id_instructor}/aprendiz-add`}><TiUserAdd className="inline-block mr-1"/>Registrar Aprendices</Link></li>
-              <li className="menu-options"><Link to={`evaluacion-EP/info-general`}><PiExamFill className="inline-block mr-1"/>Planeacion</Link></li>
               <li className="menu-options text-nowrap"><Link to="/login" onClick={handleLogout}><BiSolidLogOut className="inline-block mr-1"/>
               Cerrar sesión</Link></li>
           </ul>

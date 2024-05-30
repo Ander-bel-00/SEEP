@@ -4,8 +4,7 @@ import PopupFirmas from "../Firmas/PopupFirmas";
 import Swal from "sweetalert2";
 import SeguimientoEp from "../SeguimientoEP/SeguimientoEp";
 
-function PlanEP() {
-  
+function PlanEP({ evaluacionAprendiz, setEvalaucionAprendiz }) {
   const [campos, setCampos] = useState([
     { firma: null },
     { firma: null },
@@ -21,6 +20,57 @@ function PlanEP() {
       setFirmas(JSON.parse(storedFirmas));
     }
   }, []);
+
+  const handleChange = (event, index) => {
+    const { name, value } = event.target;
+    // Copia el estado actual de 'campos'
+    const updatedCampos = [...campos];
+    // Actualiza el campo específico en la fila con el índice dado
+    updatedCampos[index] = { ...updatedCampos[index], [name]: value };
+    // Actualiza el estado de 'campos' con el nuevo valor
+    setCampos(updatedCampos);
+
+    // Actualiza el estado de 'evaluacionAprendiz' con los valores de todas las filas
+    const newEvalaucionAprendiz = {
+      ...evaluacionAprendiz,
+      actividades_desarrollar: updatedCampos.map(
+        (campo) => campo.actividades_desarrollar
+      ),
+      evidencias_aprendizaje: updatedCampos.map(
+        (campo) => campo.evidencias_aprendizaje
+      ),
+      fecha_actividad: updatedCampos.map((campo) => campo.fecha_actividad),
+      lugar_actividad: updatedCampos.map((campo) => campo.lugar_actividad),
+    };
+    setEvalaucionAprendiz(newEvalaucionAprendiz);
+  };
+
+  const handleObservacionesChange = (event) => {
+    const { value } = event.target;
+    // Actualizar el estado con las observaciones generales
+    setEvalaucionAprendiz((prevEvalaucionAprendiz) => ({
+      ...prevEvalaucionAprendiz,
+      observaciones_actividades: value,
+    }));
+  };
+
+  const handleNombreConformadorChange = (event) => {
+    const { value } = event.target;
+    // Actualizar el estado con el nombre del ente conformador
+    setEvalaucionAprendiz((prevEvalaucionAprendiz) => ({
+      ...prevEvalaucionAprendiz,
+      nombre_ente_conformador: value,
+    }));
+  };
+
+  const handleNombreInstructorChange = (event) => {
+    const { value } = event.target;
+    // Actualizar el estado con el nombre del instructor
+    setEvalaucionAprendiz((prevEvalaucionAprendiz) => ({
+      ...prevEvalaucionAprendiz,
+      nombre_instructor: value,
+    }));
+  };
 
   const agregarCampos = () => {
     setCampos([...campos, { id: campos.length, firma: null }]);
@@ -64,11 +114,31 @@ function PlanEP() {
     });
 
     if (currentFirmaField !== null) {
-      const updatedCampos = campos.map((campo, index) =>
-        index === currentFirmaField ? { ...campo, firma } : campo
-      );
+      const updatedCampos = campos.map((campo, index) => {
+        switch (currentFirmaField) {
+          case 0: // Firma del Ente Conformador
+            return index === currentFirmaField ? { ...campo, firma } : campo;
+          case 1: // Firma del Aprendiz
+            return index === currentFirmaField ? { ...campo, firma } : campo;
+          case 2: // Firma Instructor seguimiento
+            return index === currentFirmaField ? { ...campo, firma } : campo;
+          default:
+            return campo;
+        }
+      });
+
       setCampos(updatedCampos);
       setCurrentFirmaField(null);
+
+      // Actualizar el estado de evaluacionAprendiz con las firmas correspondientes
+      const newEvalaucionAprendiz = {
+        ...evaluacionAprendiz,
+        firma_ente_conformador: updatedCampos[0].firma,
+        firma_aprendiz: updatedCampos[1].firma,
+        firma_instructor_seguimiento: updatedCampos[2].firma,
+      };
+
+      setEvalaucionAprendiz(newEvalaucionAprendiz);
     }
   };
 
@@ -83,6 +153,8 @@ function PlanEP() {
     }
   };
 
+  console.log(evaluacionAprendiz);
+
   return (
     <div className="main-container__contenedor-hijo">
       <div className="plan-content-box">
@@ -90,7 +162,9 @@ function PlanEP() {
           <thead>
             <tr className="planEP-table__tr">
               <td className="planEP-table__td" colSpan={6}>
-                <h3 className="text-center font-bold">2. PLANEACIÓN ETAPA PRODUCTIVA</h3>
+                <h3 className="text-center font-bold">
+                  2. PLANEACIÓN ETAPA PRODUCTIVA
+                </h3>
               </td>
             </tr>
             <tr className="planEP-table__tr">
@@ -130,16 +204,37 @@ function PlanEP() {
                 }`}
               >
                 <td colSpan={3} className="planEP-table__td">
-                  <textarea required></textarea>
+                  <textarea
+                    required
+                    name="actividades_desarrollar"
+                    value={campo.actividades_desarrollar}
+                    onChange={(event) => handleChange(event, index)}
+                  />
                 </td>
                 <td className="planEP-table__td">
-                  <textarea required></textarea>
+                  <textarea
+                    required
+                    name="evidencias_aprendizaje"
+                    value={campo.evidencias_aprendizaje}
+                    onChange={(event) => handleChange(event, index)}
+                  />
                 </td>
                 <td className="planEP-table__td">
-                  <input type="date" required />
+                  <input
+                    type="date"
+                    required
+                    name="fecha_actividad"
+                    value={campo.fecha_actividad}
+                    onChange={(event) => handleChange(event, index)}
+                  />
                 </td>
                 <td className="planEP-table__td">
-                  <textarea required></textarea>
+                  <textarea
+                    required
+                    name="lugar_actividad"
+                    value={campo.lugar_actividad}
+                    onChange={(event) => handleChange(event, index)}
+                  />
                   {index === campos.length - 1 && (
                     <div className="action-icons">
                       <button
@@ -161,12 +256,16 @@ function PlanEP() {
                 </td>
               </tr>
             ))}
+
             <tr className="planEP-table__tr">
               <td className="planEP-table__td" colSpan={6}>
                 <label>
                   <strong>Observaciones: </strong>
                 </label>
-                <textarea></textarea>
+                <textarea
+                  name="observaciones_actividades"
+                  onChange={handleObservacionesChange}
+                ></textarea>
               </td>
             </tr>
             <tr className="planEP-table__tr">
@@ -176,11 +275,17 @@ function PlanEP() {
                     <label>
                       <strong>Nombre del Ente Conformador:</strong>
                     </label>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      name="nombre_ente_conformador"
+                      required
+                      onChange={handleNombreConformadorChange}
+                    />
                     <label>
                       <strong>Firma del Ente Conformador:</strong>
                     </label>
                     <button
+                      type="button"
                       onClick={() => handleAddFirma(0)}
                       className={campos[0].firma ? "" : "btn-add-firma"}
                     >
@@ -200,6 +305,7 @@ function PlanEP() {
                       <strong>Firma del Aprendiz</strong>
                     </label>
                     <button
+                      type="button"
                       onClick={() => handleAddFirma(1)}
                       className={campos[1].firma ? "" : "btn-add-firma"}
                     >
@@ -218,11 +324,17 @@ function PlanEP() {
                     <label>
                       <strong>Nombre Instructor seguimiento:</strong>
                     </label>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      required
+                      name="nombre_instructor"
+                      onChange={handleNombreInstructorChange}
+                    />
                     <label>
                       <strong>Firma Instructor seguimiento</strong>
                     </label>
                     <button
+                      type="button"
                       onClick={() => handleAddFirma(2)}
                       className={campos[2].firma ? "" : "btn-add-firma"}
                     >
@@ -260,7 +372,7 @@ function PlanEP() {
         <footer className="footer-EP">GFPI-F-023 V04</footer>
       </div>
       {/* Tercera sección */}
-      <SeguimientoEp />
+      <SeguimientoEp evaluacionAprendiz={evaluacionAprendiz} setEvalaucionAprendiz={setEvalaucionAprendiz} />
     </div>
   );
 }

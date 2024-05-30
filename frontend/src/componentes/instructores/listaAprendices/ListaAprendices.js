@@ -34,6 +34,8 @@ function ListaAprendices() {
                         aprendices.map(aprendiz => (
                             <li key={aprendiz.id_aprendiz} className='aprendices-fichas '>
                                 {aprendiz.nombres} {aprendiz.apellidos}
+                                <button><Link to={`/instructor/evaluacion-EP/${aprendiz.id_aprendiz}`} 
+                                className='agendarVisita'>Planeacion y Seguimiento</Link></button>
                                 <button><Link to={`/instructor/visitas-add/${numero_ficha}/${aprendiz.id_aprendiz}`} 
                                 className='agendarVisita'>Ver o agendar visitas</Link></button>
                             </li>

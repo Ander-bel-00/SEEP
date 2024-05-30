@@ -9,6 +9,8 @@ const FichasController = require('../controllers/FichasController');
 const VisitasController = require('../controllers/VisitasController');
 const DocumentsController = require('../controllers/DocumentsController');
 const BitacorasController = require('../controllers/BitacorasController');
+const EvaluacionController = require('../controllers/EvaluacionController');
+const EmpresaController = require('../controllers/EmpresaController');
 
 
 module.exports = function () {
@@ -36,6 +38,7 @@ module.exports = function () {
 
     // Reistrar Fichas.
     router.post('/fichas-add', authRequired, FichasController.nuevaFicha);
+    router.post('/fichas/instructor/add', authRequired, FichasController.instructorFicha);
     router.post('/fichas-Admin-new', authRequired, FichasController.nuevaFichaAdmin);
     // Mostrar todas las Fichas registradas en la base de datos.
     router.get('/fichas-getAll', authRequired,FichasController.mostrarFichas);
@@ -43,17 +46,20 @@ module.exports = function () {
     router.get('/fichas-get/:numero_ficha', authRequired, FichasController.MostrarPorNumeroFicha);
     // Mostrar todos los aprendices asociados a una ficha.
     router.get('/fichas-getAprendices/:numero_ficha', authRequired, FichasController.aprendicesPorNumeroFicha);
+    // Mostrar datos de ficha de un aprendiz.
+    router.get('/ficha-aprendiz/ficha/:numero_ficha', authRequired, FichasController.OneAprendizFicha);
     // Actualizar Ficha por su número de ficha.
     router.put('/fichas-update/:numero_ficha', authRequired, FichasController.actualizarFicha);
     // Eliminar una Ficha por su número de ficha.
     router.delete('/fichas-delete/:numero_ficha', authRequired, FichasController.eliminarFicha);
 
     // Aprendices
-    router.post('/aprendices-add', authRequired, AprendizController.nuevoAprendiz);
+    router.post('/aprendices-add',  AprendizController.nuevoAprendiz);
     router.get('/aprendices', authRequired,AprendizController.mostrarAprendices);
-    router.get('/aprendices/:numero_documento', authRequired, authRequired,AprendizController.mostrarAprendizByDocument);
-    router.put('/aprendices/:numero_documento', authRequired, authRequired,AprendizController.actualizarAprendiz);
-    router.delete('/aprendices/:numero_documento', authRequired, authRequired,AprendizController.eliminarAprendiz);
+    router.get('/aprendices/:numero_documento', authRequired, AprendizController.mostrarAprendizByDocument);
+    router.get('/aprendiz/id/:id_aprendiz', AprendizController.AprendizPorID);
+    router.put('/aprendices/:numero_documento', authRequired, AprendizController.actualizarAprendiz);
+    router.delete('/aprendices/:numero_documento', authRequired, AprendizController.eliminarAprendiz);
 
     // Rutas para el instructor.
     router.post('/instructores-add', authRequired, InstructorController.nuevoInstructor);
@@ -97,5 +103,12 @@ module.exports = function () {
     router.put('/aprobar-bitacora/:idBitacora', authRequired, BitacorasController.aprobarBitacora);
     router.delete('/bitacoras-delete/:id_bitacora', authRequired, BitacorasController.eliminarBitacora);
 
+    // Rutas para evaluación de etapa productiva.
+    router.post('/evaluacion-ep-aprendiz/:id_aprendiz', EvaluacionController.cargarPlaneacionAprendiz);
+
+
+    // Rutas para las empresas.
+    router.post('/empresas/add', authRequired, EmpresaController.nuevaEmpresa);
+    router.get('/empresas/get/:id_empresa', EmpresaController.obtenerDatosEmpresa);
     return router;
 };

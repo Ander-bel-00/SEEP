@@ -139,3 +139,8 @@
 .btn-generar-pdf:hover{
     background-color: #2d8a00;
 }
+
+.input-check{
+    height: 1rem;
+    background-color: lightgray;
+}

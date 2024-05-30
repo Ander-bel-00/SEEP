@@ -1,13 +1,23 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
 const Fichas = require('../models/Fichas');
-
+const Empresa = require('../models/Empresa');
 
 // Crear el modelo aprendiz con el que se creará la tabla con los campos necesarios.
 const Aprendiz = sequelize.define('Aprendices', {
     id_aprendiz:{
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+    },
+    id_empresa: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+            model: Empresa,
+            key: 'id_empresa',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
     },
     numero_documento: {
         type: DataTypes.INTEGER,
@@ -18,7 +28,7 @@ const Aprendiz = sequelize.define('Aprendices', {
                 args: [7,10],
                 msg: 'El número de documento debe ser de 7 a 10 dígitos'
             }
-        }
+        },
     },
     tipo_documento: {
         type: DataTypes.STRING,
@@ -94,9 +104,9 @@ const Aprendiz = sequelize.define('Aprendices', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    correo_electronico2: {
+    correo_electronico_sofia_plus: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     numero_ficha: {
         type: DataTypes.INTEGER,
@@ -143,10 +153,10 @@ const Aprendiz = sequelize.define('Aprendices', {
     sequelize,
     modelName: 'Aprendices',
     indexes: [
-        // Agregar un índice a la columna id_instructor
+        // Agregar un índice a la columna id_aprendiz
         {
             unique: true,
-            fields: ['id_aprendiz']
+            fields: ['id_aprendiz', 'numero_documento']
         }
     ]
 });

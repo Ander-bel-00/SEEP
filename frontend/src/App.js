@@ -27,7 +27,6 @@ import AgendaContainer from "./componentes/agenda/AgendaContainer/AgendaContaine
 import InformacionGeneral from "./componentes/SeguimientoEP/InformacionGeneral/InformacionGeneral.js";
 import PlanEP from "./componentes/SeguimientoEP/PlaneacionEP/PlanEP.js";
 import { useAuth } from "./context/AuthContext.js";
-import PDFDocument from "./componentes/SeguimientoEP/DocumentoPDF/PDFDocument.js";
 
 
 function App() {
@@ -162,25 +161,13 @@ function App() {
                       />
 
                       <Route 
-                        path="evaluacion-EP/info-general"
+                        path="evaluacion-EP/:id_aprendiz"
                         element={
                           <main className="main-container">
                             <InformacionGeneral />
                           </main>
                         }
                       />
-
-                      <Route 
-                        path="/planeacion-ep"
-                        element={
-                          <main className="main-container">
-                            <PlanEP />
-                          </main>
-                        }
-                      />
-                      <Route path="/pdf" element={<PDFDocument />} />
-
-
                     </Routes>
                 </Fragment>
               </ProtectedRoute>

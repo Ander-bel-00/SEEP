@@ -1,10 +1,5 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
-const Instructor = require('../models/Instructor');
-
-
-
-// Crear modelo de fichas para crear la tabla en la base de datos.
 
 const Fichas = sequelize.define('Fichas', {
     id_ficha: {
@@ -24,9 +19,20 @@ const Fichas = sequelize.define('Fichas', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    
     titulo_obtenido: {
         type: DataTypes.STRING,
+        allowNull: false,
+    },
+    nombre_regional: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    centro_formacion: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    fecha_inicio_lectiva: {
+        type: DataTypes.DATE,
         allowNull: false,
     },
     fecha_fin_lectiva: {
@@ -37,16 +43,13 @@ const Fichas = sequelize.define('Fichas', {
         type: DataTypes.UUID,
         allowNull: true,
         references: {
-            model: Instructor,
-            key: 'id_instructor'
-        }
+            model: 'Instructores', // Nombre de la tabla en la base de datos
+            key: 'id_instructor',
+        },
     },
-
-},{
+}, {
     sequelize,
     modelName: 'Fichas'
 });
-
-
 
 module.exports = Fichas;

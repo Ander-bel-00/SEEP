@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./css/EvaluacionEp.css";
 import LogoSena from "./img/sena-verde.png";
 import PopupFirmas from "../Firmas/PopupFirmas";
-import { PDFViewer } from "@react-pdf/renderer"; // Importa PDFViewer
-import PDFDocument from "../DocumentoPDF/PDFDocument";
+
 function EvaluacionEp() {
   const [selected, setSelected] = useState(""); // Estado para almacenar la selección
   const [reconoSelected, setReconoSelected] = useState("");
@@ -107,7 +106,15 @@ function EvaluacionEp() {
                         selected === "APROBADO" ? "selected-evaluation" : ""
                       }`}
                     >
-                      {selected === "APROBADO" ? "X" : ""}
+                      {selected && selected === "APROBADO" ? (
+                        <input
+                          type="text"
+                          value={selected === "APROBADO" ? "X" : ""}
+                          readOnly
+                          className="w-4 input-check"
+                          name=""
+                        />
+                      ) : null}
                     </div>
                     <p className="relative top-1">
                       <strong>APROBADO</strong>
@@ -122,7 +129,17 @@ function EvaluacionEp() {
                         selected === "NO APROBADO" ? "selected-evaluation" : ""
                       }`}
                     >
-                      {selected === "NO APROBADO" ? "X" : ""}
+                     {selected && selected === "NO APROBADO" ? (
+                       <input
+                       type="text"
+                       readOnly
+                       value={selected === "NO APROBADO" ? "X" : ""}
+                       className="w-4 input-check"
+                       name=""
+                     />
+                     ): (
+                      null
+                     )}
                     </div>
                     <p className="relative top-1">
                       <strong>NO APROBADO</strong>
@@ -171,7 +188,7 @@ function EvaluacionEp() {
               </td>
             </tr>
             <tr className="Evaluacion-EP__table__tr">
-              <td className="Evaluacion-EP__table__td">
+              <td className="planEP-table__td" colSpan={6}>
                 <div className="td__firmas_inputs">
                   <div>
                     <label>
@@ -182,6 +199,7 @@ function EvaluacionEp() {
                       <strong>Firma del Ente Conformador:</strong>
                     </label>
                     <button
+                      type="button"
                       onClick={() => handleAddFirma(0)}
                       className={campos[0].firma ? "" : "btn-add-firma"}
                     >
@@ -195,23 +213,13 @@ function EvaluacionEp() {
                         "Añadir Firma"
                       )}
                     </button>
-                    <div className="elaboracion-box">
-                      <label>
-                        <strong>Ciudad y fecha de elaboración:</strong>
-                      </label>
-                      <input
-                        type="text"
-                        className="border-b-2"
-                        placeholder="Ciudad"
-                      />
-                      <input type="date" className="border-b-2" />
-                    </div>
                   </div>
                   <div>
                     <label>
                       <strong>Firma del Aprendiz</strong>
                     </label>
                     <button
+                      type="button"
                       onClick={() => handleAddFirma(1)}
                       className={campos[1].firma ? "" : "btn-add-firma"}
                     >
@@ -235,6 +243,7 @@ function EvaluacionEp() {
                       <strong>Firma Instructor seguimiento</strong>
                     </label>
                     <button
+                      type="button"
                       onClick={() => handleAddFirma(2)}
                       className={campos[2].firma ? "" : "btn-add-firma"}
                     >
@@ -254,7 +263,6 @@ function EvaluacionEp() {
             </tr>
           </thead>
         </table>
-
       </div>
       <PopupFirmas
         show={showPopup}
@@ -273,10 +281,10 @@ function EvaluacionEp() {
         <footer className="footer-EP">GFPI-F-023 V04</footer>
       </div>
       <div className="generar-pdf-btn-box">
-      <button className="btn-generar-pdf"  type="submit">
+        <button className="btn-generar-pdf" type="submit">
           Generar PDF
         </button>
-        </div>
+      </div>
     </div>
   );
 }

@@ -164,6 +164,30 @@ exports.mostrarAprendizByDocument = async (req, res) => {
     }
 };
 
+// Obtener un aprendiz almacenado en la base de datos por medio de su ID.
+exports.AprendizPorID = async (req, res) => {
+    try{
+        // Obtener el ID enviado en la cabecera de la solicitud.
+        const id_aprendiz = req.params.id_aprendiz;
+        
+        // Comparar si el ID enviado es igual al almacenado en la base de datos.
+        const aprendiz = await Aprendices.findOne({
+            where: {
+                id_aprendiz: id_aprendiz
+            }
+        });
+        // En caso de no encontrar el aprendiz envía un mensaje de error al usuario.
+        if(!aprendiz){
+            return res.status(404).json({ mensaje: 'No se ha encontrado ese aprendiz',aprendiz });
+        }
+        // Si encuentra el aprendiz lo muestra en un JSON.
+        res.json(aprendiz);
+    }catch(error){
+        // En caso de error envía un mensaje y los detalles del error al usuario.
+        res.status(500).json(error);
+    }
+};
+
 // Actualizar los datos de un aprendiz registrado en la base de datos.
 exports.actualizarAprendiz = async (req, res, next) => {
     try{

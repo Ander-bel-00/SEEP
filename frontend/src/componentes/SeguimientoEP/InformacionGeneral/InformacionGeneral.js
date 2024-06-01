@@ -41,7 +41,7 @@ function InformacionGeneral() {
   return (
     <div className="main-container__contenedor-hijo">
       <form>
-        <div className="info-general-content-box">
+        <div className="info-general-content-box" id="infoGeneral">
           <img
             src={LogoSena}
             alt="logo-sena"

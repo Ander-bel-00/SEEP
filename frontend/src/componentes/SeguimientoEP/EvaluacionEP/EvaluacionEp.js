@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./css/EvaluacionEp.css";
 import LogoSena from "./img/sena-verde.png";
 import PopupFirmas from "../Firmas/PopupFirmas";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 function EvaluacionEp() {
   const [selected, setSelected] = useState(""); // Estado para almacenar la selección
@@ -9,6 +11,7 @@ function EvaluacionEp() {
   const [firmas, setFirmas] = useState([]);
   const [currentFirmaField, setCurrentFirmaField] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [loading, setLoading] = useState(false); // Estado para controlar la carga
 
   const handleSelection = (type) => {
     setSelected(type);
@@ -73,9 +76,41 @@ function EvaluacionEp() {
       setShowPopup(false);
     }
   };
+
+  const generarPDF = async () => {
+    setLoading(true); // Iniciar la carga
+    const infoGeneral = document.getElementById("infoGeneral");
+    const planEP = document.getElementById("planEP");
+    const seguimientoEP = document.getElementById("seguimientoEP");
+    const evaluacionEP = document.getElementById("evaluacionEP");
+
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    const canvasInfoGeneral = await html2canvas(infoGeneral, { scale: 3 }); // Incrementar escala para mejorar calidad
+    const imgDataInfoGeneral = canvasInfoGeneral.toDataURL("image/png");
+    pdf.addImage(imgDataInfoGeneral, "PNG", 10, 10, 190, 0);
+
+    const canvasPlanEP = await html2canvas(planEP, { scale: 3 });
+    const imgDataPlanEP = canvasPlanEP.toDataURL("image/png");
+    pdf.addImage(imgDataPlanEP, "PNG", 10, pdf.lastAutoTable ? pdf.lastAutoTable.finalY + 30 : 100, 190, 0);
+
+    pdf.addPage();
+    const canvasSeguimientoEP = await html2canvas(seguimientoEP, { scale: 3 });
+    const imgDataSeguimientoEP = canvasSeguimientoEP.toDataURL("image/png");
+    pdf.addImage(imgDataSeguimientoEP, "PNG", 10, 10, 190, 0);
+
+    pdf.addPage();
+    const canvasEvaluacionEP = await html2canvas(evaluacionEP, { scale: 3 });
+    const imgDataEvaluacionEP = canvasEvaluacionEP.toDataURL("image/png");
+    pdf.addImage(imgDataEvaluacionEP, "PNG", 10, 10, 190, 0);
+
+    pdf.save("formulario.pdf");
+    setLoading(false); // Terminar la carga
+  };
+
   return (
     <div className="main-container__contenedor-hijo">
-      <div className="info-evaluacion-content-box">
+      <div className="info-evaluacion-content-box" id="evaluacionEP">
         <img
           src={LogoSena}
           alt="logo-sena"
@@ -129,17 +164,15 @@ function EvaluacionEp() {
                         selected === "NO APROBADO" ? "selected-evaluation" : ""
                       }`}
                     >
-                     {selected && selected === "NO APROBADO" ? (
-                       <input
-                       type="text"
-                       readOnly
-                       value={selected === "NO APROBADO" ? "X" : ""}
-                       className="w-4 input-check"
-                       name=""
-                     />
-                     ): (
-                      null
-                     )}
+                      {selected && selected === "NO APROBADO" ? (
+                        <input
+                          type="text"
+                          readOnly
+                          value={selected === "NO APROBADO" ? "X" : ""}
+                          className="w-4 input-check"
+                          name=""
+                        />
+                      ) : null}
                     </div>
                     <p className="relative top-1">
                       <strong>NO APROBADO</strong>
@@ -281,8 +314,14 @@ function EvaluacionEp() {
         <footer className="footer-EP">GFPI-F-023 V04</footer>
       </div>
       <div className="generar-pdf-btn-box">
-        <button className="btn-generar-pdf" type="submit">
-          Generar PDF
+        <button className="btn-generar-pdf" type="button" onClick={generarPDF} disabled={loading}>
+          {loading ? (
+            <div className="loading-spinner">
+              <span className="spinner"></span> Generando PDF...
+            </div>
+          ) : (
+            "Generar PDF"
+          )}
         </button>
       </div>
     </div>

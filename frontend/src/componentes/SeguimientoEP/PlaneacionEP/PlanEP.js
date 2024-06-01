@@ -157,7 +157,7 @@ function PlanEP({ evaluacionAprendiz, setEvalaucionAprendiz }) {
 
   return (
     <div className="main-container__contenedor-hijo">
-      <div className="plan-content-box">
+      <div className="plan-content-box" id="planEP">
         <table className="planEP-table">
           <thead>
             <tr className="planEP-table__tr">
@@ -368,7 +368,7 @@ function PlanEP({ evaluacionAprendiz, setEvalaucionAprendiz }) {
         }}
         firmas={firmas}
       />
-      <div className="footer-box">
+      <div className="footer-box footer">
         <footer className="footer-EP">GFPI-F-023 V04</footer>
       </div>
       {/* Tercera sección */}

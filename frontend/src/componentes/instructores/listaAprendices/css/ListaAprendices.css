@@ -3,10 +3,11 @@
     padding-top: 20px;
 }
 .lista-aprendices {
+    text-wrap: nowrap;
     list-style: none;
     padding: 0;
-    margin: 20px auto;
-    max-width: 600px;
+    margin: 25px auto;
+    max-width: 630px;
     background-color: #f1EEEE;
     box-shadow: 0 0 8px rgba(0.1, 0.1, 0.1, 0.2);
     padding: 6px;

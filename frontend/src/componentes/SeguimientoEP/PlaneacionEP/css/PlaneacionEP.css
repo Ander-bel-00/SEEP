@@ -146,4 +146,9 @@
   position: relative;
   top: 1rem;
 }
+/* EvaluacionEp.css */
+#planEP {
+  margin-top: 20px; /* Ajusta este valor según sea necesario */
+}
+
 

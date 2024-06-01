@@ -12,7 +12,7 @@ function SeguimientoEp() {
 
   return (
     <div className="main-container__contenedor-hijo">
-      <div className="segumiento-table-box">
+      <div className="segumiento-table-box" id="seguimientoEP">
         <img
           src={LogoSena}
           alt="logo-sena"
@@ -22,7 +22,9 @@ function SeguimientoEp() {
           <thead>
             <tr className="seguimientoEP-table__tr">
               <td colSpan={6} className="seguimientoEP-table__td">
-                <h3 className="text-center font-bold">3. SEGUIMIENTO ETAPA PRODUCTIVA</h3>
+                <h3 className="text-center font-bold">
+                  3. SEGUIMIENTO ETAPA PRODUCTIVA
+                </h3>
               </td>
             </tr>
             <tr className="seguimientoEP-table__tr">
@@ -40,7 +42,14 @@ function SeguimientoEp() {
                       selected === "Parcial" ? "selected-box" : ""
                     }`}
                   >
-                    {selected === "Parcial" ? "X" : ""}
+                    {selected && selected === "Parcial" ? (
+                      <input
+                        type="text"
+                        value={selected === "Parcial" ? "X" : ""}
+                        className="input-check-seguimineto"
+                        readOnly
+                      />
+                    ) : null}
                   </div>
                 </div>
               </td>
@@ -65,7 +74,14 @@ function SeguimientoEp() {
                       selected === "Final" ? "selected-box" : ""
                     }`}
                   >
-                    {selected === "Final" ? "X" : ""}
+                     {selected && selected === "Final" ? (
+                      <input
+                        type="text"
+                        value={selected === "Final" ? "X" : ""}
+                        className="input-check-seguimineto"
+                        readOnly
+                      />
+                    ) : null}
                   </div>
                 </div>
               </td>

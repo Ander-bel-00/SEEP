@@ -1,146 +1,169 @@
-.info-evaluacion-content-box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 8px;
+.info-evaluacion-content-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 8px;
 }
 
-.Evaluacion-EP__table{
-    width: 93%;
-    border-collapse: collapse;
+.Evaluacion-EP__table {
+  width: 93%;
+  border-collapse: collapse;
 }
 
-.Evaluacion-EP__table__tr{
-    border: 1px solid #000;
-    padding: 8px;
-    text-align: left;
-    position: relative;
+.Evaluacion-EP__table__tr {
+  border: 1px solid #000;
+  padding: 8px;
+  text-align: left;
+  position: relative;
 }
 
-.Evaluacion-EP__table__th{
-    background-color: #dfdede;
-    border: 1px solid #000;
-    text-align: left;
-    padding: 8px;
+.Evaluacion-EP__table__th {
+  background-color: #dfdede;
+  border: 1px solid #000;
+  text-align: left;
+  padding: 8px;
 }
 
-.Evaluacion-EP__table__td{
-    text-align: left;
-    border: 1px solid #000;
-    padding: 8px;
+.Evaluacion-EP__table__td {
+  text-align: left;
+  border: 1px solid #000;
+  padding: 8px;
 }
 
 .info-evaluacion-content-box__logo-sena {
-    width: 5rem;
-    height: 5;
-    position: relative;
-    top: 1rem;
-    margin-bottom: 2rem;
+  width: 5rem;
+  height: 5;
+  position: relative;
+  top: 1rem;
+  margin-bottom: 2rem;
 }
 
-.evaluation-td-options{
-    display: flex;
-    justify-content: space-between;
+.evaluation-td-options {
+  display: flex;
+  justify-content: space-between;
 }
 
-.selectable-container-ep{
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    margin-bottom: 0.5rem;
+.selectable-container-ep {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
 }
 
 .selectable-box-evaluation {
-    width: 50px;
-    height: 20px;
-    border: 1px solid #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 10px;
-    margin-right: 10px;
-    position: relative;
-    bottom: 3px;
+  width: 50px;
+  height: 20px;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  position: relative;
+  bottom: 3px;
 }
 
 .selected-evaluation {
-    background-color: lightgray;
-    font-weight: bold;
+  background-color: lightgray;
+  font-weight: bold;
 }
 
-.evaluation-op_1{
-    position: relative;
-    right: 15%;
+.evaluation-op_1 {
+  position: relative;
+  right: 15%;
 }
 
-.evaluation-op_2{
-    position: relative;
-    right: 25%;
+.evaluation-op_2 {
+  position: relative;
+  right: 25%;
 }
 
-.reconocimientos-section{
-    display: flex;
-    justify-content: space-between;
+.reconocimientos-section {
+  display: flex;
+  justify-content: space-between;
 }
 
-
-.selectable-container-recono{
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    margin-bottom: 0.5rem;
+.selectable-container-recono {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
 }
 
-.selectable-box-recono{
-    width: 50px;
-    height: 20px;
-    border-bottom: 2px solid #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 10px;
-    margin-right: 10px;
-    position: relative;
-    right: 9%;
-    bottom: 3px;
+.selectable-box-recono {
+  width: 50px;
+  height: 20px;
+  border-bottom: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  position: relative;
+  right: 9%;
+  bottom: 3px;
 }
 
 .selected-recono {
-    font-weight: bold;
-    font-size: 20px;
+  font-weight: bold;
+  font-size: 20px;
 }
 
-.recono-op_1{
-    position: relative;
-    right: 15%;
+.recono-op_1 {
+  position: relative;
+  right: 15%;
 }
 
-.recono-op_2{
-    position: relative;
-    right: 25%;
+.recono-op_2 {
+  position: relative;
+  right: 25%;
 }
 
-.generar-pdf-btn-box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    top: 1.5rem;
+.generar-pdf-btn-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 1.5rem;
 }
 
-.btn-generar-pdf{
-    background-color: #39a900;
-    color: #fff;
-    padding: 8px;
-    border-radius: 8px;
+.btn-generar-pdf {
+  background-color: #39a900;
+  color: #fff;
+  padding: 8px;
+  border-radius: 8px;
 }
 
-.btn-generar-pdf:hover{
-    background-color: #2d8a00;
+.btn-generar-pdf:hover {
+  background-color: #2d8a00;
 }
 
-.input-check{
-    height: 1rem;
-    background-color: lightgray;
+.input-check {
+  height: 1rem;
+  background-color: lightgray;
+}
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 2s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

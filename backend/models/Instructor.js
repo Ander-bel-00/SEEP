@@ -80,13 +80,11 @@ const Instructor = sequelize.define('Instructores', {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            // Función de validación personalizada para la contraseña
-            validarContrasena(value) {
-                if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}/.test(value)) {
-                    throw new Error('La contraseña debe tener al menos 8 caracteres, incluir al menos una mayúscula, una minúscula, un carácter especial y cinco números.');
-                }
-            },
-        }
+            len: {
+                args: [8, 10],
+                msg: "La contraseña debe ser de 8 a 10 dígitos"
+            }
+        },
     },
 }, {
     sequelize,

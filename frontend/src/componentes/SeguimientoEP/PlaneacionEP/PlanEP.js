@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./css/PlaneacionEP.css";
 import PopupFirmas from "../Firmas/PopupFirmas";
 import Swal from "sweetalert2";
-import SeguimientoEp from "../SeguimientoEP/SeguimientoEp";
 
 function PlanEP({ evaluacionAprendiz, setEvalaucionAprendiz }) {
   const [campos, setCampos] = useState([
@@ -112,7 +111,7 @@ function PlanEP({ evaluacionAprendiz, setEvalaucionAprendiz }) {
       localStorage.setItem("firmas", JSON.stringify(newFirmas));
       return newFirmas;
     });
-
+  
     if (currentFirmaField !== null) {
       const updatedCampos = campos.map((campo, index) => {
         switch (currentFirmaField) {
@@ -126,10 +125,11 @@ function PlanEP({ evaluacionAprendiz, setEvalaucionAprendiz }) {
             return campo;
         }
       });
-
+  
       setCampos(updatedCampos);
+      setFirmas(updatedCampos);
       setCurrentFirmaField(null);
-
+  
       // Actualizar el estado de evaluacionAprendiz con las firmas correspondientes
       const newEvalaucionAprendiz = {
         ...evaluacionAprendiz,
@@ -137,10 +137,14 @@ function PlanEP({ evaluacionAprendiz, setEvalaucionAprendiz }) {
         firma_aprendiz: updatedCampos[1].firma,
         firma_instructor_seguimiento: updatedCampos[2].firma,
       };
-
+  
+      // También actualiza el estado de evaluacionAprendiz con las firmas
+      // Debes asegurarte de tener las claves correctas aquí para las firmas.
+      // Por ejemplo, firma_ente_conformador, firma_aprendiz, firma_instructor_seguimiento, etc.
       setEvalaucionAprendiz(newEvalaucionAprendiz);
     }
   };
+  
 
   const handleSelectFirma = (firma) => {
     if (currentFirmaField !== null) {
@@ -149,9 +153,22 @@ function PlanEP({ evaluacionAprendiz, setEvalaucionAprendiz }) {
       );
       setCampos(updatedCampos);
       setCurrentFirmaField(null);
-      setShowPopup(false);
+  
+      // Actualizar el estado de evaluacionAprendiz con las firmas correspondientes
+      const newEvalaucionAprendiz = {
+        ...evaluacionAprendiz,
+        firma_ente_conformador: updatedCampos[0].firma,
+        firma_aprendiz: updatedCampos[1].firma,
+        firma_instructor_seguimiento: updatedCampos[2].firma,
+      };
+  
+      // También actualiza el estado de evaluacionAprendiz con las firmas
+      // Debes asegurarte de tener las claves correctas aquí para las firmas.
+      // Por ejemplo, firma_ente_conformador, firma_aprendiz, firma_instructor_seguimiento, etc.
+      setEvalaucionAprendiz(newEvalaucionAprendiz);
     }
   };
+  
 
   console.log(evaluacionAprendiz);
 
@@ -371,8 +388,6 @@ function PlanEP({ evaluacionAprendiz, setEvalaucionAprendiz }) {
       <div className="footer-box footer">
         <footer className="footer-EP">GFPI-F-023 V04</footer>
       </div>
-      {/* Tercera sección */}
-      <SeguimientoEp evaluacionAprendiz={evaluacionAprendiz} setEvalaucionAprendiz={setEvalaucionAprendiz} />
     </div>
   );
 }

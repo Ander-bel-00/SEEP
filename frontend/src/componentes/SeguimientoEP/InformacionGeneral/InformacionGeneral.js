@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./css/infoGeneral.css";
 import LogoSena from "./img/sena-verde.png";
-import PlanEP from "../PlaneacionEP/PlanEP";
 import { useParams } from "react-router-dom";
 import clienteAxios from "../../../api/axios";
 
-function InformacionGeneral() {
+function InformacionGeneral({ evaluacionAprendiz, setEvalaucionAprendiz }) {
   const { id_aprendiz } = useParams();
-  const [evaluacionAprendiz, setEvalaucionAprendiz] = useState({
-    id_aprendiz: id_aprendiz,
-  });
-
   const [aprendizInfo, setAprendizInfo] = useState([]);
   const [fichaAprendizInfo, setFichaAprendizInfo] = useState([]);
   const [empresaInfo, setEmpresaInfo] = useState([]);
@@ -247,8 +242,6 @@ function InformacionGeneral() {
             </tbody>
           </table>
         </div>
-        {/* Segunda seccion */}
-        <PlanEP evaluacionAprendiz={evaluacionAprendiz} setEvalaucionAprendiz={setEvalaucionAprendiz}/>
       </form>
     </div>
   );

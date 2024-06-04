@@ -37,7 +37,7 @@ module.exports = function () {
     router.post('/admin-add', authRequired, AdminController.nuevoAdmin);
 
     // Reistrar Fichas.
-    router.post('/fichas-add', authRequired, FichasController.nuevaFicha);
+    router.post('/fichas-add',  FichasController.nuevaFicha);
     router.post('/fichas/instructor/add', authRequired, FichasController.instructorFicha);
     router.post('/fichas-Admin-new', authRequired, FichasController.nuevaFichaAdmin);
     // Mostrar todas las Fichas registradas en la base de datos.
@@ -60,6 +60,7 @@ module.exports = function () {
     router.get('/aprendiz/id/:id_aprendiz', AprendizController.AprendizPorID);
     router.put('/aprendices/:numero_documento', authRequired, AprendizController.actualizarAprendiz);
     router.delete('/aprendices/:numero_documento', authRequired, AprendizController.eliminarAprendiz);
+    router.put('/aprendiz/:id_aprendiz/nuevaContrasena', AprendizController.aprendizContrasena);
 
     // Rutas para el instructor.
     router.post('/instructores-add', authRequired, InstructorController.nuevoInstructor);
@@ -108,7 +109,7 @@ module.exports = function () {
 
 
     // Rutas para las empresas.
-    router.post('/empresas/add', authRequired, EmpresaController.nuevaEmpresa);
+    router.post('/empresas/add/:id_aprendiz',  EmpresaController.nuevaEmpresa);
     router.get('/empresas/get/:id_empresa', EmpresaController.obtenerDatosEmpresa);
     return router;
 };

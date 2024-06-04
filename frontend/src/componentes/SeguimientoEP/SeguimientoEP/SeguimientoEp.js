@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import LogoSena from "./img/sena-verde.png";
 import "./css/SegumientoEP.css";
-import EvaluacionEp from "../EvaluacionEP/EvaluacionEp";
 
-function SeguimientoEp() {
+function SeguimientoEp({evaluacionAprendiz, setEvalaucionAprendiz}) {
   const [selected, setSelected] = useState(""); // Estado para almacenar la selección
 
   const handleSelection = (type) => {
     setSelected(type);
+    setEvalaucionAprendiz({ ...evaluacionAprendiz, tipo_informe: type });
   };
+  
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setEvalaucionAprendiz({ ...evaluacionAprendiz, [name]: value });
+  };
+
+  console.log(evaluacionAprendiz)
 
   return (
     <div className="main-container__contenedor-hijo">
@@ -442,8 +450,6 @@ function SeguimientoEp() {
       <div className="footer-box">
         <footer className="footer-EP">GFPI-F-023 V04</footer>
       </div>
-      {/* Cuarta sección */}
-      <EvaluacionEp />
     </div>
   );
 }

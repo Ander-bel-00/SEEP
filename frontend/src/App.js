@@ -27,6 +27,7 @@ import AgendaContainer from "./componentes/agenda/AgendaContainer/AgendaContaine
 import InformacionGeneral from "./componentes/SeguimientoEP/InformacionGeneral/InformacionGeneral.js";
 import PlanEP from "./componentes/SeguimientoEP/PlaneacionEP/PlanEP.js";
 import { useAuth } from "./context/AuthContext.js";
+import FormularioCompleto from "./componentes/SeguimientoEP/FormularioCompleto/FormIPSE.js";
 
 
 function App() {
@@ -61,7 +62,7 @@ function App() {
                 <Header showNav={showNav} setShowNav={setShowNav}/>
                   <Routes>
                     <Route path="/" element={
-                      <main className="Aprendiz-main-content">
+                      <main className="main-container">
                         <Aprendices />
                       </main>} />
                     <Route path=":id_aprendiz/bitacoras-aprendiz" element={
@@ -90,7 +91,6 @@ function App() {
                 <Fragment>
                   <Header showNav={showNav} setShowNav={setShowNav}/>
                   <NavbarInstructor showNav={showNav} handleLogout={handleLogout} setShowNav={setShowNav}/>
-
                     <Routes>
                       <Route path="/" element={
                         <main className="main-container">
@@ -121,7 +121,7 @@ function App() {
                       <Route 
                         path=":id_instructor/nuevaFicha"
                         element={
-                            <main className="new-fichas-content">
+                            <main className="main-container">
                               <NuevaFicha />
                             </main>
                         }
@@ -164,7 +164,7 @@ function App() {
                         path="evaluacion-EP/:id_aprendiz"
                         element={
                           <main className="main-container">
-                            <InformacionGeneral />
+                            <FormularioCompleto />
                           </main>
                         }
                       />

@@ -16,14 +16,14 @@ function InformacionGeneral({ evaluacionAprendiz, setEvalaucionAprendiz }) {
         try {
           const res = await clienteAxios.get(`/aprendiz/id/${id_aprendiz}`);
           setAprendizInfo(res.data);
-          const empresaData = await clienteAxios.get(
-            `/empresas/get/${res.data.id_empresa}`
-          );
-          setEmpresaInfo(empresaData.data.empresa);
           const fichaData = await clienteAxios.get(
             `/ficha-aprendiz/ficha/${res.data.numero_ficha}`
           );
           setFichaAprendizInfo(fichaData.data.ficha);
+          const empresaData = await clienteAxios.get(
+            `/empresas/get/${res.data.id_empresa}`
+          );
+          setEmpresaInfo(empresaData.data.empresa);
         } catch (error) {
           console.error("Error al obtner los datos del aprendiz", error);
         }
@@ -31,7 +31,6 @@ function InformacionGeneral({ evaluacionAprendiz, setEvalaucionAprendiz }) {
     };
     obtenerDatosAprendiz();
   }, [id_aprendiz]);
-
 
   return (
     <div className="main-container__contenedor-hijo">

@@ -36,8 +36,8 @@ const Admin = sequelize.define(
       allowNull: false,
       validate: {
         len: {
-            args: [8, 10],
-            msg: "La contraseña debe ser de 8 a 10 dígitos"
+            args: [8],
+            msg: "La contraseña debe ser mínimo de 8 dígitos"
         }
       },
     },

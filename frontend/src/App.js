@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"; // Importa BrowserRouter
 import LoginForm from "./componentes/login/LoginForm";
 import NavbarAprendiz from "./componentes/aprendices/layouts/Navabar-Aprendiz";
@@ -7,8 +7,6 @@ import Aprendices from "./componentes/aprendices/Aprendiz";
 import Administrador from "./componentes/admin/Administrador";
 import Instructor from "./componentes/instructores/Instructor";
 import Header from "./componentes/layouts/Header";
-import clienteAxios from './api/axios';
-import Cookies from 'js-cookie';
 import ListaAprendices from "./componentes/instructores/listaAprendices/ListaAprendices.js";
 import Calendario from "./componentes/calendario/Calendario.js";
 import NavbarInstructor from "./componentes/instructores/layouts/NavbarInstructor.js";
@@ -24,8 +22,6 @@ import FichasForm from "./componentes/formularios/FichasForm.js";
 import InstructorForm from "./componentes/formularios/InstructorForm.js";
 import { ProtectedRoute } from "./ProtectedRoute.js";
 import AgendaContainer from "./componentes/agenda/AgendaContainer/AgendaContainer.js";
-import InformacionGeneral from "./componentes/SeguimientoEP/InformacionGeneral/InformacionGeneral.js";
-import PlanEP from "./componentes/SeguimientoEP/PlaneacionEP/PlanEP.js";
 import { useAuth } from "./context/AuthContext.js";
 import FormularioCompleto from "./componentes/SeguimientoEP/FormularioCompleto/FormIPSE.js";
 

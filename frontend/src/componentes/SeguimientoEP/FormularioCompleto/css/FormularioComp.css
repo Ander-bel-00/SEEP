@@ -1,34 +1,31 @@
-.PlanEP-contenido{
-    position: relative;
-    top: 23rem;
+/* FormularioComp.css */
+
+.PlanEP-contenido {
+  position: relative;
+  top: 23rem;
 }
 
-.SeguimientoEP-contenido{
-    position: relative;
-    top: 45rem;
-}
-
-.EvalaucionEP-contenido{
-    position: relative;
-    top: 155rem;
-}
-
-.generarpdf-box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    top: 168rem;
+.generarpdf-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 168rem;
 }
 
 .generarpdf-box button {
-    background-color: #39a900;
-    color: #fff;
-    border-radius: 10px;
-    padding: 10px;
+  background-color: #39a900;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
 }
 
-.generarpdf-box button:hover{
-    background-color: #2d8a00;
-    cursor: pointer;
+.generarpdf-box button:hover {
+  background-color: #2d8a00;
+  cursor: pointer;
+}
+
+/* General print styles */
+@media print {
+  
 }

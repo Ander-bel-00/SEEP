@@ -37,7 +37,7 @@ module.exports = function () {
     router.post('/admin-add', authRequired, AdminController.nuevoAdmin);
 
     // Reistrar Fichas.
-    router.post('/fichas-add',  FichasController.nuevaFicha);
+    router.post('/fichas-add', authRequired, FichasController.nuevaFicha);
     router.post('/fichas/instructor/add', authRequired, FichasController.instructorFicha);
     router.post('/fichas-Admin-new', authRequired, FichasController.nuevaFichaAdmin);
     // Mostrar todas las Fichas registradas en la base de datos.
@@ -54,13 +54,13 @@ module.exports = function () {
     router.delete('/fichas-delete/:numero_ficha', authRequired, FichasController.eliminarFicha);
 
     // Aprendices
-    router.post('/aprendices-add',  AprendizController.nuevoAprendiz);
+    router.post('/aprendices-add', authRequired, AprendizController.nuevoAprendiz);
     router.get('/aprendices', authRequired,AprendizController.mostrarAprendices);
     router.get('/aprendices/:numero_documento', authRequired, AprendizController.mostrarAprendizByDocument);
-    router.get('/aprendiz/id/:id_aprendiz', AprendizController.AprendizPorID);
+    router.get('/aprendiz/id/:id_aprendiz', authRequired, AprendizController.AprendizPorID);
     router.put('/aprendices/:numero_documento', authRequired, AprendizController.actualizarAprendiz);
     router.delete('/aprendices/:numero_documento', authRequired, AprendizController.eliminarAprendiz);
-    router.put('/aprendiz/:id_aprendiz/nuevaContrasena', AprendizController.aprendizContrasena);
+    router.put('/aprendiz/:id_aprendiz/nuevaContrasena', authRequired, AprendizController.aprendizContrasena);
 
     // Rutas para el instructor.
     router.post('/instructores-add', authRequired, InstructorController.nuevoInstructor);
@@ -105,11 +105,11 @@ module.exports = function () {
     router.delete('/bitacoras-delete/:id_bitacora', authRequired, BitacorasController.eliminarBitacora);
 
     // Rutas para evaluación de etapa productiva.
-    router.post('/evaluacion-ep-aprendiz/:id_aprendiz', EvaluacionController.cargarPlaneacionAprendiz);
+    router.post('/evaluacion-ep-aprendiz/:id_aprendiz', authRequired, EvaluacionController.cargarPlaneacionAprendiz);
 
 
     // Rutas para las empresas.
-    router.post('/empresas/add/:id_aprendiz',  EmpresaController.nuevaEmpresa);
-    router.get('/empresas/get/:id_empresa', EmpresaController.obtenerDatosEmpresa);
+    router.post('/empresas/add/:id_aprendiz',  authRequired, EmpresaController.nuevaEmpresa);
+    router.get('/empresas/get/:id_empresa', authRequired, EmpresaController.obtenerDatosEmpresa);
     return router;
 };

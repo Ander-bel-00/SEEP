@@ -1,6 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import logoSEEP from "./img/LOGO_SEEP-removebg-preview.png";
+import cditi2 from "./img/CDITI2.png";
+import logoSENA from "./img/sena-verde.png";
+import senaMedio from "./img/sena-medio.png";
+
 import "./css/login.styles.css";
 import { useAuth } from "../../context/AuthContext";
 
@@ -15,6 +19,7 @@ const LoginForm = () => {
     // Atributo que almacena la contraseña.
     contrasena: "",
   });
+
 
   // Estado que guarda los errores obtenidos en el Login para mostrar mensaje al usuario.
   const [errors, setErrors] = useState([]);
@@ -77,10 +82,13 @@ const LoginForm = () => {
     <Fragment>
       <div className="login-body">
         <header className="header-login">
-          <h1 className="text-center cditi-title">
-            Centro de Diseño e Innovación Tecnológica Industrial
-          </h1>
-          <img src={logoSEEP} alt="Logo SEEP" className="logo-seep" />
+
+          <img src={logoSENA} alt="sena" className="sena-verde" />
+
+          <img src={senaMedio} alt="sena-medio" className="sena-medio" />
+
+          <img src={cditi2} alt="cditi" className="cditi" />
+          
         </header>
         <main className="main-login-content">
           <h1 className="text-center welcome-title">¡Bienvenidos!</h1>

@@ -86,6 +86,9 @@ const Instructor = sequelize.define('Instructores', {
             }
         },
     },
+    contrasena_temporal: {
+        type: DataTypes.BOOLEAN,
+    }
 }, {
     sequelize,
     modelName: 'Instructores',

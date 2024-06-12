@@ -3,19 +3,8 @@ const enviarCorreo = require("../utils/enviarCorreo");
 const plantillasController = require("../controllers/templatesController");
 const Fichas = require("../models/Fichas");
 const bcrypt = require("bcryptjs");
+const {generarContrasenaAleatoria} = require('./ContraseñaAleatoria');
 
-// Función para generar una contraseña aleatoria
-function generarContrasenaAleatoria() {
-  const caracteres =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$&+,:;=?@#|'<>.^*()%!-";
-  const longitud = 10;
-  let contrasena = "";
-  for (let i = 0; i < longitud; i++) {
-    const indice = Math.floor(Math.random() * caracteres.length);
-    contrasena += caracteres.charAt(indice);
-  }
-  return contrasena;
-};
 
 exports.nuevoAprendiz = async (req, res, next) => {
   try {

@@ -3,33 +3,33 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  border-radius: 8px;
 }
 
-.Evaluacion-EP__table {
-  width: 80%;
-  border-collapse: collapse;
+.evaluacionEP-container-table{
+  display: grid;
+  width: 980px;
+  grid-template-columns: repeat(8, 1fr); /* Define 8 columnas de igual tamaño */
+  gap: 0px; /* Espacio entre celdas */
+  margin-top: 1rem;
+  position: relative; /* Necesario para que los botones se posicionen correctamente */
 }
 
-.Evaluacion-EP__table__tr {
-  border: 1px solid #000;
+.col-8cols{
+  grid-column: span 8;
+  text-align: center;
+  border-right: 1px solid;
+}
+
+.ep-table-td{
+  border-top: 1px solid;
+  border-left: 1px solid;
   padding: 8px;
-  text-align: left;
-  position: relative;
 }
 
-.Evaluacion-EP__table__th {
+.ep-table-th{
   background-color: #dfdede;
-  border: 1px solid #000;
-  text-align: left;
-  padding: 8px;
 }
 
-.Evaluacion-EP__table__td {
-  text-align: left;
-  border: 1px solid #000;
-  padding: 8px;
-}
 
 .info-evaluacion-content-box__logo-sena {
   width: 5rem;
@@ -53,8 +53,8 @@
 
 .selectable-box-evaluation {
   width: 50px;
-  height: 20px;
-  border: 1px solid #000;
+  height: 30px;
+  border-bottom: 1px solid #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,9 +64,21 @@
   bottom: 3px;
 }
 
+.space-word{
+  word-spacing: 9px;
+}
+
 .selected-evaluation {
-  background-color: lightgray;
+  background-color: transparent;
   font-weight: bold;
+}
+
+.input-check {
+  width: 1rem;
+  height: 1rem;
+  background-color: transparent;
+  position: relative;
+  bottom: 10px;
 }
 
 .evaluation-op_1 {
@@ -79,9 +91,30 @@
   right: 25%;
 }
 
+.reconos-col{
+  padding: 8px;
+}
+
 .reconocimientos-section {
   display: flex;
   justify-content: space-between;
+}
+
+.especific-recon{
+  display: flex;
+  flex-direction: row;
+  text-wrap: nowrap;
+}
+
+.especific-recon > textarea{
+  margin-left: 10px;
+  width: 80%;
+  border-bottom: 1px solid;
+}
+
+.firmas-ev-col{
+  border-bottom: 1px solid;
+  padding: 8px;
 }
 
 .selectable-container-recono {
@@ -120,8 +153,10 @@
   right: 25%;
 }
 
-.input-check {
-  height: 1rem;
-  background-color: lightgray;
-}
 
+
+
+.recon-check{
+  position: relative;
+  bottom: 8px;
+}

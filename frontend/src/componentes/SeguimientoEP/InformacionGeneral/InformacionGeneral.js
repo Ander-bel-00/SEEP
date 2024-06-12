@@ -33,216 +33,150 @@ function InformacionGeneral({ evaluacionAprendiz, setEvalaucionAprendiz }) {
   }, [id_aprendiz]);
 
   return (
-    <div className="main-container__contenedor-hijo">
-      <form>
-        <div className="info-general-content-box" id="infoGeneral">
-          <img
-            src={LogoSena}
-            alt="logo-sena"
-            className="info-general-content-box__logo-sena"
-          />
-          <h2 className="info-general-content-box__main-title">
-            PROCESO GESTIÓN DE FORMACIÓN PROFESIONAL INTEGRAL <br />
-            FORMATO PLANEACIÓN, SEGUIMIENTO Y EVALUACIÓN ETAPA PRODUCTIVA
-          </h2>
 
-          <h3 className="mt-4 font-bold">1. INFORMACIÓN GENERAL</h3>
+      <div className="info-general-content-box" id="infoGeneral">
+        <img
+          src={LogoSena}
+          alt="logo-sena"
+          className="info-general-content-box__logo-sena"
+        />
+        <h2 className="info-general-content-box__main-title">
+          PROCESO GESTIÓN DE FORMACIÓN PROFESIONAL INTEGRAL <br />
+          FORMATO PLANEACIÓN, SEGUIMIENTO Y EVALUACIÓN ETAPA PRODUCTIVA
+        </h2>
 
-          <table className="info-general-table">
-            <thead>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th">Regional: </th>
-                <td className="info-general-table_td">
-                  <input
-                    type="text"
-                    required
-                    readOnly
-                    value={
-                      fichaAprendizInfo
-                        ? fichaAprendizInfo.nombre_regional
-                        : null
-                    }
-                  />
-                </td>
-                <th className="info-general-table_th">Centro de Formación: </th>
-                <td className="info-general-table_td" colSpan={2}>
-                  <p className="relative top-2 left-1">
-                    {fichaAprendizInfo
-                      ? fichaAprendizInfo.centro_formacion
-                      : null}
-                  </p>
-                </td>
-              </tr>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th">
-                  Programa de Formación:{" "}
-                </th>
+        <h3 className="mt-4 font-bold">1. INFORMACIÓN GENERAL</h3>
+        {/* Tabla Info General */}
+        <div className="info-general-table">
+          {/* Row 1*/}
+          <div className="Regional-col">
+            <p className="font-medium">Regional:</p>
+          </div>
+          <div className="Regional-col__text">
+            <p>{fichaAprendizInfo.nombre_regional}</p>
+          </div>
+          <div className="CentroF-col">
+            <p className="font-medium">Centro de Formación:</p>
+          </div>
+          <div className="CentroF-col__text">
+            <p>{fichaAprendizInfo.centro_formacion}</p>
+          </div>
+          {/* Row 2 */}
+          <div className="programF-col">
+            <p className="font-medium">Programa de Formación:</p>
+          </div>
+          <div className="programF-col__text">
+            <p>{fichaAprendizInfo.programa_formacion}</p>
+          </div>
+          <div className="NroFicha-col">
+            <p className="font-medium">No. de Ficha:</p>
+          </div>
+          <div className="NroFicha-col__text">
+            {fichaAprendizInfo.numero_ficha}
+          </div>
 
-                <td className="info-general-table_td" colSpan={2}>
-                  <input
-                    type="text"
-                    required
-                    readOnly
-                    value={
-                      fichaAprendizInfo
-                        ? fichaAprendizInfo.programa_formacion
-                        : null
-                    }
-                  />
-                </td>
-                <th className="info-general-table_th">No. de Ficha: </th>
-                <td className="info-general-table_td">
-                  <input
-                    type="number"
-                    required
-                    readOnly
-                    value={
-                      fichaAprendizInfo ? fichaAprendizInfo.numero_ficha : null
-                    }
-                  />
-                </td>
-              </tr>
-              <tr className="info-general-table_tr">
-                <td className="info-general-table_td" colSpan={2}>
-                  <p></p>
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th" colSpan={1} rowSpan={5}>
-                  Datos del Aprendiz
-                </th>
-                <th className="info-general-table_th">Nombre: </th>
-                <td className="info-general-table_td" colSpan={3}>
-                  <p className="relative top-2 left-3">
-                    {aprendizInfo ? aprendizInfo.nombres : null}{" "}
-                    {aprendizInfo ? aprendizInfo.apellidos : null}
-                  </p>
-                </td>
-              </tr>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th">Identificación: </th>
-                <td className="info-general-table_td" colSpan={3}>
-                  <input
-                    type="text"
-                    required
-                    readOnly
-                    value={aprendizInfo ? aprendizInfo.numero_documento : null}
-                  />
-                </td>
-              </tr>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th">Teléfono: </th>
-                <td className="info-general-table_td" colSpan={3}>
-                  <input
-                    type="number"
-                    required
-                    readOnly
-                    value={aprendizInfo ? aprendizInfo.numero_celular1 : null}
-                  />
-                </td>
-              </tr>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th">Email: </th>
-                <td className="info-general-table_td" colSpan={3}>
-                  <input
-                    type="email"
-                    required
-                    readOnly
-                    value={
-                      aprendizInfo ? aprendizInfo.correo_electronico1 : null
-                    }
-                  />
-                </td>
-              </tr>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th">
-                  Alternativa registrada en SOFIA plus
-                </th>
-                <td className="info-general-table_td" colSpan={3}>
-                  <input
-                    type="email"
-                    required
-                    readOnly
-                    value={
-                      aprendizInfo
-                        ? aprendizInfo.correo_electronico_sofia_plus
-                        : null
-                    }
-                  />
-                </td>
-              </tr>
-              {/* Ente Conformador */}
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th" colSpan={1} rowSpan={7}>
-                  Ente Conformador
-                </th>
-                <th className="info-general-table_th">
-                  Razón social Empresa: :{" "}
-                </th>
-                <td className="info-general-table_td" colSpan={3}>
-                  <p className="relative top-2 left-3">
-                    {empresaInfo ? empresaInfo.razon_social : null}
-                  </p>
-                </td>
-              </tr>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th">Nit: </th>
-                <td className="info-general-table_td" colSpan={3}>
-                  <p className="relative top-2 left-3">
-                    {empresaInfo ? empresaInfo.nit_empresa : null}
-                  </p>
-                </td>
-              </tr>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th">Dirección: </th>
-                <td className="info-general-table_td" colSpan={3}>
-                  <p className="relative top-2 left-3">
-                    {empresaInfo ? empresaInfo.direccion_empresa : null}
-                  </p>
-                </td>
-              </tr>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th">
-                  Nombre del Jefe Inmediato del aprendiz:{" "}
-                </th>
-                <td className="info-general-table_td" colSpan={3}>
-                  <p className="relative top-2 left-3">
-                    {empresaInfo ? empresaInfo.nombre_jefe_inmediato : null}{" "}
-                    {empresaInfo ? empresaInfo.apellidos_jefe_inmediato : null}
-                  </p>
-                </td>
-              </tr>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th">Cargo:</th>
-                <td className="info-general-table_td" colSpan={3}>
-                  <p className="relative top-2 left-3">
-                    {empresaInfo ? empresaInfo.cargo_jefe_inmediato : null}
-                  </p>
-                </td>
-              </tr>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th">Teléfono: </th>
-                <td className="info-general-table_td" colSpan={3}>
-                  <p className="relative top-2 left-3">
-                    {empresaInfo ? empresaInfo.telefono_jefe_inmediato : null}
-                  </p>
-                </td>
-              </tr>
-              <tr className="info-general-table_tr">
-                <th className="info-general-table_th">Email: </th>
-                <td className="info-general-table_td" colSpan={3}>
-                  <p className="relative top-2 left-3">
-                    {empresaInfo ? empresaInfo.email_jefe_imediato : null}
-                  </p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          {/* Row 3 */}
+          <div className="row-null"></div>
+
+          {/* Row 4  */}
+          <div className="DatAprendiz-col">
+            <p className="font-medium">Datos del Aprendiz</p>
+          </div>
+          <div className="nombre-col">
+            <p className="font-medium">Nombre: </p>
+          </div>
+          <div className="nombre-col__text">
+            <p>
+              {aprendizInfo.nombres} {aprendizInfo.apellidos}
+            </p>
+          </div>
+
+          {/* Row 5 */}
+          <div className="identi-col">
+            <p className="font-medium">Identificación: </p>
+          </div>
+          <div className="identi-col__text">
+            <p>{aprendizInfo.numero_documento}</p>
+          </div>
+
+          {/* Row 6 */}
+          <div className="telef-col">
+            <p className="font-medium">Teléfono:</p>
+          </div>
+          <div className="telef-col__text">{aprendizInfo.numero_celular1}</div>
+
+          {/* Row 7 */}
+          <div className="email-col">
+            <p className="font-medium">E-mail:</p>
+          </div>
+          <div className="email-col__text">
+            <p>{aprendizInfo.correo_electronico1}</p>
+          </div>
+
+          {/* Row 8 */}
+          <div className="alter-col">
+            <p className="font-medium">Alternativa registrada en SOFIA plus </p>
+          </div>
+          <div className="alter-col__text">
+            <p>{aprendizInfo.correo_electronico_sofia_plus}</p>
+          </div>
+
+          {/* Row 9 */}
+          <div className="Ente-col">
+            <p className="font-medium">Ente Conformador</p>
+          </div>
+          <div className="rz-social__col">
+            <p className="font-medium">Razón Social Empresa: </p>
+          </div>
+          <div className="nombre-col__text">
+            <p>{empresaInfo.razon_social}</p>
+          </div>
+
+          {/* Row 5 */}
+          <div className="identi-col">
+            <p className="font-medium">Nit: </p>
+          </div>
+          <div className="identi-col__text">
+            <p>{empresaInfo.nit_empresa}</p>
+          </div>
+
+          {/* Row 6 */}
+          <div className="telef-col">
+            <p className="font-medium">Dirección:</p>
+          </div>
+          <div className="telef-col__text">{empresaInfo.direccion_empresa}</div>
+
+          {/* Row 7 */}
+          <div className="nameJefe-col">
+            <p className="font-medium">
+              Nombre del Jefe Inmediato del aprendiz:{" "}
+            </p>
+          </div>
+          <div className="email-col__text">
+            <p>{empresaInfo.nombre_jefe_inmediato}</p>
+          </div>
+
+          {/* Row 8 */}
+          <div className="alter-col">
+            <p className="font-medium">Cargo:</p>
+          </div>
+          <div className="alter-col__text">
+            <p>{empresaInfo.cargo_jefe_inmediato}</p>
+          </div>
+          <div className="telef-col">
+            <p className="font-medium">Teléfono:</p>
+          </div>
+          <div className="telef-col__text">{empresaInfo.telefono_jefe_inmediato}</div>
+
+          {/* Row 7 */}
+          <div className="email-jefe-col">
+            <p className="font-medium">E-mail:</p>
+          </div>
+          <div className="email-jefe-col__text">
+            <p>{empresaInfo.email_jefe_imediato}</p>
+          </div>
         </div>
-      </form>
-    </div>
+      </div>
   );
 }
 

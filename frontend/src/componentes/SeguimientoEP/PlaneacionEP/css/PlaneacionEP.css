@@ -2,67 +2,134 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
-  border-radius: 8px;
+  flex-direction: column;
 }
 
-.planEP-table {
-  width: 80%;
-  border-collapse: collapse;
+.planEP-container-table {
+  display: grid;
+  width: 980px;
+  grid-template-columns: repeat(8, 1fr); /* Define 8 columnas de igual tamaño */
+  gap: 0px; /* Espacio entre celdas */
+  margin-top: 1rem;
+  position: relative; /* Necesario para que los botones se posicionen correctamente */
 }
 
-.planEP-table__th {
+.planEP-title{
+  word-spacing: 9px;
+}
+
+.planEP-container-table > div {
+  padding: 2px;
+}
+
+.planEP-title-col, .planEP-secondTitle-col {
+  grid-column: span 8;
+  text-align: center;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+  border-left: 1px solid #000;
+}
+
+.planEP-secondTitle-col {
   background-color: #dfdede;
-  border: 1px solid #000;
-  text-align: left;
-  padding: 8px;
 }
 
-.planEP-table__th p {
-  margin: 0;
+.planEP-secondTitle-col h4 {
+  font-size: 18px;
+  font-weight: 700;
 }
 
-.planEP-table__tr {
-  border: 1px solid #000;
-  padding: 8px;
-  text-align: left;
-  position: relative;
+.planEP-container-table__th {
+  background-color: #dfdede;
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
 }
 
-.planEP-table__td {
-  text-align: left;
-  border: 1px solid #000;
-  padding: 8px;
+.actividades-info-col {
+  grid-column: span 4;
+  grid-row: span 2;
 }
 
-.planEP-table__td input,
-.planEP-table__td textarea {
+.actividades-info-col > p:first-child {
+  text-align: center;
+  font-weight: 700;
+}
+
+.actividades-info-col > p:last-child {
+  font-weight: 600;
+}
+
+.evidens-info-col {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.evidens-info-col > p:first-child {
+  text-align: center;
+  font-weight: 700;
+  margin-top: 2rem;
+}
+
+.recol-evidens-info-col {
+  grid-column: span 2;
+}
+
+.recol-evidens-info-col, .fecha-info-col, .lugar-info-col > p:first-child {
+  text-align: center;
+  font-weight: 700;
+}
+
+/* Clase para aplicar los bordes finales de la derecha a la tabla */
+.final_border_col {
+  border-right: 1px solid #000;
+}
+
+.final_bottom_border{
+  border-bottom: 1px solid #000;
+}
+
+.planEP-container-table__td {
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+}
+
+.planEP-container-table__td input, textarea {
   width: 100%;
+}
+
+.activi-text-col {
+  grid-column: span 4;
+}
+
+.evidens-text-col {
+  grid-column: span 2;
+}
+
+.observaciones-col {
+  grid-column: span 8;
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
   padding: 10px;
-  box-sizing: border-box;
-}
-
-.planEP-table__td textarea {
-  resize: vertical;
-}
-
-.textarea-container {
-  position: relative;
-}
-
-.textarea-container textarea {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  resize: vertical;
-}
-
-.action-icons {
   display: flex;
+  flex-direction: column;
+}
+
+.firmas-col{
+  grid-column: span 8;
+}
+
+/* Añadir una clase para ocultar los botones por defecto */
+.action-icons {
+  display: none;
   gap: 5px;
   position: absolute;
-  top: -7px; /* Adjust this as needed */
-  right: 10px; /* Adjust this as needed */
+  right: 10px; /* Ajusta según sea necesario */
+}
+
+/* Mostrar los botones cuando el cursor está sobre la última columna de la última fila */
+.planEP-container-table__td.final_border_col:hover .action-icons {
+  display: flex;
 }
 
 .add-icon {
@@ -79,7 +146,7 @@
   border: none;
   border-radius: 50%;
   width: 24px;
-  height: 22px;
+  height: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,20 +161,6 @@
   background-color: #d30404;
 }
 
-.btn-add-inputs {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.btn-add-inputs button {
-  padding: 8px;
-  background-color: #39a900;
-  border-radius: 10px;
-  color: #fff;
-  border: none;
-}
-
 .td__firmas_inputs {
   display: flex;
   flex-direction: row;
@@ -119,12 +172,8 @@
   margin-bottom: 8px;
 }
 
-.planEP-table__tr.hover-visible .action-icons {
-  display: none;
-}
-
-.planEP-table__tr.hover-visible:hover .action-icons {
-  display: flex;
+.td__firmas_inputs textarea {
+  border-bottom: 1px solid #ccc;
 }
 
 .btn-add-firma {
@@ -137,18 +186,3 @@
 .btn-add-firma:hover {
   background-color: #2d8a00;
 }
-
-.footer-box{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  top: 1rem;
-}
-/* EvaluacionEp.css */
-#planEP {
-  margin-top: 20px; /* Ajusta este valor según sea necesario */
-}
-
-

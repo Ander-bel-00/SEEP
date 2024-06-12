@@ -39,18 +39,6 @@ const EvaluacionEP = sequelize.define('Evaluaciones', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    firma_aprendiz: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    firma_instructor_seguimiento: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    firma_ente_conformador: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     nombre_ente_conformador: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -63,14 +51,14 @@ const EvaluacionEP = sequelize.define('Evaluaciones', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    inicio_periodo_evalaudo: {
+    inicio_periodo_evaluado: {
         type: DataTypes.DATE,
         allowNull: false,
     },
-    fin_periodo_evalaudo: {
+    fin_periodo_evaluado: {
         type: DataTypes.DATE,
         allowNull: false,
-    },
+    },    
     relaciones_in_satisfactorio: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -245,7 +233,7 @@ const EvaluacionEP = sequelize.define('Evaluaciones', {
     },
     especificar_recono: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 }, {
     sequelize,

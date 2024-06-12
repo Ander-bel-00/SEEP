@@ -15,7 +15,7 @@ function generarContrasenaAleatoria() {
     contrasena += caracteres.charAt(indice);
   }
   return contrasena;
-}
+};
 
 exports.nuevoAprendiz = async (req, res, next) => {
   try {

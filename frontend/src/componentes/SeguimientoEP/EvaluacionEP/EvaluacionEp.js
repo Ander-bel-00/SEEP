@@ -1,24 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "./css/EvaluacionEp.css";
 import LogoSena from "./img/sena-verde.png";
 import PopupFirmas from "../Firmas/PopupFirmas";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
-function EvaluacionEp() {
+function EvaluacionEp({ evaluacionAprendiz, setEvalaucionAprendiz }) {
   const [selected, setSelected] = useState(""); // Estado para almacenar la selección
   const [reconoSelected, setReconoSelected] = useState("");
   const [firmas, setFirmas] = useState([]);
   const [currentFirmaField, setCurrentFirmaField] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-  
 
   const handleSelection = (type) => {
     setSelected(type);
+    setEvalaucionAprendiz({ ...evaluacionAprendiz, juicio_aprendiz: type });
   };
 
   const handleRecono = (type) => {
     setReconoSelected(type);
+    setEvalaucionAprendiz({ ...evaluacionAprendiz, recono_especiales: type });
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setEvalaucionAprendiz({ ...evaluacionAprendiz, [name]: value });
   };
 
   const [campos, setCampos] = useState([
@@ -78,193 +84,218 @@ function EvaluacionEp() {
   };
 
   return (
-    <div className="main-container__contenedor-hijo">
+    <Fragment>
       <div className="info-evaluacion-content-box" id="evaluacionEP">
         <img
           src={LogoSena}
           alt="logo-sena"
           className="info-evaluacion-content-box__logo-sena"
         />
-        <table className="Evaluacion-EP__table">
-          <thead>
-            <tr className="Evaluacion-EP__table__tr">
-              <td>
-                <h2 className="text-center font-bold">
-                  4. EVALUACIÓN ETAPA PRODUCTIVA
-                </h2>
-              </td>
-            </tr>
-            <tr className="Evaluacion-EP__table__tr">
-              <th className="Evaluacion-EP__table__th"></th>
-            </tr>
-            <tr className="Evaluacion-EP__table__tr">
-              <td className="Evaluacion-EP__table__td" colSpan={1}>
-                <div className="evaluation-td-options">
-                  <p>JUICIO DE EVALUACIÓN: </p>
-                  <div
-                    className="selectable-container-ep evaluation-op_1"
-                    onClick={() => handleSelection("APROBADO")}
-                  >
-                    <div
-                      className={`selectable-box-evaluation ${
-                        selected === "APROBADO" ? "selected-evaluation" : ""
-                      }`}
-                    >
-                      {selected && selected === "APROBADO" ? (
-                        <input
-                          type="text"
-                          value={selected === "APROBADO" ? "X" : ""}
-                          readOnly
-                          className="w-4 input-check"
-                          name=""
-                        />
-                      ) : null}
-                    </div>
-                    <p className="relative top-1">
-                      <strong>APROBADO</strong>
-                    </p>
-                  </div>
-                  <div
-                    className="selectable-container-ep evaluation-op_2"
-                    onClick={() => handleSelection("NO APROBADO")}
-                  >
-                    <div
-                      className={`selectable-box-evaluation ${
-                        selected === "NO APROBADO" ? "selected-evaluation" : ""
-                      }`}
-                    >
-                      {selected && selected === "NO APROBADO" ? (
-                        <input
-                          type="text"
-                          readOnly
-                          value={selected === "NO APROBADO" ? "X" : ""}
-                          className="w-4 input-check"
-                          name=""
-                        />
-                      ) : null}
-                    </div>
-                    <p className="relative top-1">
-                      <strong>NO APROBADO</strong>
-                    </p>
-                  </div>
+        <div className="evaluacionEP-container-table">
+          {/* Row 1 */}
+          <div className="col-8cols ep-table-td">
+            <h3 className="font-bold space-word">
+              4. EVALUACIÓN ETAPA PRODUCTIVA
+            </h3>
+          </div>
+          {/* Row 2 */}
+          <div className="ep-table-td ep-table-th col-8cols">
+            <div>
+              <p></p>
+            </div>
+          </div>
+          <div className="col-8cols ep-table-td">
+            <div className="evaluation-td-options">
+              <p className="space-word">JUICIO DE EVALUACIÓN: </p>
+              <div
+                className="selectable-container-ep evaluation-op_1"
+                onClick={() => handleSelection("APROBADO")}
+              >
+                <div
+                  className={`selectable-box-evaluation ${
+                    selected === "APROBADO" ? "selected-recono" : ""
+                  }`}
+                >
+                  {selected && selected === "APROBADO" ? (
+                    <input
+                      type="text"
+                      value={selected === "APROBADO" ? "X" : ""}
+                      readOnly
+                      className="w-4 recon-check"
+                      name=""
+                    />
+                  ) : null}
                 </div>
-              </td>
-            </tr>
-            <tr className="Evaluacion-EP__table__tr">
-              <td className="Evaluacion-EP__table__td">
-                <div className="reconocimientos-section">
-                  <p>RECONOCIMIENTOS ESPECIALES SOBRE EL DESEMPEÑO:</p>
-                  <div
-                    className="selectable-container-recono recono-op_1"
-                    onClick={() => handleRecono("SI")}
-                  >
-                    <p className="relative top-1">
-                      <strong>SI</strong>
-                    </p>
-                    <div
-                      className={`selectable-box-recono ${
-                        reconoSelected === "SI" ? "selected-recono" : ""
-                      }`}
-                    >
-                      {reconoSelected === "SI" ? "X" : ""}
-                    </div>
-                  </div>
-                  <div
-                    className="selectable-container-ep recono-op_2"
-                    onClick={() => handleRecono("NO")}
-                  >
-                    <p className="relative top-1">
-                      <strong>NO</strong>
-                    </p>
-                    <div
-                      className={`selectable-box-recono ${
-                        reconoSelected === "NO" ? "selected-recono" : ""
-                      }`}
-                    >
-                      {reconoSelected === "NO" ? "X" : ""}
-                    </div>
-                  </div>
+                <p className="relative top-1">
+                  <strong>APROBADO</strong>
+                </p>
+              </div>
+              <div
+                className="selectable-container-ep evaluation-op_2"
+                onClick={() => handleSelection("NO APROBADO")}
+              >
+                <div
+                  className={`selectable-box-evaluation ${
+                    selected === "NO APROBADO" ? "selected-recono" : ""
+                  }`}
+                >
+                  {selected && selected === "NO APROBADO" ? (
+                    <input
+                      type="text"
+                      readOnly
+                      value={selected === "NO APROBADO" ? "X" : ""}
+                      className="w-4 recon-check"
+                      name=""
+                    />
+                  ) : null}
                 </div>
-                <p>Especificar cuáles:</p>
-                <textarea className="w-full"></textarea>
-              </td>
-            </tr>
-            <tr className="Evaluacion-EP__table__tr">
-              <td className="planEP-table__td" colSpan={6}>
-                <div className="td__firmas_inputs">
-                  <div>
-                    <label>
-                      <strong>Nombre del Ente Conformador:</strong>
-                    </label>
-                    <input type="text" />
-                    <label>
-                      <strong>Firma del Ente Conformador:</strong>
-                    </label>
-                    <button
-                      type="button"
-                      onClick={() => handleAddFirma(0)}
-                      className={campos[0].firma ? "" : "btn-add-firma"}
-                    >
-                      {campos[0].firma ? (
-                        <img
-                          src={campos[0].firma}
-                          alt="Firma del Ente Conformador"
-                          style={{ width: 100, height: 50 }}
-                        />
-                      ) : (
-                        "Añadir Firma"
-                      )}
-                    </button>
-                  </div>
-                  <div>
-                    <label>
-                      <strong>Firma del Aprendiz</strong>
-                    </label>
-                    <button
-                      type="button"
-                      onClick={() => handleAddFirma(1)}
-                      className={campos[1].firma ? "" : "btn-add-firma"}
-                    >
-                      {campos[1].firma ? (
-                        <img
-                          src={campos[1].firma}
-                          alt="Firma del Aprendiz"
-                          style={{ width: 100, height: 50 }}
-                        />
-                      ) : (
-                        "Añadir Firma"
-                      )}
-                    </button>
-                  </div>
-                  <div>
-                    <label>
-                      <strong>Nombre Instructor seguimiento:</strong>
-                    </label>
-                    <input type="text" />
-                    <label>
-                      <strong>Firma Instructor seguimiento</strong>
-                    </label>
-                    <button
-                      type="button"
-                      onClick={() => handleAddFirma(2)}
-                      className={campos[2].firma ? "" : "btn-add-firma"}
-                    >
-                      {campos[2].firma ? (
-                        <img
-                          src={campos[2].firma}
-                          alt="Firma Instructor seguimiento"
-                          style={{ width: 100, height: 50 }}
-                        />
-                      ) : (
-                        "Añadir Firma"
-                      )}
-                    </button>
-                  </div>
+                <p className="relative top-1">
+                  <strong>NO APROBADO</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="col-8cols ep-table-td reconos-col">
+            <div className="reconocimientos-section">
+              <p className="space-word">
+                RECONOCIMIENTOS ESPECIALES SOBRE EL DESEMPEÑO:
+              </p>
+              <div
+                className="selectable-container-recono recono-op_1"
+                onClick={() => handleRecono("SI")}
+              >
+                <p className="relative top-1">
+                  <strong>SI</strong>
+                </p>
+                <div
+                  className={`selectable-box-recono ${
+                    reconoSelected === "SI" ? "selected-recono" : ""
+                  }`}
+                >
+                  {reconoSelected && reconoSelected === "SI" ? (
+                    <input
+                      type="text"
+                      value={reconoSelected === "SI" ? "X" : ""}
+                      className="w-4 recon-check"
+                      name=""
+                    />
+                  ) : null}
                 </div>
-              </td>
-            </tr>
-          </thead>
-        </table>
+              </div>
+              <div
+                className="selectable-container-ep recono-op_2"
+                onClick={() => handleRecono("NO")}
+              >
+                <p className="relative top-1">
+                  <strong>NO</strong>
+                </p>
+                <div
+                  className={`selectable-box-recono ${
+                    reconoSelected === "NO" ? "selected-recono" : ""
+                  }`}
+                >
+                  {reconoSelected && reconoSelected === "NO" ? (
+                    <input
+                      type="text"
+                      value={reconoSelected === "NO" ? "X" : ""}
+                      readOnly
+                      className="w-4 recon-check"
+                      name=""
+                    />
+                  ) : null}
+                </div>
+              </div>
+            </div>
+            <div className="especific-recon">
+              <p className="space-word">Especificar cuáles:</p>
+              <textarea onChange={handleChange} name="especificar_recono"></textarea>
+            </div>
+          </div>
+          <div className="col-8cols ep-table-td firmas-ev-col">
+            <div className="td__firmas_inputs">
+              <div>
+                <label>
+                  <strong>Nombre del Ente Conformador:</strong>
+                </label>
+                <input
+                  type="text"
+                  readOnly
+                  required
+                  value={evaluacionAprendiz.nombre_ente_conformador}
+                  className="relative left-10 border-b-2"
+                />
+                <label>
+                  <strong>Firma del Ente Conformador:</strong>
+                </label>
+                <button
+                  type="button"
+                  onClick={() => handleAddFirma(0)}
+                  className={campos[0].firma ? "" : "btn-add-firma"}
+                >
+                  {campos[0].firma ? (
+                    <img
+                      src={campos[0].firma}
+                      alt="Firma del Ente Conformador"
+                      style={{ width: 100, height: 50 }}
+                    />
+                  ) : (
+                    "Añadir Firma"
+                  )}
+                </button>
+              </div>
+              <div>
+                <label>
+                  <strong>Firma del Aprendiz</strong>
+                </label>
+                <button
+                  type="button"
+                  onClick={() => handleAddFirma(1)}
+                  className={campos[1].firma ? "" : "btn-add-firma"}
+                >
+                  {campos[1].firma ? (
+                    <img
+                      src={campos[1].firma}
+                      alt="Firma del Aprendiz"
+                      style={{ width: 100, height: 50 }}
+                    />
+                  ) : (
+                    "Añadir Firma"
+                  )}
+                </button>
+              </div>
+              <div>
+                <label>
+                  <strong>Nombre Instructor seguimiento:</strong>
+                </label>
+                <input
+                  type="text"
+                  readOnly
+                  required
+                  value={evaluacionAprendiz.nombre_instructor}
+                  className="relative left-0 border-b-2"
+                />
+                <label>
+                  <strong>Firma Instructor seguimiento</strong>
+                </label>
+                <button
+                  type="button"
+                  onClick={() => handleAddFirma(2)}
+                  className={campos[2].firma ? "" : "btn-add-firma"}
+                >
+                  {campos[2].firma ? (
+                    <img
+                      src={campos[2].firma}
+                      alt="Firma Instructor seguimiento"
+                      style={{ width: 100, height: 50 }}
+                    />
+                  ) : (
+                    "Añadir Firma"
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <PopupFirmas
         show={showPopup}
@@ -279,10 +310,7 @@ function EvaluacionEp() {
         }}
         firmas={firmas}
       />
-      <div className="footer-box">
-        <footer className="footer-EP">GFPI-F-023 V04</footer>
-      </div>
-    </div>
+    </Fragment>
   );
 }
 

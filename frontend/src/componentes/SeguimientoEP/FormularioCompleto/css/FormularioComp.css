@@ -1,16 +1,33 @@
-/* FormularioComp.css */
+.form-seguimiento-complete {
+  display: flex;
+  flex-direction: column; /* Cambiar el diseño a columnas */
+  width: 100%;
+}
 
-.PlanEP-contenido {
-  position: relative;
-  top: 23rem;
+.pdf-page {
+  width: 100%;
+  padding: 20px;
+}
+
+
+#page2 {
+  margin-top: 6cm;
+}
+
+#page3 {
+  margin-top: 6cm;
+}
+
+#page4{
+  margin-top: 3cm;
 }
 
 .generarpdf-box {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  top: 168rem;
+  width: 100%; /* Asegura que el contenedor ocupe el 100% del ancho */
+  margin-top: 5%; /* Espacio superior para separar del contenido anterior */
 }
 
 .generarpdf-box button {
@@ -27,5 +44,14 @@
 
 /* General print styles */
 @media print {
+  body * {
+    visibility: hidden;
+  }
+  #formulario-completo * {
+    visibility: visible;
+  }
+  #generate-pdf-button {
+    display: none !important; /* Ocultar el botón en el PDF */
+  }
   
 }

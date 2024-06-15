@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import logoSEEP from "./img/LOGO_SEEP-removebg-preview.png";
 import cditi2 from "./img/CDITI2.png";
 import logoSENA from "./img/sena-verde.png";
-import senaMedio from "./img/sena-medio.png";
+import senaMedio from "./img/sena-seeep.png";
 
 import "./css/login.styles.css";
 import { useAuth } from "../../context/AuthContext";

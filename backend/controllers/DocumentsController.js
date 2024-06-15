@@ -83,11 +83,6 @@ exports.cargarDocumento = async (req, res) => {
         tipo_documento,
         archivo: req.file.filename,
         id_aprendiz: aprendiz.id_aprendiz,
-        numero_documento: aprendiz.numero_documento,
-        nombres: aprendiz.nombres,
-        apellidos: aprendiz.apellidos,
-        numero_ficha: aprendiz.numero_ficha,
-        programa_formacion: aprendiz.programa_formacion,
       });
 
       // Devuelve una respuesta de estado 201 (creado) con un mensaje de éxito y el documento creado.

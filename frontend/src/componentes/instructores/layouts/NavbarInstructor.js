@@ -10,7 +10,7 @@ import { FaFileExcel } from "react-icons/fa";
 import clienteAxios from "../../../api/axios";
 import "./css/NavbarInstructor.css";
 
-const NavbarInstructor = ({ showNav, handleLogout, setShowNav }) => {
+const NavbarInstructor = ({ showNav, handleLogout, setShowNav, modalIsOpen  }) => {
   const [usuario, setUsuario] = useState(null);
   const [hoveredOption, setHoveredOption] = useState(null);
   const [hoveredPosition, setHoveredPosition] = useState({ top: 0, left: 0 });
@@ -74,7 +74,8 @@ const NavbarInstructor = ({ showNav, handleLogout, setShowNav }) => {
               <button className="close-btn" onClick={handleCloseMenu}>
                 X
               </button>
-              <ul className="list-group menu-content">
+              {!modalIsOpen && (
+                <ul className="list-group menu-content">
                 <MenuItem
                   title="Inicio"
                   icon={<IoHomeSharp className="inline-block" />}
@@ -125,6 +126,7 @@ const NavbarInstructor = ({ showNav, handleLogout, setShowNav }) => {
                   handleLogout={handleLogout}
                 />
               </ul>
+              )}
               {hoveredOption && (
                 <div className="hovered-options" style={{ top: hoveredPosition.top, left: hoveredPosition.left }}>
                   <div className="hovered-text">{hoveredOption}</div>

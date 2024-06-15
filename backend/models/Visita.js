@@ -29,7 +29,8 @@ const Visitas = sequelize.define('Visitas', {
         allowNull: false
     },
     modalidad_visita: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM,
+        values: ['Presencial', 'Virtual'],
         allowNull: false
     },
     aprendiz:{
@@ -39,26 +40,6 @@ const Visitas = sequelize.define('Visitas', {
             model: Aprendiz,
             key: 'id_aprendiz'
         }
-    },
-    documento_aprendiz: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    nombres_aprendiz: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    apellidos_aprendiz: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    numero_ficha_aprendiz: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    programa_formacion: {
-        type: DataTypes.STRING,
-        allowNull: false,
     },
 },{
     sequelize,

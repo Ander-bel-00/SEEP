@@ -83,54 +83,56 @@ body {
 .close-btn{
     display: none;
 }
-/* aprendiz.styles.css */
-.actualizar-contrasena-card {
-    margin-top: 20px;
+
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  
+  .modal-new-contrasena {
+    background: white;
     padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-.actualizar-contrasena-card h3 {
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-    color: #333;
-}
-
-.actualizar-contrasena-card label {
+    border-radius: 10px;
+    max-width: 500px;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    position: absolute;
+  }
+  
+  .modal-new-contrasena h2 {
+    margin-bottom: 20px;
+  }
+  
+  .modal-new-contrasena label {
     display: block;
-    margin-bottom: 5px;
-    font-size: 1rem;
-    color: #555;
-}
-
-.actualizar-contrasena-card input[type="password"] {
+    margin-bottom: 10px;
+  }
+  
+  .modal-new-contrasena input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.actualizar-contrasena-card button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #39a900;
-    color: #fff;
+    border-radius: 5px;
+  }
+  
+  .modal-new-contrasena button {
+    padding: 10px 20px;
+    margin-right: 10px;
     border: none;
-    border-radius: 3px;
-    font-size: 1rem;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.actualizar-contrasena-card button:hover {
-    background-color: #2d8a00;
-}
-
-
+  }
+  
+  .modal-new-contrasena button:last-of-type {
+    background-color: #6c757d;
+  }
+  
 
 
 @media screen and (max-width: 1508.89px) {

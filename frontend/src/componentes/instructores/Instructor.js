@@ -2,14 +2,31 @@ import React, { Fragment, useEffect, useState } from "react";
 import clienteAxios from "../../api/axios";
 import logoSena from "./img/sena-verde.png";
 import "./css/Instructores.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import Modal from "react-modal";
 
-function Instructor() {
+function Instructor({ setModalIsOpen }) {
   const [usuario, setUsuario] = useState(null);
   const [fichasAsignadas, setFichasAsignadas] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [fichasPorPagina] = useState(3); // Número de fichas por página
+  const [infoInstructor, SetInstructorInfo] = useState([]);
+  const [nuevaContrasena, setNuevaContrasena] = useState("");
+  const [contrasenaActualizada, setContrasenaActualizada] = useState(false);
+  const [modalIsOpen, setModalIsOpenState] = useState(false);
+  const navigate = useNavigate();
+
+  const openModal = () => {
+    setModalIsOpen(true);
+    setModalIsOpenState(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setModalIsOpenState(false);
+  };
 
   useEffect(() => {
     const obtenerUsuario = async () => {
@@ -26,6 +43,15 @@ function Instructor() {
           }
         );
         setFichasAsignadas(fichasOrdenadas);
+
+        const resInstructor = await clienteAxios.get(
+          `instructores/get-Instructor/${response.data.usuario.id_instructor}`
+        );
+        SetInstructorInfo(resInstructor.data);
+
+        if (resInstructor.data.contrasena_temporal) {
+          openModal();
+        }
       } catch (error) {
         console.error("Error al obtener la información del usuario:", error);
       }
@@ -75,6 +101,49 @@ function Instructor() {
     }
   };
 
+  const actualizarContrasena = async () => {
+    if (!nuevaContrasena.trim()) {
+      Swal.fire({
+        title: "Error",
+        text: "Por favor ingresa una nueva contraseña.",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+      return;
+    }
+
+    try {
+      const response = await clienteAxios.put(
+        `/instructor/${infoInstructor.id_instructor}/nuevaContrasena`,
+        {
+          contrasena: nuevaContrasena,
+        }
+      );
+      console.log("Contraseña actualizada", response.data);
+      Swal.fire({
+        title: "Su contraseña se ha actualizado",
+        text: "Le informamos que su contraseña se ha actualizado exitosamente",
+        icon: "success",
+        showCancelButton: false,
+        confirmButtonText: "Aceptar",
+      }).then(() => {
+        setContrasenaActualizada(true);
+        closeModal();
+        return navigate('/')
+      });
+    } catch (error) {
+      console.error("Error al actualizar la contraseña:", error);
+      Swal.fire({
+        title: "Error al actualizar su contraseña",
+        text: "Hubo un error al actualizar su contraseña",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
+
+  console.log(infoInstructor.contrasena_temporal)
+
   return (
     <Fragment>
       <div className="main-container__contenedor-hijo">
@@ -82,6 +151,23 @@ function Instructor() {
           <h2 className="fichasAsignedTitle ">Agendamiento de visitas</h2>
           <h5 className=" text-gray-500 selctFicha">Selecciona una ficha</h5>
         </div>
+        <Modal
+          isOpen={modalIsOpen}
+          className="modal-new-contrasena"
+          overlayClassName="Overlay"
+          shouldCloseOnOverlayClick={false}
+          shouldCloseOnEsc={false}
+        >
+          <h2>Debes actualizar tu contraseña</h2>
+          <label htmlFor="nuevaContrasena">Nueva contraseña:</label>
+          <input
+            type="password"
+            id="nuevaContrasena"
+            value={nuevaContrasena}
+            onChange={(e) => setNuevaContrasena(e.target.value)}
+          />
+          <button onClick={actualizarContrasena}>Actualizar contraseña</button>
+        </Modal>
         {usuario && usuario.rol_usuario ? (
           <>
             {window.innerWidth >= 1024 ? (
@@ -239,7 +325,7 @@ function Instructor() {
             Anterior
           </button>
           <span>
-            {currentPage} de {" "}
+            {currentPage} de{" "}
             {Math.ceil(fichasFiltradas.length / fichasPorPagina)}
           </span>
           <button

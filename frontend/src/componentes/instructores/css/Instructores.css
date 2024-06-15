@@ -154,6 +154,7 @@
     background-color: #2f8a02;
 }
 
+
 /* Para celulares */
 @media screen and (max-width: 480px) {
     .pageFichas-content{

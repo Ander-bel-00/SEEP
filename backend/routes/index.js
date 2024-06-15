@@ -38,7 +38,7 @@ module.exports = function () {
 
     // Reistrar Fichas.
     router.post('/fichas-add',  FichasController.nuevaFicha);
-    router.post('/fichas/instructor/add',  FichasController.instructorFicha);
+    router.post('/fichas/instructor/add', authRequired,  FichasController.instructorFicha);
     router.post('/fichas-Admin-new', authRequired, FichasController.nuevaFichaAdmin);
     // Mostrar todas las Fichas registradas en la base de datos.
     router.get('/fichas-getAll', authRequired,FichasController.mostrarFichas);
@@ -63,11 +63,12 @@ module.exports = function () {
     router.put('/aprendiz/:id_aprendiz/nuevaContrasena', authRequired, AprendizController.aprendizContrasena);
 
     // Rutas para el instructor.
-    router.post('/instructores-add',  InstructorController.nuevoInstructor);
+    router.post('/instructores-add',   InstructorController.nuevoInstructor);
     router.get('/instructor/:numero_documento/fichas-asignadas', InstructorController.obtenerFichasAsignadas);
     router.get('/instructores/get-All', authRequired, InstructorController.obtenerInstructores);
     router.get('/instructores/get-Instructor/:id_instructor', authRequired, InstructorController.obtenerInstructorById);
     router.put('/instructores/update/:id_instructor', authRequired, InstructorController.actualizarInstructor);
+    router.put('/instructor/:id_instructor/nuevaContrasena', InstructorController.nueaContrasenaInstructor)
     router.delete('/instructores/delete/:id_instructor', authRequired, InstructorController.eliminarInstructor);
 
 
@@ -91,7 +92,7 @@ module.exports = function () {
 
 
     // Rutas para las Bitácoras.
-    router.post('/bitacoras-upload/:id_aprendiz', authRequired, BitacorasController.cargarBitacora);
+    router.post('/bitacoras-upload/:id_aprendiz',  BitacorasController.cargarBitacora);
     router.get('/bitacoras-aprendiz/:id_aprendiz', authRequired, BitacorasController.obtenerBitacorasPorAprendiz);
     // Ruta para obtener todas las bitacoras de la Base de Datos.
     router.get('/bitacoras-aprendiz-getAll', authRequired, BitacorasController.obtenerBitacoras);
@@ -105,11 +106,11 @@ module.exports = function () {
     router.delete('/bitacoras-delete/:id_bitacora', authRequired, BitacorasController.eliminarBitacora);
 
     // Rutas para evaluación de etapa productiva.
-    router.post('/evaluacion-ep-aprendiz/:id_aprendiz',  EvaluacionController.cargarPlaneacionAprendiz);
+    router.post('/evaluacion-ep-aprendiz/:id_aprendiz', authRequired, EvaluacionController.cargarPlaneacionAprendiz);
 
 
     // Rutas para las empresas.
-    router.post('/empresas/add/:id_aprendiz',   EmpresaController.nuevaEmpresa);
+    router.post('/empresas/add/:id_aprendiz',    EmpresaController.nuevaEmpresa);
     router.get('/empresas/get/:id_empresa', authRequired, EmpresaController.obtenerDatosEmpresa);
     return router;
 };

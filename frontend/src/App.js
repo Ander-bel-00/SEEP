@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"; // Importa BrowserRouter
 import LoginForm from "./componentes/login/LoginForm";
 import NavbarAprendiz from "./componentes/aprendices/layouts/Navabar-Aprendiz";
@@ -25,53 +25,81 @@ import AgendaContainer from "./componentes/agenda/AgendaContainer/AgendaContaine
 import { useAuth } from "./context/AuthContext.js";
 import FormularioCompleto from "./componentes/SeguimientoEP/FormularioCompleto/FormIPSE.js";
 
-
 function App() {
-  const { isAuthenticated, userRole, handleLogout, showNav, setShowNav } = useAuth();
+  const { isAuthenticated, userRole, handleLogout, showNav, setShowNav } =
+    useAuth();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   return (
     <BrowserRouter>
       <Routes>
-      <Route
-            path="/login"
-            element={
-              isAuthenticated ? <Navigate to={`/${userRole}`} /> : <LoginForm />
-            }
-          />
+        <Route
+          path="/login"
+          element={
+            isAuthenticated ? <Navigate to={`/${userRole}`} /> : <LoginForm />
+          }
+        />
         <Route
           path="/"
-          element={!isAuthenticated ? <Navigate to="/login" /> : <ProtectedRoute userRole={sessionStorage.getItem('userRole')} />}
+          element={
+            !isAuthenticated ? (
+              <Navigate to="/login" />
+            ) : (
+              <ProtectedRoute userRole={sessionStorage.getItem("userRole")} />
+            )
+          }
         />
 
-        <Route path="/restablecimiento-contrasena" element={<RecuperaContrasena />} />
-        
+        <Route
+          path="/restablecimiento-contrasena"
+          element={<RecuperaContrasena />}
+        />
+
         {/* Rutas protegidas, solo accede el rol aprendiz */}
         <Route
           path="/aprendiz/*"
           element={
             <ProtectedRoute
-              isAllowed={!!sessionStorage.getItem('isAuthenticated') && sessionStorage.getItem('userRole') === 'aprendiz'}
+              isAllowed={
+                !!sessionStorage.getItem("isAuthenticated") &&
+                sessionStorage.getItem("userRole") === "aprendiz"
+              }
               redirectTo="/login"
             >
               <Fragment>
-                <NavbarAprendiz showNav={showNav} handleLogout={handleLogout} setShowNav={setShowNav}/>
-                <Header showNav={showNav} setShowNav={setShowNav}/>
-                  <Routes>
-                    <Route path="/" element={
+                <NavbarAprendiz
+                  showNav={showNav}
+                  handleLogout={handleLogout}
+                  setShowNav={setShowNav}
+                  modalIsOpen={modalIsOpen}
+                />
+                <Header showNav={showNav} setShowNav={setShowNav} />
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
                       <main className="main-container">
-                        <Aprendices />
-                      </main>} />
-                    <Route path=":id_aprendiz/bitacoras-aprendiz" element={
+                        <Aprendices setModalIsOpen={setModalIsOpen} />
+                      </main>
+                    }
+                  />
+                  <Route
+                    path=":id_aprendiz/bitacoras-aprendiz"
+                    element={
                       <main className="bitacoras-aprendizUser-main">
-                        <Bitacoras />
+                        <Bitacoras setModalIsOpen={setModalIsOpen} />
                       </main>
-                    } />
-                    <Route path=":id_aprendiz/documents-aprendiz"element={
+                    }
+                  />
+                  <Route
+                    path=":id_aprendiz/documents-aprendiz"
+                    element={
                       <main className="documents-aprendiz-main">
-                        <Documents/>
+                        <Documents setModalIsOpen={setModalIsOpen} />
                       </main>
-                    }/>
-                  </Routes>
+                    }
+                  />
+                </Routes>
               </Fragment>
             </ProtectedRoute>
           }
@@ -80,146 +108,168 @@ function App() {
         <Route
           path="/instructor/*"
           element={
-              <ProtectedRoute
-                isAllowed={!!sessionStorage.getItem('isAuthenticated') && sessionStorage.getItem('userRole') === 'instructor'}
-                redirectTo="/login"
-              >
-                <Fragment>
-                  <Header showNav={showNav} setShowNav={setShowNav}/>
-                  <NavbarInstructor showNav={showNav} handleLogout={handleLogout} setShowNav={setShowNav}/>
-                    <Routes>
-                      <Route path="/" element={
-                        <main className="main-container">
-                          <Instructor />
-                        </main>
-                      } />
-                      <Route path=":id_instructor/documents-instructor" 
-                        element={
-                          <main className="main-ins-bitacoras">
-                            <InstructorDocuments />
-                          </main>   
-                        }
-                      />
-                      <Route path=":id_instructor/bitacoras-instructor"
-                        element={
-                          <BitacorasInstructor/>
-                        }
-                      />
+            <ProtectedRoute
+              isAllowed={
+                !!sessionStorage.getItem("isAuthenticated") &&
+                sessionStorage.getItem("userRole") === "instructor"
+              }
+              redirectTo="/login"
+            >
+              <Fragment>
+                <Header showNav={showNav} setShowNav={setShowNav} />
+                <NavbarInstructor
+                  showNav={showNav}
+                  handleLogout={handleLogout}
+                  setShowNav={setShowNav}
+                  modalIsOpen={modalIsOpen}
+                />
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <main className="main-container">
+                        <Instructor setModalIsOpen={setModalIsOpen}/>
+                      </main>
+                    }
+                  />
+                  <Route
+                    path=":id_instructor/documents-instructor"
+                    element={
+                      <main className="main-ins-bitacoras">
+                        <InstructorDocuments setModalIsOpen={setModalIsOpen}/>
+                      </main>
+                    }
+                  />
+                  <Route
+                    path=":id_instructor/bitacoras-instructor"
+                    element={<BitacorasInstructor setModalIsOpen={setModalIsOpen}/>}
+                  />
 
-                      <Route 
-                        path="aprendicesFicha/:numero_ficha"
-                        element={
-                          <main className="list-aprendices-box">
-                            <ListaAprendices isAuthenticated={isAuthenticated}/>
-                          </main>
-                        }
-                      />
-                      <Route 
-                        path=":id_instructor/nuevaFicha"
-                        element={
-                            <main className="main-container">
-                              <NuevaFicha />
-                            </main>
-                        }
-                      />
-                      <Route 
-                        path=":id_instructor/aprendiz-add"
-                        element={
-                          <main className="new-aprendiz-content">
-                            <NuevoAprendiz />
-                          </main>
-                        }
-                      />
+                  <Route
+                    path="aprendicesFicha/:numero_ficha"
+                    element={
+                      <main className="list-aprendices-box">
+                        <ListaAprendices isAuthenticated={isAuthenticated} setModalIsOpen={setModalIsOpen}/>
+                      </main>
+                    }
+                  />
+                  <Route
+                    path=":id_instructor/nuevaFicha"
+                    element={
+                      <main className="main-container">
+                        <NuevaFicha setModalIsOpen={setModalIsOpen}/>
+                      </main>
+                    }
+                  />
+                  <Route
+                    path=":id_instructor/aprendiz-add"
+                    element={
+                      <main className="new-aprendiz-content">
+                        <NuevoAprendiz setModalIsOpen={setModalIsOpen}/>
+                      </main>
+                    }
+                  />
 
-                      <Route 
-                        path="visitas-add/:numero_ficha/:id_aprendiz"
-                        element={
-                          <div className="main-container">
-                            <Calendario />
-                          </div>
-                        }
-                      />
-                      <Route 
-                        path="agenda/visitas"
-                        element={
-                          <main className="agenda-main-container">
-                            <AgendaContainer />
-                          </main>
-                        }
-                      />
-                      <Route 
-                        path="agenda/visitas/visitas-add/:numero_ficha/:id_aprendiz"
-                        element={
-                          <div className="main-container">
-                            <Calendario />
-                          </div>
-                        }
-                      />
+                  <Route
+                    path="visitas-add/:numero_ficha/:id_aprendiz"
+                    element={
+                      <div className="main-container">
+                        <Calendario setModalIsOpen={setModalIsOpen}/>
+                      </div>
+                    }
+                  />
+                  <Route
+                    path="agenda/visitas"
+                    element={
+                      <main className="agenda-main-container">
+                        <AgendaContainer setModalIsOpen={setModalIsOpen}/>
+                      </main>
+                    }
+                  />
+                  <Route
+                    path="agenda/visitas/visitas-add/:numero_ficha/:id_aprendiz"
+                    element={
+                      <div className="main-container">
+                        <Calendario setModalIsOpen={setModalIsOpen}/>
+                      </div>
+                    }
+                  />
 
-                      <Route 
-                        path="evaluacion-EP/:id_aprendiz"
-                        element={
-                          <main className="main-container">
-                            <FormularioCompleto />
-                          </main>
-                        }
-                      />
-                    </Routes>
-                </Fragment>
-              </ProtectedRoute>
+                  <Route
+                    path="evaluacion-EP/:id_aprendiz"
+                    element={
+                      <main className="main-container">
+                        <FormularioCompleto setModalIsOpen={setModalIsOpen}/>
+                      </main>
+                    }
+                  />
+                </Routes>
+              </Fragment>
+            </ProtectedRoute>
           }
         />
         {/* Rutas protegidas a las qeu accederá el rol Administrador */}
-        <Route path="/admin/*"
+        <Route
+          path="/admin/*"
           element={
             <ProtectedRoute
-                isAllowed={!!sessionStorage.getItem('isAuthenticated') && sessionStorage.getItem('userRole') === 'admin'}
-                redirectTo="/login"
-              >
-                <Fragment>
-                  <Header showNav={showNav} setShowNav={setShowNav}/>
-                  <NavbarAdmin showNav={showNav} handleLogout={handleLogout} setShowNav={setShowNav}/>
-                  <main className="container contAdmin">
-                    <Routes>
-                      <Route path="/" element={
+              isAllowed={
+                !!sessionStorage.getItem("isAuthenticated") &&
+                sessionStorage.getItem("userRole") === "admin"
+              }
+              redirectTo="/login"
+            >
+              <Fragment>
+                <Header showNav={showNav} setShowNav={setShowNav} />
+                <NavbarAdmin
+                  showNav={showNav}
+                  handleLogout={handleLogout}
+                  setShowNav={setShowNav}
+                />
+                <main className="container contAdmin">
+                  <Routes>
+                    <Route
+                      path="/"
+                      element={
                         <main className="Admin-main-box">
                           <Administrador />
                         </main>
-                      } />
-                      <Route
-                        path="/crear-ficha"
-                        element={
-                            <div>
-                              <main className="fichasForm-main-box">
-                                <FichasForm />
-                              </main>
-                            </div>
-                        }
-                      />
-                      <Route
-                        path="/crear-aprendiz"
-                        element={
-                            <div>
-                              <main className="AprendizForm-main-box">
-                                <AprendizForm />
-                              </main>
-                            </div>
-                        }
-                      />
-                      <Route
-                        path="/crear-instructor"
-                        element={
-                              <div>
-                                <main className="InstructorForm-main-box">
-                                  <InstructorForm />
-                                </main>
-                              </div>
-                          }
-                      />
-                    </Routes>
-                  </main>
-                </Fragment>
-              </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/crear-ficha"
+                      element={
+                        <div>
+                          <main className="fichasForm-main-box">
+                            <FichasForm />
+                          </main>
+                        </div>
+                      }
+                    />
+                    <Route
+                      path="/crear-aprendiz"
+                      element={
+                        <div>
+                          <main className="AprendizForm-main-box">
+                            <AprendizForm />
+                          </main>
+                        </div>
+                      }
+                    />
+                    <Route
+                      path="/crear-instructor"
+                      element={
+                        <div>
+                          <main className="InstructorForm-main-box">
+                            <InstructorForm />
+                          </main>
+                        </div>
+                      }
+                    />
+                  </Routes>
+                </main>
+              </Fragment>
+            </ProtectedRoute>
           }
         />
       </Routes>

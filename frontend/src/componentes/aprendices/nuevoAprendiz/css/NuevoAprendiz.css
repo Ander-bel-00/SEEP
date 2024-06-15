@@ -31,6 +31,7 @@
     padding: 10px; /* Espaciado interno del input */
     border: 1px solid #ccc; /* Borde del input */
     border-radius: 5px; /* Bordes redondeados */
+    background-color: #F5F5F5;
 }
 
 /* Estilos para el botón */

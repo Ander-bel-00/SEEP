@@ -40,8 +40,27 @@ function Calendario() {
   const [selectedEndTime, setSelectedEndTime] = useState("");
   const [selectedPlaceEvent, setSelectedPlaceEvent] = useState("");
   const [selectedModalidadEvent, setSelectedModalidadEvent] = useState("");
-  
+  const [aprendizInfo, setAprendizInfo] = useState([]);
+  const [fichaAprendizInfo, setFichaAprendizInfo] = useState([]);
 
+  useEffect(() => {
+    const obtenerUsuario = async () => {
+      try {
+
+        const resAprendiz = await clienteAxios.get(`/aprendiz/id/${id_aprendiz}`);
+        setAprendizInfo(resAprendiz.data);
+        const fichaData = await clienteAxios.get(
+          `/ficha-aprendiz/ficha/${resAprendiz.data.numero_ficha}`
+        );
+        setFichaAprendizInfo(fichaData.data.ficha);
+      } catch (error) {
+        console.error("Error al obtener la información del usuario:", error);
+      }
+    };
+
+    obtenerUsuario();
+  });
+  
   useEffect(() => {
     cargarEventos();
   }, []);
@@ -352,23 +371,23 @@ function Calendario() {
                             <h2>Datos del Aprendiz</h2>
                             <div>
                               <strong>Número de Documento:</strong>{" "}
-                              {selectedEvent.documento_aprendiz}
+                              {aprendizInfo.numero_documento}
                             </div>
                             <div>
                               <strong>Nombres:</strong>{" "}
-                              {selectedEvent.nombres_aprendiz}
+                              {aprendizInfo.nombres}
                             </div>
                             <div>
                               <strong>Apellidos:</strong>{" "}
-                              {selectedEvent.apellidos_aprendiz}
+                              {aprendizInfo.apellidos}
                             </div>
                             <div>
                               <strong>Número de Ficha:</strong>{" "}
-                              {selectedEvent.numero_ficha_aprendiz}
+                              {aprendizInfo.numero_ficha}
                             </div>
                             <div>
                               <strong>Programa de Formación:</strong>{" "}
-                              {selectedEvent.programa_formacion}
+                              {fichaAprendizInfo.programa_formacion}
                             </div>
                           </div>
                         </div>

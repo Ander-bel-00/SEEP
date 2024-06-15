@@ -5,9 +5,9 @@ const {
   Sequelize,
   ValidationError: SequelizeValidationError,
 } = require("sequelize");
-const {generarContrasenaAleatoria} = require('./ContraseñaAleatoria');
-
-
+const { generarContrasenaAleatoria } = require("./ContraseñaAleatoria");
+const enviarCorreo = require("../utils/enviarCorreo");
+const plantillasController = require("../controllers/templatesController");
 
 exports.nuevoInstructor = async (req, res, next) => {
   try {
@@ -26,7 +26,6 @@ exports.nuevoInstructor = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(contrasenaAleatoria, 10);
     req.body.contrasena = hashedPassword;
 
-
     const numerosFicha = req.body.fichas_asignadas;
     const fichas = await Fichas.findAll({
       where: {
@@ -36,18 +35,17 @@ exports.nuevoInstructor = async (req, res, next) => {
 
     // Si no se encuentran las fichas, retornar un error
     if (!fichas || fichas.length !== numerosFicha.length) {
-      return res
-        .status(404)
-        .json({
-          mensaje:
-            "No se encontraron todas las fichas correspondientes a los números proporcionados",
-        });
+      return res.status(404).json({
+        mensaje:
+          "No se encontraron todas las fichas correspondientes a los números proporcionados",
+      });
     }
 
     await Instructores.sync({ force: false });
 
     const instructorData = {
       ...req.body,
+      contrasena_temporal: true,
       // Convertir el array de números de ficha en una cadena separada por comas
       fichas_asignadas: fichas.map((ficha) => ficha.numero_ficha).join(","),
     };
@@ -65,8 +63,23 @@ exports.nuevoInstructor = async (req, res, next) => {
         .status(500)
         .json({ mensaje: "El instructor ya se encuentra registrado" });
     } else {
+      const correo_electronico1 = req.body.correo_electronico1;
       // Crear el instructor en la base de datos
       const instructor = await Instructores.create(instructorData);
+
+      const datosPlantilla = {
+        nombreUsuario: instructor.nombres,
+        numeroDocumento: instructor.numero_documento,
+        contrasenaUsuario: contrasenaAleatoria,
+      };
+      const cuerpoCorreo =
+        plantillasController.RegisterAprendiz(datosPlantilla);
+
+      await enviarCorreo(
+        correo_electronico1,
+        "S.E.E.P-Bienvenido al Sistema de Evaluación de Etapa Productiva",
+        cuerpoCorreo
+      );
 
       // Enviar mensaje de respuesta con los datos del instructor creado
       res.json({
@@ -194,12 +207,10 @@ exports.actualizarInstructor = async (req, res, next) => {
       fichas_asignadas: fichasAsignadas,
     });
 
-    res
-      .status(200)
-      .json({
-        mensaje: "Instructor actualizado exitosamente",
-        instructorActualizado,
-      });
+    res.status(200).json({
+      mensaje: "Instructor actualizado exitosamente",
+      instructorActualizado,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ mensaje: "Hubo error interno en el servidor" });
@@ -226,5 +237,38 @@ exports.eliminarInstructor = async (req, res, next) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ mensaje: "Hubo error interno en el servidor" });
+  }
+};
+
+exports.nueaContrasenaInstructor = async (req, res, next) => {
+  try {
+    const instructor = await Instructores.findOne({
+      where: {
+        id_instructor: req.params.id_instructor,
+      },
+    });
+
+    if (!instructor)
+      return res.status(404).json({
+        menssage: "No se ha encontardo el instructor con el id proporcionado",
+      });
+
+    const nuevaContrasena = req.body.contrasena;
+
+    // Encriptar la contraseña antes de guardarla en la base de datos
+    const hashedPassword = await bcrypt.hash(nuevaContrasena, 10);
+    instructor.contrasena = hashedPassword;
+    instructor.contrasena_temporal = false;
+
+    await instructor.save();
+    res.status(200).json({
+      message: "Su contraseña se ha actualizado exitosamente",
+    });
+  } catch (error) {
+    console.error("Hubo un error al actualizar la contraseña", error);
+    res.status(500).json({
+      message: "Hubo un error al actualizar la contraseña",
+      error,
+    });
   }
 };

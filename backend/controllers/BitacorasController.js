@@ -94,11 +94,6 @@ exports.cargarBitacora = async (req, res, next) => {
                 numero_de_bitacora: req.body.numero_de_bitacora,
                 archivo: req.file.filename,
                 id_aprendiz: aprendiz.id_aprendiz,
-                numero_documento: aprendiz.numero_documento,
-                nombres: aprendiz.nombres,
-                apellidos: aprendiz.apellidos,
-                numero_ficha: aprendiz.numero_ficha,
-                programa_formacion: aprendiz.programa_formacion,
             };
 
             // Establece las observaciones como vacías después de crear la nueva bitácora

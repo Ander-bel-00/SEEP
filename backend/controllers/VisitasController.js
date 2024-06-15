@@ -53,23 +53,24 @@ exports.crearEvento = async (req, res) => {
       // Verificar si hay una visita agendada en la misma fecha y hora que otra visita existente
       const visitaExistente = await Visitas.findOne({
         where: {
-          fecha: fecha,
-          [Op.or]: [
+          fecha: fecha, // Filtra visitas que tengan la misma fecha que la nueva visita
+          [Op.or]: [ // Usa el operador OR para combinar múltiples condiciones lógicas
             {
-              hora_inicio: { [Op.lte]: hora_inicio },
-              hora_fin: { [Op.gte]: hora_inicio },
-            }, // La nueva visita inicia durante una visita existente
+              hora_inicio: { [Op.lte]: hora_inicio }, // Verifica si la hora de inicio de una visita existente es menor o igual a la hora de inicio de la nueva visita
+              hora_fin: { [Op.gte]: hora_inicio }, // Verifica si la hora de fin de una visita existente es mayor o igual a la hora de inicio de la nueva visita
+            }, // Si ambas condiciones son verdaderas, significa que la nueva visita empieza durante una visita existente
             {
-              hora_inicio: { [Op.lte]: hora_fin },
-              hora_fin: { [Op.gte]: hora_fin },
-            }, // La nueva visita finaliza durante una visita existente
+              hora_inicio: { [Op.lte]: hora_fin }, // Verifica si la hora de inicio de una visita existente es menor o igual a la hora de fin de la nueva visita
+              hora_fin: { [Op.gte]: hora_fin }, // Verifica si la hora de fin de una visita existente es mayor o igual a la hora de fin de la nueva visita
+            }, // Si ambas condiciones son verdaderas, significa que la nueva visita termina durante una visita existente
             {
-              hora_inicio: { [Op.gte]: hora_inicio },
-              hora_fin: { [Op.lte]: hora_fin },
-            }, // La nueva visita se superpone completamente con una visita existente
+              hora_inicio: { [Op.gte]: hora_inicio }, // Verifica si la hora de inicio de una visita existente es mayor o igual a la hora de inicio de la nueva visita
+              hora_fin: { [Op.lte]: hora_fin }, // Verifica si la hora de fin de una visita existente es menor o igual a la hora de fin de la nueva visita
+            }, // Si ambas condiciones son verdaderas, significa que la nueva visita se superpone completamente con una visita existente
           ],
         },
       });
+      
 
       if (visitaExistente) {
         return res.status(400).json({
@@ -87,11 +88,6 @@ exports.crearEvento = async (req, res) => {
         lugar_visita,
         modalidad_visita,
         aprendiz: id_aprendiz,
-        documento_aprendiz: aprendices.numero_documento,
-        nombres_aprendiz: aprendices.nombres,
-        apellidos_aprendiz: aprendices.apellidos,
-        numero_ficha_aprendiz: aprendices.numero_ficha,
-        programa_formacion: aprendices.programa_formacion,
       });
 
       return res.json(nuevaVisita);

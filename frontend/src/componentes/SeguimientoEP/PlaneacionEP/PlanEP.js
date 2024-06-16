@@ -24,24 +24,26 @@ function PlanEP({ evaluacionAprendiz, setEvalaucionAprendiz }) {
   const handleChange = (event, index) => {
     const { name, value } = event.target;
     const updatedCampos = [...campos];
-    if (name === "fecha_actividad") {
-      const formattedDate = new Date(value).toISOString().split("T")[0];
-      updatedCampos[index] = { ...updatedCampos[index], [name]: formattedDate };
-    } else {
-      updatedCampos[index] = { ...updatedCampos[index], [name]: value };
-    }
+    updatedCampos[index] = { ...updatedCampos[index], [name]: value };
     setCampos(updatedCampos);
-  
+
     const newEvalaucionAprendiz = {
       ...evaluacionAprendiz,
-      actividades_desarrollar: JSON.stringify(updatedCampos.map(campo => campo.actividades_desarrollar || "")),
-      evidencias_aprendizaje: JSON.stringify(updatedCampos.map(campo => campo.evidencias_aprendizaje || "")),
-      fecha_actividad: updatedCampos.map(campo => campo.fecha_actividad || ""),
-      lugar_actividad: JSON.stringify(updatedCampos.map(campo => campo.lugar_actividad || "")),
+      actividades_desarrollar: updatedCampos.map(
+        (campo) => campo.actividades_desarrollar || ""
+      ),
+      evidencias_aprendizaje: updatedCampos.map(
+        (campo) => campo.evidencias_aprendizaje || ""
+      ),
+      fecha_actividad: updatedCampos.map(
+        (campo) => campo.fecha_actividad || ""
+      ),
+      lugar_actividad: updatedCampos.map(
+        (campo) => campo.lugar_actividad || ""
+      ),
     };
     setEvalaucionAprendiz(newEvalaucionAprendiz);
   };
-  
 
   const handleObservacionesChange = (event) => {
     const { value } = event.target;
@@ -112,24 +114,35 @@ function PlanEP({ evaluacionAprendiz, setEvalaucionAprendiz }) {
     });
 
     if (currentFirmaField !== null) {
-      const updatedCampos = campos.map((campo, index) => {
-        return index === currentFirmaField ? { ...campo, firma } : campo;
-      });
-
+      const updatedCampos = [...campos];
+      updatedCampos[currentFirmaField] = { ...updatedCampos[currentFirmaField], firma };
       setCampos(updatedCampos);
-      setCurrentFirmaField(null);
+
+      const updatedEvalaucionAprendiz = {
+        ...evaluacionAprendiz,
+        firma_ente_conformador: currentFirmaField === 0 ? firma : evaluacionAprendiz.firma_ente_conformador,
+        firma_aprendiz: currentFirmaField === 1 ? firma : evaluacionAprendiz.firma_aprendiz,
+        firma_instructor_seguimiento: currentFirmaField === 2 ? firma : evaluacionAprendiz.firma_instructor_seguimiento,
+      };
+      setEvalaucionAprendiz(updatedEvalaucionAprendiz);
     }
   };
 
   const handleSelectFirma = (firma) => {
-    if (currentFirmaField !== null) {
-      const updatedCampos = campos.map((campo, index) =>
-        index === currentFirmaField ? { ...campo, firma } : campo
-      );
-      setCampos(updatedCampos);
-      setCurrentFirmaField(null);
-    }
+    const updatedCampos = [...campos];
+    updatedCampos[currentFirmaField] = { ...updatedCampos[currentFirmaField], firma };
+    setCampos(updatedCampos);
+    setShowPopup(false);
+
+    const updatedEvalaucionAprendiz = {
+      ...evaluacionAprendiz,
+      firma_ente_conformador: currentFirmaField === 0 ? firma : evaluacionAprendiz.firma_ente_conformador,
+      firma_aprendiz: currentFirmaField === 1 ? firma : evaluacionAprendiz.firma_aprendiz,
+      firma_instructor_seguimiento: currentFirmaField === 2 ? firma : evaluacionAprendiz.firma_instructor_seguimiento,
+    };
+    setEvalaucionAprendiz(updatedEvalaucionAprendiz);
   };
+
   return (
     <Fragment>
       <div className="plan-content-box" id="planEP">
@@ -334,6 +347,8 @@ function PlanEP({ evaluacionAprendiz, setEvalaucionAprendiz }) {
       <PopupFirmas
         evaluacionAprendiz={evaluacionAprendiz}
         setEvalaucionAprendiz={setEvalaucionAprendiz}
+        currentFirmaField={currentFirmaField}
+        setCurrentFirmaField={setCurrentFirmaField}
         show={showPopup}
         onClose={() => setShowPopup(false)}
         onSave={(firma, editIndex) => {

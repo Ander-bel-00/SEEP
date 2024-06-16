@@ -208,7 +208,10 @@ function EvaluacionEp({ evaluacionAprendiz, setEvalaucionAprendiz }) {
             </div>
             <div className="especific-recon">
               <p className="space-word">Especificar cuáles:</p>
-              <textarea onChange={handleChange} name="especificar_recono"></textarea>
+              <textarea
+                onChange={handleChange}
+                name="especificar_recono"
+              ></textarea>
             </div>
           </div>
           <div className="col-8cols ep-table-td firmas-ev-col">
@@ -227,41 +230,26 @@ function EvaluacionEp({ evaluacionAprendiz, setEvalaucionAprendiz }) {
                 <label>
                   <strong>Firma del Ente Conformador:</strong>
                 </label>
-                <button
-                  type="button"
-                  onClick={() => handleAddFirma(0)}
-                  className={campos[0].firma ? "" : "btn-add-firma"}
-                >
-                  {campos[0].firma ? (
-                    <img
-                      src={campos[0].firma}
-                      alt="Firma del Ente Conformador"
-                      style={{ width: 100, height: 50 }}
-                    />
-                  ) : (
-                    "Añadir Firma"
-                  )}
-                </button>
+                {evaluacionAprendiz &&
+                evaluacionAprendiz.firma_ente_conformador ? (
+                  <img
+                    src={evaluacionAprendiz.firma_ente_conformador}
+                    alt="Firma Ente Conformador"
+                    className="relative left-10"
+                  />
+                ) : null}
               </div>
               <div>
                 <label>
                   <strong>Firma del Aprendiz</strong>
                 </label>
-                <button
-                  type="button"
-                  onClick={() => handleAddFirma(1)}
-                  className={campos[1].firma ? "" : "btn-add-firma"}
-                >
-                  {campos[1].firma ? (
-                    <img
-                      src={campos[1].firma}
-                      alt="Firma del Aprendiz"
-                      style={{ width: 100, height: 50 }}
-                    />
-                  ) : (
-                    "Añadir Firma"
-                  )}
-                </button>
+                {evaluacionAprendiz && evaluacionAprendiz.firma_aprendiz ? (
+                  <img
+                    src={evaluacionAprendiz.firma_aprendiz}
+                    alt="Firma del Aprendiz"
+                    className="relative ml-3"
+                  />
+                ) : null}
               </div>
               <div>
                 <label>
@@ -277,21 +265,14 @@ function EvaluacionEp({ evaluacionAprendiz, setEvalaucionAprendiz }) {
                 <label>
                   <strong>Firma Instructor seguimiento</strong>
                 </label>
-                <button
-                  type="button"
-                  onClick={() => handleAddFirma(2)}
-                  className={campos[2].firma ? "" : "btn-add-firma"}
-                >
-                  {campos[2].firma ? (
-                    <img
-                      src={campos[2].firma}
-                      alt="Firma Instructor seguimiento"
-                      style={{ width: 100, height: 50 }}
-                    />
-                  ) : (
-                    "Añadir Firma"
-                  )}
-                </button>
+                {evaluacionAprendiz &&
+                evaluacionAprendiz.firma_instructor_seguimiento ? (
+                  <img
+                    src={evaluacionAprendiz.firma_instructor_seguimiento}
+                    alt="Firma del Instructor de Seguimiento"
+                    className="relative ml-5"
+                  />
+                ) : null}
               </div>
             </div>
           </div>

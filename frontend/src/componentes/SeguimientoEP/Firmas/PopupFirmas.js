@@ -1,4 +1,3 @@
-// PopupFirmas.js
 import React, { useRef, useState } from "react";
 import Modal from "react-modal";
 import SignatureCanvas from "react-signature-canvas";
@@ -6,7 +5,17 @@ import "./css/PopupFirmas.css";
 
 Modal.setAppElement("#root");
 
-const PopupFirmas = ({ show, onClose, onSave, onSelect, firmas }) => {
+const PopupFirmas = ({
+  show,
+  onClose,
+  onSave,
+  onSelect,
+  firmas,
+  evaluacionAprendiz,
+  setEvalaucionAprendiz,
+  currentFirmaField,
+  setCurrentFirmaField,
+}) => {
   const sigCanvas = useRef({});
   const [editIndex, setEditIndex] = useState(null);
 
@@ -18,6 +27,16 @@ const PopupFirmas = ({ show, onClose, onSave, onSelect, firmas }) => {
     const firma = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
     onSave(firma, editIndex);
     setEditIndex(null);
+
+    // Actualiza el estado de evaluacionAprendiz con la nueva firma
+    const updatedFirmas = [...firmas];
+    if (editIndex !== null) {
+      updatedFirmas[editIndex] = firma;
+    } else {
+      updatedFirmas.push(firma);
+    }
+    onSelect(firma);
+    localStorage.setItem("firmas", JSON.stringify(updatedFirmas));
   };
 
   const handleEdit = (index) => {
@@ -34,11 +53,14 @@ const PopupFirmas = ({ show, onClose, onSave, onSelect, firmas }) => {
     const updatedFirmas = firmas.filter((_, i) => i !== index);
     localStorage.setItem("firmas", JSON.stringify(updatedFirmas));
     onSave(null, index);
+    if (firmas.length === 1) {
+      setEditIndex(null);
+    }
   };
 
-  const handleSelectFirma = (firma, index) => {
+  const handleSelectFirma = (firma) => {
     onSelect(firma);
-    onClose(); // Close the modal after selecting a firma
+    onClose(); // Asegúrate de cerrar el modal después de seleccionar la firma
   };
 
   return (
@@ -63,7 +85,7 @@ const PopupFirmas = ({ show, onClose, onSave, onSelect, firmas }) => {
                   src={firma}
                   alt={`Firma ${index}`}
                   className="firma-item"
-                  onClick={() => handleSelectFirma(firma, index)}
+                  onClick={() => handleSelectFirma(firma)}
                 />
                 <div className="button-firmas-container">
                   <button

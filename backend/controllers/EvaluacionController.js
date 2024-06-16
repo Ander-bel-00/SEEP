@@ -27,6 +27,9 @@ exports.cargarPlaneacionAprendiz = async (req, res, next) => {
     const evaluacionAprendiz = await Evaluacion.create({
       id_aprendiz: req.params.id_aprendiz,
       ...req.body,
+      firma_ente_conformador: req.body.firma_ente_conformador,
+      firma_aprendiz: req.body.firma_aprendiz,
+      firma_instructor_seguimiento: req.body.firma_instructor_seguimiento,
     });
 
     res.status(201).json({

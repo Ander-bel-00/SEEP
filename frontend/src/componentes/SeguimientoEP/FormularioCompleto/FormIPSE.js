@@ -14,14 +14,22 @@ function FormularioCompleto() {
   const [loading, setLoading] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const { id_aprendiz } = useParams();
-  const [evaluacionAprendiz, setEvalaucionAprendiz] = useState({});
+  const [evaluacionAprendiz, setEvalaucionAprendiz] = useState({
+    firma_ente_conformador: '',
+    firma_aprendiz: '',
+    firma_instructor_seguimiento: '',
+  });
+  
 
   useEffect(() => {
     const button = document.getElementById("generate-pdf-button");
+    const sendButton = document.getElementById("enviar-form");
     if (isGeneratingPDF) {
       button.style.display = "none"; // Oculta el botón antes de generar el PDF
+      sendButton.style.display = "none"; // Oculta el botón antes de generar el PDF
     } else {
       button.style.display = "block"; // Muestra el botón después de generar el PDF
+      sendButton.style.display = "block"; // Muestra el botón después de generar el PDF
     }
   }, [isGeneratingPDF]);
 
@@ -41,20 +49,8 @@ function FormularioCompleto() {
         let totalPages = pdf.internal.getNumberOfPages();
         for (let i = 1; i <= totalPages; i++) {
           pdf.setPage(i);
-          // // Agregar el footer centrado en cada página
-          // pdf.setFontSize(10);
-          // const footerText = "GFPI-F-023 V04";
-          // const textWidth =
-          //   (pdf.getStringUnitWidth(footerText) * pdf.internal.getFontSize()) /
-          //   pdf.internal.scaleFactor;
-          // const textHeight =
-          //   pdf.internal.getLineHeight() / pdf.internal.scaleFactor;
-          // const pageSize = pdf.internal.pageSize;
-          // const x = (pageSize.width - textWidth) / 2; // Calcula la posición x centrada
-          // const y = pageSize.height - 30; // Ajusta la posición y según sea necesario
-          // pdf.text(footerText, x, y);
         }
-        pdf.save("formulario.pdf");
+        pdf.save("Planeación_Seguimiento.pdf");
         setLoading(false);
         setIsGeneratingPDF(false);
       },
@@ -73,7 +69,7 @@ function FormularioCompleto() {
       );
       Swal.fire({
         title:
-          "Aprendiz registrado exitosamente, se ha enviado un correo al aprendiz con los pasos para iniciar sesión",
+          "Se ha registardo la evaluación del aprendiz correctamente",
         icon: "success",
         showCancelButton: false,
         confirmButtonText: "Aceptar",
@@ -118,7 +114,10 @@ function FormularioCompleto() {
           />
         </div>
         <div className="generarpdf-box">
-          <button id="generate-pdf-button" type="submit" disabled={loading} onClick={generatePDF}>
+          <button className="mr-10" type="submit" id="enviar-form">
+            Registrar Evaluación
+          </button>
+          <button id="generate-pdf-button" type="button" disabled={loading} onClick={generatePDF}>
             {loading ? (
               <>
                 <ClipLoader size={20} color={"#fff"} loading={loading} />

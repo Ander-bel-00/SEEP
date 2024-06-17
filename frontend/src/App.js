@@ -29,6 +29,7 @@ function App() {
   const { isAuthenticated, userRole, handleLogout, showNav, setShowNav } =
     useAuth();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalEmpresaOpen, setModalEmpresaOpen] = useState(false);
 
   return (
     <BrowserRouter>
@@ -67,19 +68,21 @@ function App() {
               redirectTo="/login"
             >
               <Fragment>
+                <Header showNav={showNav} setShowNav={setShowNav} />
                 <NavbarAprendiz
                   showNav={showNav}
                   handleLogout={handleLogout}
                   setShowNav={setShowNav}
                   modalIsOpen={modalIsOpen}
+                  modalEmpresaOpen={modalEmpresaOpen}
                 />
-                <Header showNav={showNav} setShowNav={setShowNav} />
+
                 <Routes>
                   <Route
                     path="/"
                     element={
                       <main className="main-container">
-                        <Aprendices setModalIsOpen={setModalIsOpen} />
+                        <Aprendices setModalIsOpen={setModalIsOpen} setModalEmpresaOpen={setModalEmpresaOpen} />
                       </main>
                     }
                   />
@@ -128,7 +131,7 @@ function App() {
                     path="/"
                     element={
                       <main className="main-container">
-                        <Instructor setModalIsOpen={setModalIsOpen}/>
+                        <Instructor setModalIsOpen={setModalIsOpen} />
                       </main>
                     }
                   />
@@ -136,20 +139,25 @@ function App() {
                     path=":id_instructor/documents-instructor"
                     element={
                       <main className="main-ins-bitacoras">
-                        <InstructorDocuments setModalIsOpen={setModalIsOpen}/>
+                        <InstructorDocuments setModalIsOpen={setModalIsOpen} />
                       </main>
                     }
                   />
                   <Route
                     path=":id_instructor/bitacoras-instructor"
-                    element={<BitacorasInstructor setModalIsOpen={setModalIsOpen}/>}
+                    element={
+                      <BitacorasInstructor setModalIsOpen={setModalIsOpen} />
+                    }
                   />
 
                   <Route
                     path="aprendicesFicha/:numero_ficha"
                     element={
-                      <main className="list-aprendices-box">
-                        <ListaAprendices isAuthenticated={isAuthenticated} setModalIsOpen={setModalIsOpen}/>
+                      <main className="main-container">
+                        <ListaAprendices
+                          isAuthenticated={isAuthenticated}
+                          setModalIsOpen={setModalIsOpen}
+                        />
                       </main>
                     }
                   />
@@ -157,7 +165,7 @@ function App() {
                     path=":id_instructor/nuevaFicha"
                     element={
                       <main className="main-container">
-                        <NuevaFicha setModalIsOpen={setModalIsOpen}/>
+                        <NuevaFicha setModalIsOpen={setModalIsOpen} />
                       </main>
                     }
                   />
@@ -165,7 +173,7 @@ function App() {
                     path=":id_instructor/aprendiz-add"
                     element={
                       <main className="new-aprendiz-content">
-                        <NuevoAprendiz setModalIsOpen={setModalIsOpen}/>
+                        <NuevoAprendiz setModalIsOpen={setModalIsOpen} />
                       </main>
                     }
                   />
@@ -174,7 +182,7 @@ function App() {
                     path="visitas-add/:numero_ficha/:id_aprendiz"
                     element={
                       <div className="main-container">
-                        <Calendario setModalIsOpen={setModalIsOpen}/>
+                        <Calendario setModalIsOpen={setModalIsOpen} />
                       </div>
                     }
                   />
@@ -182,7 +190,7 @@ function App() {
                     path="agenda/visitas"
                     element={
                       <main className="agenda-main-container">
-                        <AgendaContainer setModalIsOpen={setModalIsOpen}/>
+                        <AgendaContainer setModalIsOpen={setModalIsOpen} />
                       </main>
                     }
                   />
@@ -190,7 +198,7 @@ function App() {
                     path="agenda/visitas/visitas-add/:numero_ficha/:id_aprendiz"
                     element={
                       <div className="main-container">
-                        <Calendario setModalIsOpen={setModalIsOpen}/>
+                        <Calendario setModalIsOpen={setModalIsOpen} />
                       </div>
                     }
                   />
@@ -199,7 +207,7 @@ function App() {
                     path="evaluacion-EP/:id_aprendiz"
                     element={
                       <main className="main-container">
-                        <FormularioCompleto setModalIsOpen={setModalIsOpen}/>
+                        <FormularioCompleto setModalIsOpen={setModalIsOpen} />
                       </main>
                     }
                   />

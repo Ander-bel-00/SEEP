@@ -1,28 +1,28 @@
-.sidenavAprendiz{
-    width: 70px;
-    height: 100vh;
-    position: fixed;
-    top: 15%;
-    left: 0;
-    padding: 20px;
-    background: #00324d;
-    overflow-y: auto;
-    z-index: 1000;
+.sidenavAprendiz {
+  width: 70px;
+  height: 100vh;
+  position: fixed;
+  top: 15%;
+  left: 0;
+  padding: 20px;
+  background: #00324d;
+  overflow-y: auto;
+  z-index: 1000;
 }
 
 .sidenavAprendiz ul {
-    padding: 0px;
-    margin: 0;
-    list-style: none;
-    position: relative;
-    right: 20px;
-    top: -10px;
+  padding: 0px;
+  margin: 0;
+  list-style: none;
+  position: relative;
+  right: 20px;
+  top: -10px;
 }
 
 .sidenavAprendiz ul li {
-    width: 90px;
+  width: 90px;
 }
-    
+
 .sidenavAprendiz ul li a {
   display: block;
   color: #fff;
@@ -36,40 +36,39 @@
 
 .sidenavAprendiz ul li a:hover,
 .sidenavAprendiz ul li a:active {
-    background: #787a7a4d;
-    color: #fff;
+  background: #787a7a4d;
+  color: #fff;
 }
 
 /* Estilos para el componente hovered-options */
 .hovered-options {
-    position: fixed;
-    /* Ajusta el margen superior para desplazar hacia abajo el texto del hover */
-    top: 80px; /* Por ejemplo, puedes probar con 80px */
-    left: calc(70px + 20px); /* 70px del menú + 20px de padding */
-    transform: translateY(-50%);
-    z-index: 1001;
+  position: fixed;
+  /* Ajusta el margen superior para desplazar hacia abajo el texto del hover */
+  top: 80px; /* Por ejemplo, puedes probar con 80px */
+  left: calc(70px + 20px); /* 70px del menú + 20px de padding */
+  transform: translateY(-50%);
+  z-index: 1001;
 }
 
 /* Estilos para el texto dentro de hovered-options */
 .hovered-text {
-    background-color: #00324d;
-    color: #fff;
-    padding: 8px;
-    border-radius: 4px;
-    font-size: 14px;
-    margin-bottom: 5px;
+  background-color: #00324d;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
 .hidden {
   display: none;
 }
 
-
 @media screen and (max-width: 480px) {
-    /* Estilos para el menú hamburguesa */
+  /* Estilos para el menú hamburguesa */
   .sidenav {
     width: 210px;
-    height: 100vh;
+    height: 100%;
     position: fixed;
     top: 0;
     left: 0;
@@ -84,7 +83,7 @@
   .active {
     transform: translateX(0);
   }
-  .menu-burguer{
+  .menu-burguer {
     display: inline-block;
     font-size: 35px;
     position: relative;
@@ -92,11 +91,11 @@
     color: #fff;
   }
 
-  .menu-burguer:hover{
+  .menu-burguer:hover {
     cursor: pointer;
   }
 
-  .sidenav .close-btn{
+  .sidenav .close-btn {
     display: block;
     position: relative;
     left: 150px;
@@ -115,7 +114,7 @@
     right: 20px;
     top: 0px;
   }
-  .userWelcome{
+  .userWelcome {
     color: #fff;
   }
 
@@ -135,7 +134,7 @@
     color: #fff;
   }
 
-  .sidenavAprendiz{
+  .sidenavAprendiz {
     display: none;
   }
 }

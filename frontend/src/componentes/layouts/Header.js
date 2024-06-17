@@ -27,13 +27,13 @@ const Header = ({ showNav, setShowNav }) => {
 
   // Función para obtener solo el primer nombre
   const getPrimerNombre = (nombres) => {
-    const nombresArray = nombres.split(' '); // Dividir los nombres por espacios
+    const nombresArray = nombres.split(" "); // Dividir los nombres por espacios
     return nombresArray[0]; // Devolver el primer nombre
   };
 
   // Función para obtener solo el primer apellido
   const getPrimerApellido = (apellidos) => {
-    const apellidosArray = apellidos.split(' '); // Dividir los apellidos por espacios
+    const apellidosArray = apellidos.split(" "); // Dividir los apellidos por espacios
     return apellidosArray[0]; // Devolver el primer apellido
   };
 
@@ -43,7 +43,32 @@ const Header = ({ showNav, setShowNav }) => {
         <div onClick={toogleNav} className="menu-box">
           <HiMenuAlt1 className="menu-burguer" />
         </div>
-        <div className="user-info-box">
+        {window.innerWidth >= 1024 ? (
+          <img alt="logo-sena" src={logoSena} className="logo-sena-header" />
+        ) : (
+          <div className="user-info-box">
+            {userProfile ? (
+              <Fragment>
+                <p className="user-info-box__rol">
+                  {getRolNombre(userProfile.rol_usuario)}
+                </p>
+                <p className="user-info-box__names">
+                  {getPrimerNombre(userProfile.nombres)}{" "}
+                  {getPrimerApellido(userProfile.apellidos)}
+                </p>
+              </Fragment>
+            ) : (
+              <p>No se han proporcionado datos del Usuario</p>
+            )}
+          </div>
+        )}
+      </div>
+      <div className="header-section center-section">
+        <h1 className="tSeep">S.E.E.P</h1>
+      </div>
+      <div className="header-section right-section">
+        {window.innerWidth >= 1024 ? (
+          <div className="user-info-box">
           {userProfile ? (
             <Fragment>
               <p className="user-info-box__rol">{getRolNombre(userProfile.rol_usuario)}</p>
@@ -53,12 +78,9 @@ const Header = ({ showNav, setShowNav }) => {
             <p>No se han proporcionado datos del Usuario</p>
           )}
         </div>
-      </div>
-      <div className="header-section center-section">
-        <h1 className="tSeep">S.E.E.P</h1>
-      </div>
-      <div className="header-section right-section">
-        <img alt="logo-sena" src={logoSena} className="logo-sena-header" />
+        ): (
+          <img alt="logo-sena" src={logoSena} className="logo-sena-header" />
+        )}
       </div>
     </header>
   );

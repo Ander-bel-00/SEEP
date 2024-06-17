@@ -39,7 +39,6 @@ exports.iniciarSesion = async (req, res, next) => {
         numero_documento: usuario.numero_documento,
         nombres: usuario.nombres,
         apellidos: usuario.apellidos,
-        programa_formacion: usuario.programa_formacion,
         numero_ficha: usuario.numero_ficha,
         },
         'SECRETKEY', {
@@ -57,7 +56,6 @@ exports.iniciarSesion = async (req, res, next) => {
                 numero_documento: usuario.numero_documento,
                 nombres: usuario.nombres,
                 apellidos: usuario.apellidos,
-                programa_formacion: usuario.programa_formacion,
                 numero_ficha: usuario.numero_ficha,
             }
         });

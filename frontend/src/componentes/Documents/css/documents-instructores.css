@@ -4,27 +4,83 @@
 }
 
 /* Estilos generales para la tabla */
-.docsTab {
+.docsTab{
   width: 100%;
   border-collapse: collapse;
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px 2px rgba(0.3, 0.3, 0.3, 0.2);
 }
 
-.th, .td {
-  border: 1px solid #dddddd;
+.docsTab .tr:nth-child(even) {
+  background-color: #f2f2f2; /* Gris claro */
+}
+
+.docsTab .tr:hover{
+  background-color: #ddd; /* Gris más oscuro */
+  cursor: pointer;
+}
+
+.th-docs, .td {
   text-align: left;
   padding: 8px;
 }
 
-.th {
-  background-color: #f2f2f2;
+.th-docs {
+  border: 1px solid #dddddd;
+  background-color: #04324D;
+  color: #fff;
+}
+
+.td{
+  border: 1px solid #ccc;
 }
 
 .btnDownloadInstruc{
   color: #39a900;
+  font-size: 22px;
 }
 
 .btnDownloadInstruc:hover{
-  text-decoration: underline;
+  transform: scale(1.2);
+}
+
+/* Estilos para el tooltip */
+.download-tooltip {
+  position: absolute;
+  bottom: -30px; /* Ajusta según sea necesario para la separación deseada */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  pointer-events: none; /* Evita que el tooltip afecte los eventos del botón */
+  z-index: 1000;
+}
+
+.Search-documents-box{
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.Search-documents-box > p  {
+  font-weight: 600;
+}
+
+.Search-documents-box > p > input {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-left: 1rem;
+  padding: 8px;
+  background-color: #f5f5f5;
+}
+
+.Search-documents-box > p > input:focus {
+  background-color: #fff;
 }
 
 /* Media query para dispositivos móviles */
@@ -33,6 +89,32 @@
     margin-top: 130px;
     padding-top: 20px;
     width: 396px;
+  }
+  .Search-documents-box{
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .Search-documents-box > p > input {
+    position: relative;
+    right: 6%;
+    width: 95%;
+  }
+
+  .docsTab {
+    width: 95%;
+    position: relative;
+    left: 1%;
+  }
+  .docsTab .tr:nth-child(even) {
+    background: none;
+  }
+  
+  .docsTab .tr:hover{
+    background: none;
+    cursor: pointer;
   }
   /* Ocultar la tabla encabezados y mostrar celdas como bloques */
   .docsTab, .Thead, .tbody, .th, .td, .tr { 

@@ -243,8 +243,9 @@
 
 @media screen and (max-width: 480px) {
     .sena-verde{
+        margin-top: 5px;
         width: 4rem;
-        height: 5rem;
+        height: 4rem;
     }
     .sena-medio{
         position: relative;

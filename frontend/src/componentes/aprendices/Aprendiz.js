@@ -6,7 +6,7 @@ import "./css/aprendiz.styles.css";
 import Swal from "sweetalert2";
 import Modal from "react-modal";
 
-function Aprendiz({ setModalIsOpen }) {
+function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
   const [usuario, setUsuario] = useState(null);
   Modal.setAppElement("#root");
   const [visitas, setVisitas] = useState([]);
@@ -16,6 +16,10 @@ function Aprendiz({ setModalIsOpen }) {
   const fechasPorTipo = {};
   const horasPorTipo = {};
   const [modalIsOpen, setModalIsOpenState] = useState(false);
+  const [modalEmpresa, setModalEmpresaState] = useState(false);
+  const [empresaData, setEmpresaData] = useState([]);
+  const [showVisits, setShowVisits] = useState(true);
+  const [empresaInfo, setEmpresaInfo] = useState(null);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -27,24 +31,43 @@ function Aprendiz({ setModalIsOpen }) {
     setModalIsOpenState(false);
   };
 
+  const openModalEmpersa = () => {
+    setModalEmpresaOpen(true);
+    setModalEmpresaState(true);
+  };
+
+  const closeModalEmpresa = () => {
+    setModalEmpresaOpen(false);
+    setModalEmpresaState(false);
+  };
+
   useEffect(() => {
     const obtenerUsuario = async () => {
       try {
         const response = await clienteAxios.get("/usuario");
         setUsuario(response.data.usuario);
 
-        const resVisitas = await clienteAxios.get(`/visitas-aprendiz/${response.data.usuario.id_aprendiz}`);
+        const resVisitas = await clienteAxios.get(
+          `/visitas-aprendiz/${response.data.usuario.id_aprendiz}`
+        );
         if (Array.isArray(resVisitas.data.visitas)) {
           setVisitas(resVisitas.data.visitas);
         } else {
-          console.error("La respuesta de la API no es un array:", resVisitas.data.visitas);
+          console.error(
+            "La respuesta de la API no es un array:",
+            resVisitas.data.visitas
+          );
         }
 
-        const resAprendiz = await clienteAxios.get(`/aprendiz/id/${response.data.usuario.id_aprendiz}`);
+        const resAprendiz = await clienteAxios.get(
+          `/aprendiz/id/${response.data.usuario.id_aprendiz}`
+        );
         setAprendizInfo(resAprendiz.data);
 
         if (resAprendiz.data.contrasena_temporal) {
           openModal();
+        } else if (!resAprendiz.data.id_empresa) {
+          openModalEmpersa();
         }
       } catch (error) {
         console.error("Error al obtener la información del usuario:", error);
@@ -79,10 +102,12 @@ function Aprendiz({ setModalIsOpen }) {
     }
 
     try {
-      const response = await clienteAxios.put(`/aprendiz/${aprendizInfo.id_aprendiz}/nuevaContrasena`, {
-        contrasena: nuevaContrasena,
-      });
-      console.log("Contraseña actualizada", response.data);
+      const response = await clienteAxios.put(
+        `/aprendiz/${aprendizInfo.id_aprendiz}/nuevaContrasena`,
+        {
+          contrasena: nuevaContrasena,
+        }
+      );
       Swal.fire({
         title: "Su contraseña se ha actualizado",
         text: "Le informamos que su contraseña se ha actualizado exitosamente",
@@ -92,6 +117,9 @@ function Aprendiz({ setModalIsOpen }) {
       }).then(() => {
         setContrasenaActualizada(true);
         closeModal();
+        if (!aprendizInfo.id_empresa) {
+          openModalEmpersa();
+        }
       });
     } catch (error) {
       console.error("Error al actualizar la contraseña:", error);
@@ -104,12 +132,69 @@ function Aprendiz({ setModalIsOpen }) {
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEmpresaData({ ...empresaData, [name]: value });
+  };
+
+  const añadirInfoEmpresa = async () => {
+    try {
+      const res = await clienteAxios.post(
+        `/empresas/add/${aprendizInfo.id_aprendiz}`,
+        empresaData
+      );
+      Swal.fire({
+        title: "Información Registrada",
+        text: "Se ha registardo la información de la empresa exitosamente",
+        icon: "success",
+        showCancelButton: false,
+        confirmButtonText: "Aceptar",
+      }).then(() => {
+        closeModalEmpresa();
+      });
+    } catch (error) {
+      console.error("Error al registrar la información de la empresa:", error);
+      Swal.fire({
+        title: "Error al registrar la información de la empresa",
+        text: "Hubo un error al registrar la información de la empresa",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
+
+  // Función para obtener el rol de Usuario y presentarlo de mejor manera al usuario
+  const getRolNombre = (rol) => {
+    switch (rol) {
+      case "aprendiz":
+        return "Aprendiz";
+      default:
+        return rol;
+    }
+  };
+
+  const handleNext = async () => {
+    try {
+      const response = await clienteAxios.get(
+        `/empresa/aprendiz/${aprendizInfo.id_aprendiz}`
+      );
+      setEmpresaInfo(response.data.empresa);
+      setShowVisits(false); // Activa la transición al siguiente contenido
+    } catch (error) {
+      console.error("Error al obtener la información de la empresa:", error);
+    }
+  };
+
+  const handlePrevious = () => {
+    setShowVisits(true); // Activa la transición al contenido anterior
+  };
+
   return (
     <Fragment>
-      <div className="container">
+      <div className="main-container__contenedor-hijo">
         {usuario && usuario.id_aprendiz && usuario.rol_usuario ? (
           <Fragment>
-          <Modal
+            <Modal
               isOpen={modalIsOpen}
               className="modal-new-contrasena"
               overlayClassName="Overlay"
@@ -124,17 +209,82 @@ function Aprendiz({ setModalIsOpen }) {
                 value={nuevaContrasena}
                 onChange={(e) => setNuevaContrasena(e.target.value)}
               />
-              <button onClick={actualizarContrasena}>
-                Actualizar contraseña
-              </button>
+              <button onClick={actualizarContrasena}>Actualizar contraseña</button>
             </Modal>
+            <Modal
+              isOpen={modalEmpresa}
+              className="modal-empresa-data"
+              overlayClassName="Overlay"
+              shouldCloseOnOverlayClick={false}
+              shouldCloseOnEsc={false}
+            >
+              <h2>Ingresa la información de la empresa en la que realiza sus prácticas</h2>
+              <label htmlFor="razon_social">Razón social empresa:</label>
+              <input
+                type="text"
+                id="razon_social"
+                name="razon_social"
+                onChange={handleChange}
+              />
+              <label htmlFor="nit_empresa">Nit empresa:</label>
+              <input
+                type="number"
+                id="nit_empresa"
+                name="nit_empresa"
+                onChange={handleChange}
+              />
+              <label htmlFor="direccion_empresa">Dirección de la empresa:</label>
+              <input
+                type="text"
+                id="direccion_empresa"
+                name="direccion_empresa"
+                onChange={handleChange}
+              />
+              <label htmlFor="nombre_jefe_inmediato">Nombres del jefe inmediato:</label>
+              <input
+                type="text"
+                id="nombre_jefe_inmediato"
+                name="nombre_jefe_inmediato"
+                onChange={handleChange}
+              />
+              <label htmlFor="apellidos_jefe_inmediato">Apellidos del jefe inmediato:</label>
+              <input
+                type="text"
+                id="apellidos_jefe_inmediato"
+                name="apellidos_jefe_inmediato"
+                onChange={handleChange}
+              />
+              <label htmlFor="cargo_jefe_inmediato">Cargo del jefe inmediato:</label>
+              <input
+                type="text"
+                id="cargo_jefe_inmediato"
+                name="cargo_jefe_inmediato"
+                onChange={handleChange}
+              />
+              <label htmlFor="telefono_jefe_inmediato">Teléfono del jefe inmediato:</label>
+              <input
+                type="number"
+                id="telefono_jefe_inmediato"
+                name="telefono_jefe_inmediato"
+                onChange={handleChange}
+              />
+              <label htmlFor="email_jefe_imediato">E-mail del jefe inmediato:</label>
+              <input
+                type="email"
+                id="email_jefe_imediato"
+                name="email_jefe_imediato"
+                onChange={handleChange}
+              />
+              <button onClick={añadirInfoEmpresa}>Añadir Información de la Empresa</button>
+            </Modal>
+  
             <div className="row">
               <div className="col-md-6 col-lg-6">
                 <div className="card carta info-aprendiz">
                   <i className="bi bi-person-circle"></i>
                   <div className="card-body cuerpo-carta">
                     <h5 className="card-title text-center">
-                      <strong>{usuario.rol_usuario}</strong>
+                      <strong>{getRolNombre(usuario.rol_usuario)}</strong>
                     </h5>
                     <p className="card-text texo-carta">
                       <strong>Nombres: </strong> {usuario.nombres}
@@ -143,8 +293,7 @@ function Aprendiz({ setModalIsOpen }) {
                       <strong>Apellidos: </strong> {usuario.apellidos}
                     </p>
                     <p className="card-text texo-carta">
-                      <strong>Programa de formación: </strong>{" "}
-                      {usuario.programa_formacion}
+                      <strong>Programa de formación: </strong> {usuario.programa_formacion}
                     </p>
                     <p className="card-text texo-carta">
                       <strong>Número de Ficha: </strong> {usuario.numero_ficha}
@@ -153,66 +302,85 @@ function Aprendiz({ setModalIsOpen }) {
                 </div>
               </div>
               <div className="col-md-6 col-lg-6 my-4 visitas-cont">
-                <h2>Tus visitas programadas</h2>
-                <table className="tabla">
-                  <thead>
-                    <tr>
-                      <th>Tipo de Visita</th>
-                      <th>Fecha de Visita</th>
-                      <th>Hora de Visita</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Primera visita</td>
-                      <td>
-                        {fechasPorTipo["primera visita"]
-                          ? moment(fechasPorTipo["primera visita"]).format("LL")
-                          : "No agendada"}
-                      </td>
-                      <td>
-                        {horasPorTipo["primera visita"]
-                          ? moment(
-                              horasPorTipo["primera visita"],
-                              "HH:mm"
-                            ).format("h:mm A")
-                          : "No agendada"}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Segunda visita</td>
-                      <td>
-                        {fechasPorTipo["segunda visita"]
-                          ? moment(fechasPorTipo["segunda visita"]).format("LL")
-                          : "No agendada"}
-                      </td>
-                      <td>
-                        {horasPorTipo["segunda visita"]
-                          ? moment(
-                              horasPorTipo["segunda visita"],
-                              "HH:mm"
-                            ).format("h:mm A")
-                          : "No agendada"}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Tercera visita</td>
-                      <td>
-                        {fechasPorTipo["tercera visita"]
-                          ? moment(fechasPorTipo["tercera visita"]).format("LL")
-                          : "No agendada"}
-                      </td>
-                      <td>
-                        {horasPorTipo["tercera visita"]
-                          ? moment(
-                              horasPorTipo["tercera visita"],
-                              "HH:mm"
-                            ).format("h:mm A")
-                          : "No agendada"}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                {showVisits ? (
+                  <Fragment>
+                    <h2>Tus visitas programadas</h2>
+                    <table className="tabla">
+                      <thead>
+                        <tr>
+                          <th>Tipo de Visita</th>
+                          <th>Fecha de Visita</th>
+                          <th>Hora de Visita</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Primera visita</td>
+                          <td>
+                            {fechasPorTipo["primera visita"]
+                              ? moment(fechasPorTipo["primera visita"]).format("LL")
+                              : "No agendada"}
+                          </td>
+                          <td>
+                            {horasPorTipo["primera visita"]
+                              ? moment(horasPorTipo["primera visita"], "HH:mm").format("h:mm A")
+                              : "No agendada"}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Segunda visita</td>
+                          <td>
+                            {fechasPorTipo["segunda visita"]
+                              ? moment(fechasPorTipo["segunda visita"]).format("LL")
+                              : "No agendada"}
+                          </td>
+                          <td>
+                            {horasPorTipo["segunda visita"]
+                              ? moment(horasPorTipo["segunda visita"], "HH:mm").format("h:mm A")
+                              : "No agendada"}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Tercera visita</td>
+                          <td>
+                            {fechasPorTipo["tercera visita"]
+                              ? moment(fechasPorTipo["tercera visita"]).format("LL")
+                              : "No agendada"}
+                          </td>
+                          <td>
+                            {horasPorTipo["tercera visita"]
+                              ? moment(horasPorTipo["tercera visita"], "HH:mm").format("h:mm A")
+                              : "No agendada"}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div className="buttons-container">
+                      <button onClick={handleNext}>Siguiente</button>
+                    </div>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    {empresaInfo ? (
+                      <div className="empresa-info">
+                        <h2>Información de la Empresa</h2>
+                        <p><strong>Razón Social:</strong> {empresaInfo.razon_social}</p>
+                        <p><strong>NIT:</strong> {empresaInfo.nit_empresa}</p>
+                        <p><strong>Dirección:</strong> {empresaInfo.direccion_empresa}</p>
+                        <p><strong>Nombre del Jefe Inmediato:</strong> {empresaInfo.nombre_jefe_inmediato}</p>
+                        <p><strong>Apellidos del Jefe Inmediato:</strong> {empresaInfo.apellidos_jefe_inmediato}</p>
+                        <p><strong>Cargo del Jefe Inmediato:</strong> {empresaInfo.cargo_jefe_inmediato}</p>
+                        <p><strong>Teléfono del Jefe Inmediato:</strong> {empresaInfo.telefono_jefe_inmediato}</p>
+                        <p><strong>Email del Jefe Inmediato:</strong> {empresaInfo.email_jefe_imediato}</p>
+                      </div>
+                    ) : (
+                      <p>Cargando información de la empresa...</p>
+                    )}
+                    <div className="buttons-container">
+                      <button onClick={handlePrevious}>Anterior</button>
+                    </div>
+                  </Fragment>
+                )}
               </div>
             </div>
           </Fragment>
@@ -222,6 +390,7 @@ function Aprendiz({ setModalIsOpen }) {
       </div>
     </Fragment>
   );
+  
 }
 
 export default Aprendiz;

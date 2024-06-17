@@ -64,7 +64,7 @@ function FormularioCompleto() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await clienteAxios.post(
+      await clienteAxios.post(
         `/evaluacion-ep-aprendiz/${id_aprendiz}`, evaluacionAprendiz
       );
       Swal.fire({

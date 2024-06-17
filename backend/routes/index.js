@@ -112,5 +112,6 @@ module.exports = function () {
     // Rutas para las empresas.
     router.post('/empresas/add/:id_aprendiz',    EmpresaController.nuevaEmpresa);
     router.get('/empresas/get/:id_empresa', authRequired, EmpresaController.obtenerDatosEmpresa);
+    router.get('/empresa/aprendiz/:id_aprendiz', EmpresaController.empresaAprendiz);
     return router;
 };

@@ -122,6 +122,10 @@ const Aprendiz = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    estado: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     contrasena: {
       type: DataTypes.STRING,
       allowNull: false,

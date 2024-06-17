@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import clienteAxios from "../../api/axios";
 import "./css/BitacorasInstructor.css";
 import Modal from "react-modal";
+import { FaClipboardCheck } from "react-icons/fa6";
+import { MdAddComment } from "react-icons/md";
+import { FaDownload } from "react-icons/fa";
 
 function BitacorasInstructor() {
   const [bitacoras, setBitacoras] = useState([]);
@@ -11,7 +14,10 @@ function BitacorasInstructor() {
   const [bitacoraSeleccionada, setBitacoraSeleccionada] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [aprendizInfo, setAprendizInfo] = useState([]);
-  const [fichaAprendizInfo, setFichaAprendizInfo] = useState([]);
+  const [fichaAprendizInfo, setFichaAprendizInfo] = useState({});
+  const [hoveredButton, setHoveredButton] = useState(null); // Estado para controlar el hover
+  const [hoveredObservaciones, setHoveredObservaciones] = useState(null);
+  const [hoveredDownload, setHoveredDownload] = useState(null);
 
   useEffect(() => {
     const fetchBitacoras = async () => {
@@ -21,21 +27,28 @@ function BitacorasInstructor() {
         setBitacoras(bitacorasData);
 
         const aprendizPromises = bitacorasData.map(async (bitacora) => {
-          const aprendizRes = await clienteAxios.get(`/aprendiz/id/${bitacora.id_aprendiz}`);
-          return { ...bitacora, aprendiz: aprendizRes.data };
+          const aprendizRes = await clienteAxios.get(
+            `/aprendiz/id/${bitacora.id_aprendiz}`
+          );
+          const aprendizData = aprendizRes.data;
+
+          const fichaRes = await clienteAxios.get(
+            `/ficha-aprendiz/ficha/${aprendizData.numero_ficha}`
+          );
+          const fichaData = fichaRes.data.ficha;
+
+          setAprendizInfo((prevState) => ({
+            ...prevState,
+            [bitacora.id_aprendiz]: aprendizData,
+          }));
+
+          setFichaAprendizInfo((prevState) => ({
+            ...prevState,
+            [aprendizData.numero_ficha]: fichaData,
+          }));
         });
 
-        const bitacorasWithAprendiz = await Promise.all(aprendizPromises);
-
-        const fichaPromises = bitacorasWithAprendiz.map(async (bitacora) => {
-          const fichaRes = await clienteAxios.get(`/ficha-aprendiz/ficha/${bitacora.aprendiz.numero_ficha}`);
-          return { ...bitacora, ficha: fichaRes.data.ficha };
-        });
-
-        const completeBitacoras = await Promise.all(fichaPromises);
-
-        setBitacoras(completeBitacoras);
-
+        await Promise.all(aprendizPromises);
       } catch (error) {
         console.error("Error al obtener las bitácoras:", error);
       }
@@ -135,41 +148,65 @@ function BitacorasInstructor() {
     }
   };
 
+  const handleMouseEnter = (id) => {
+    setHoveredButton(id);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredButton(null);
+  };
+
+  const handleMosuseObservaciones = (id) => {
+    setHoveredObservaciones(id);
+  };
+
+  const handleLeaveObservaciones = () => {
+    setHoveredObservaciones(null);
+  };
+
+  const handleMosuseDownload = (id) => {
+    setHoveredDownload(id);
+  };
+
+  const handleLeaveDownload = () => {
+    setHoveredDownload(null);
+  };
+
   return (
     <div className="instru-bitacoras-box">
       <h2 className="text-center" style={{ color: "#39a900" }}>
         Bitácoras de los aprendices
       </h2>
       <div className="Search-biatcorasInstructor-box">
-        <p className="inline-block pr-4">
+        <p className="pr-4">
           Buscar por numero de ficha:
           <input
             type="search"
             placeholder="Numero de ficha"
             value={numeroFicha}
             onChange={handleNumeroFichaChange}
-            className="pl-2 border-b-2"
+            className="pl-2"
           />
         </p>
-        <p className="inline-block">
+        <p className="pr-4">
           Buscar por nombres del Aprendiz:
           <input
             type="search"
             placeholder="Nombres del aprendiz"
             value={nombreAprendiz}
             onChange={handleNombreAprendizChange}
-            className="pl-2 border-b-2"
+            className="pl-2"
           />
         </p>
       </div>
       <table className="docsTab-bitacoras">
         <thead className="Thead">
           <tr className="tr">
-            <th className="th">N° bitácora</th>
-            <th className="th">N° Documento</th>
+            <th className="th text-nowrap">N° bitácora</th>
+            <th className="th text-nowrap">N° Documento</th>
             <th className="th">Nombres</th>
             <th className="th">Apellidos</th>
-            <th className="th">N° Ficha</th>
+            <th className="th text-nowrap">N° Ficha</th>
             <th className="th">Programa de Formación</th>
             <th className="th">Observaciones</th>
             <th className="th">Estado</th>
@@ -177,57 +214,88 @@ function BitacorasInstructor() {
           </tr>
         </thead>
         <tbody className="tbody">
-          {bitacorasFiltradas.map((bitacora) => (
-            <tr key={bitacora.id_bitacora} className="tr">
-              <td className="td-instru">{bitacora.numero_de_bitacora}</td>
-              <td className="td-instru">{bitacora.aprendiz?.numero_documento}</td>
-              <td className="td-instru">{bitacora.aprendiz?.nombres}</td>
-              <td className="td-instru">{bitacora.aprendiz?.apellidos}</td>
-              <td className="td-instru">{bitacora.aprendiz?.numero_ficha}</td>
-              <td className="td-instru">{bitacora.ficha?.programa_formacion}</td>
-              <td className="td-instru">
-                {bitacora.observaciones
-                  ? bitacora.observaciones
-                  : "No hay observaciones"}
-              </td>
-              <td className="td-instru">
-                {bitacora.estado ? "Aprobada" : "No aprobada"}
-              </td>
-              <td className="td-instru">
-                <div className="textarea-container">
-                  <div className="button-container">
+          {bitacorasFiltradas.map((bitacora) => {
+            const aprendiz = aprendizInfo[bitacora.id_aprendiz] || {};
+            const ficha = fichaAprendizInfo[aprendiz.numero_ficha] || {};
+            return (
+              <tr key={bitacora.id_bitacora} className="tr">
+                <td className="td-instru">{bitacora.numero_de_bitacora}</td>
+                <td className="td-instru">{aprendiz.numero_documento}</td>
+                <td className="td-instru">{aprendiz.nombres}</td>
+                <td className="td-instru">{aprendiz.apellidos}</td>
+                <td className="td-instru">{aprendiz.numero_ficha}</td>
+                <td className="td-instru">{ficha.programa_formacion}</td>
+                <td className="td-instru">
+                  {bitacora.observaciones
+                    ? bitacora.observaciones
+                    : "No hay observaciones"}
+                </td>
+                <td className="td-instru">
+                  {bitacora.estado ? "Aprobada" : "No aprobada"}
+                </td>
+                <td className="td-instru">
+                  <div className="bitacoras-actions">
                     <div>
-                      {!bitacora.estado && (
-                        <button
-                          onClick={() => openModal(bitacora)}
-                          className="btnEnviarObservacion"
-                        >
-                          Agregar Observación
-                        </button>
-                      )}
                       {!bitacora.estado && (
                         <button
                           onClick={() => aprobarBitacora(bitacora.id_bitacora)}
                           className="flex btnAprobar"
+                          onMouseEnter={() =>
+                            handleMouseEnter(bitacora.id_bitacora)
+                          }
+                          onMouseLeave={handleMouseLeave}
                         >
                           {" "}
-                          <p>Aprobar</p>
+                          <FaClipboardCheck />
+                          {hoveredButton === bitacora.id_bitacora && (
+                            <span className="download-tooltip">
+                              Aprobar Bitácora
+                            </span>
+                          )}
                         </button>
                       )}
                     </div>
+                    <div className="">
+                      {!bitacora.estado && (
+                        <button
+                          onClick={() => openModal(bitacora)}
+                          className="btnEnviarObservacion"
+                          onMouseEnter={() =>
+                            handleMosuseObservaciones(bitacora.id_bitacora)
+                          }
+                          onMouseLeave={handleLeaveObservaciones}
+                        >
+                          <MdAddComment />
+                          {hoveredObservaciones === bitacora.id_bitacora && (
+                            <span className="download-tooltip">
+                              Añadir Observación
+                            </span>
+                          )}
+                        </button>
+                      )}
+                    </div>
+                    <div>
+                      <button
+                        onClick={() => handleDownload(bitacora.archivo)}
+                        className="btnDownloadInstru flex"
+                        onMouseEnter={() =>
+                          handleMosuseDownload(bitacora.id_bitacora)
+                        }
+                        onMouseLeave={handleLeaveDownload}
+                      >
+                        <FaDownload />
+                        {hoveredDownload === bitacora.id_bitacora && (
+                          <span className="download-tooltip">
+                            Descargar bitácora
+                          </span>
+                        )}
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <button
-                    onClick={() => handleDownload(bitacora.archivo)}
-                    className="btnDownloadInstru flex"
-                  >
-                    Descargar bitácora
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <Modal

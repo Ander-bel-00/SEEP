@@ -1,16 +1,10 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import "./css/EvaluacionEp.css";
 import LogoSena from "./img/sena-verde.png";
-import PopupFirmas from "../Firmas/PopupFirmas";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 
 function EvaluacionEp({ evaluacionAprendiz, setEvalaucionAprendiz }) {
   const [selected, setSelected] = useState(""); // Estado para almacenar la selección
   const [reconoSelected, setReconoSelected] = useState("");
-  const [firmas, setFirmas] = useState([]);
-  const [currentFirmaField, setCurrentFirmaField] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
 
   const handleSelection = (type) => {
     setSelected(type);
@@ -27,61 +21,7 @@ function EvaluacionEp({ evaluacionAprendiz, setEvalaucionAprendiz }) {
     setEvalaucionAprendiz({ ...evaluacionAprendiz, [name]: value });
   };
 
-  const [campos, setCampos] = useState([
-    { firma: null },
-    { firma: null },
-    { firma: null },
-  ]);
 
-  useEffect(() => {
-    const storedFirmas = localStorage.getItem("firmas");
-    if (storedFirmas) {
-      setFirmas(JSON.parse(storedFirmas));
-    }
-  }, []);
-
-  const handleSaveFirma = (firma, editIndex = null) => {
-    setFirmas((prevFirmas) => {
-      let newFirmas;
-      if (editIndex !== null) {
-        if (firma) {
-          newFirmas = prevFirmas.map((f, index) =>
-            index === editIndex ? firma : f
-          );
-        } else {
-          newFirmas = prevFirmas.filter((_, index) => index !== editIndex);
-        }
-      } else {
-        newFirmas = [...prevFirmas, firma];
-      }
-      localStorage.setItem("firmas", JSON.stringify(newFirmas));
-      return newFirmas;
-    });
-
-    if (currentFirmaField !== null) {
-      const updatedCampos = campos.map((campo, index) =>
-        index === currentFirmaField ? { ...campo, firma } : campo
-      );
-      setCampos(updatedCampos);
-      setCurrentFirmaField(null);
-    }
-  };
-
-  const handleAddFirma = (fieldId) => {
-    setCurrentFirmaField(fieldId);
-    setShowPopup(true);
-  };
-
-  const handleSelectFirma = (firma) => {
-    if (currentFirmaField !== null) {
-      const updatedCampos = campos.map((campo, index) =>
-        index === currentFirmaField ? { ...campo, firma } : campo
-      );
-      setCampos(updatedCampos);
-      setCurrentFirmaField(null);
-      setShowPopup(false);
-    }
-  };
 
   return (
     <Fragment>
@@ -278,19 +218,6 @@ function EvaluacionEp({ evaluacionAprendiz, setEvalaucionAprendiz }) {
           </div>
         </div>
       </div>
-      <PopupFirmas
-        show={showPopup}
-        onClose={() => setShowPopup(false)}
-        onSave={(firma, editIndex) => {
-          handleSaveFirma(firma, editIndex);
-          setShowPopup(false);
-        }}
-        onSelect={(firma) => {
-          handleSelectFirma(firma);
-          setShowPopup(false);
-        }}
-        firmas={firmas}
-      />
     </Fragment>
   );
 }

@@ -20,17 +20,26 @@ exports.cargarPlaneacionAprendiz = async (req, res, next) => {
     }
 
     // Validación de fecha_actividad
-    if (req.body.fecha_actividad.some(fecha => isNaN(new Date(fecha)))) {
-      return res.status(400).json({ message: "Fecha inválida en fecha_actividad" });
+    if (req.body.fecha_actividad.some((fecha) => isNaN(new Date(fecha)))) {
+      return res
+        .status(400)
+        .json({ message: "Fecha inválida en fecha_actividad" });
     }
 
-    const evaluacionAprendiz = await Evaluacion.create({
+    const evaluacionData = {
       id_aprendiz: req.params.id_aprendiz,
       ...req.body,
       firma_ente_conformador: req.body.firma_ente_conformador,
       firma_aprendiz: req.body.firma_aprendiz,
       firma_instructor_seguimiento: req.body.firma_instructor_seguimiento,
-    });
+    };
+
+    const evaluacionAprendiz = await Evaluacion.create(evaluacionData);
+
+    // Asignar el estado del aprendiz por medio del juicio aprendiz en la evalaución.
+    aprendiz.estado = evaluacionAprendiz.juicio_aprendiz;
+
+    await aprendiz.save();
 
     res.status(201).json({
       message:

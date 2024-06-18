@@ -2,6 +2,7 @@ import React, { Fragment, useState, useRef } from "react";
 import clienteAxios from "../../../api/axios";
 import Swal from "sweetalert2";
 import "./css/recuperar.css";
+import {useNavigate} from 'react-router-dom';
 
 function RecuperaContrasena() {
   const [numeroDocumento, setNumeroDocumento] = useState("");
@@ -21,6 +22,7 @@ function RecuperaContrasena() {
   const [successMessage, setSuccessMessage] = useState("");
   const [showSolicitarCodigo, setShowSolicitarCodigo] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
+  const navigate = useNavigate();
 
   const codeInputsRefs = useRef([]);
 
@@ -84,7 +86,7 @@ function RecuperaContrasena() {
       });
       setSuccessMessage(response.data.mensaje);
       Swal.fire("Éxito", response.data.mensaje, "success").then(() => {
-        window.location.href = "/login";
+        return navigate('/login');
       });
     } catch (error) {
       setError(error.response.data.mensaje);

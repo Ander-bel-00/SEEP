@@ -52,7 +52,7 @@ Documento.belongsTo(Aprendiz, {
 Aprendiz.hasMany(Documento, { onDelete: "CASCADE", onUpdate: "CASCADE" });
 
 Visita.belongsTo(Aprendiz, { foreignKey: "id_aprendiz" });
-Aprendiz.hasMany(Visita);
+Aprendiz.hasMany(Visita,{ onDelete: "CASCADE", onUpdate: "CASCADE" });
 
 Aprendiz.hasOne(EvaluacionEP, {
   foreignKey: "id_aprendiz",

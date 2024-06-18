@@ -94,6 +94,7 @@ exports.cargarBitacora = async (req, res, next) => {
                 numero_de_bitacora: req.body.numero_de_bitacora,
                 archivo: req.file.filename,
                 id_aprendiz: aprendiz.id_aprendiz,
+                intentos: 1 // Incrementa el contador a 1 para la primera carga
             };
 
             // Establece las observaciones como vacías después de crear la nueva bitácora
@@ -280,7 +281,7 @@ exports.actualizarBitacora = async (req, res) => {
             // Actualizar los datos de la bitácora con los valores de la solicitud o mantener los valores anteriores si no se proporcionan nuevos valores
             bitacora.numero_de_bitacora = req.body.numero_de_bitacora || bitacora.numero_de_bitacora;
             bitacora.archivo = req.file.filename; // Utilizar el nombre del archivo cargado
-            
+            bitacora.intentos += 1; // Incrementa el contador en cada actualización
             // Establecer las observaciones como vacías después de la actualización
             bitacora.observaciones = '';
 

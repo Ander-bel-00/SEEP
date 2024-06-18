@@ -42,12 +42,15 @@ function Calendario() {
   const [selectedModalidadEvent, setSelectedModalidadEvent] = useState("");
   const [aprendizInfo, setAprendizInfo] = useState([]);
   const [fichaAprendizInfo, setFichaAprendizInfo] = useState([]);
+  // Dentro de tu componente Calendario
+  const [guardando, setGuardando] = useState(false);
 
   useEffect(() => {
     const obtenerUsuario = async () => {
       try {
-
-        const resAprendiz = await clienteAxios.get(`/aprendiz/id/${id_aprendiz}`);
+        const resAprendiz = await clienteAxios.get(
+          `/aprendiz/id/${id_aprendiz}`
+        );
         setAprendizInfo(resAprendiz.data);
         const fichaData = await clienteAxios.get(
           `/ficha-aprendiz/ficha/${resAprendiz.data.numero_ficha}`
@@ -59,8 +62,8 @@ function Calendario() {
     };
 
     obtenerUsuario();
-  });
-  
+  }, []);
+
   useEffect(() => {
     cargarEventos();
   }, []);
@@ -115,13 +118,13 @@ function Calendario() {
       console.error("Por favor, complete todos los campos.");
       return;
     }
-
+  
     const formattedStartTime = moment(selectedTime, "HH:mm").format("HH:mm");
     const formattedEndTime = moment(selectedEndTime, "HH:mm").format("HH:mm");
-
+  
     // Obtener la fecha actual
     const currentDate = moment();
-
+  
     // Verificar si la fecha seleccionada es anterior a la fecha actual
     if (moment(selectedDate).isBefore(currentDate, "day")) {
       console.error("No se pueden agregar eventos en fechas anteriores a hoy.");
@@ -133,8 +136,10 @@ function Calendario() {
       });
       return;
     }
-
+  
     try {
+      setGuardando(true); // Activar el estado de guardando
+  
       const response = await clienteAxios.post(`/nuevaVisita/${id_aprendiz}`, {
         tipo_visita: eventTitle,
         fecha: selectedDate,
@@ -143,7 +148,7 @@ function Calendario() {
         lugar_visita: selectedPlaceEvent,
         modalidad_visita: selectedModalidadEvent,
       });
-
+  
       setEvents((prevEvents) => [...prevEvents, response.data]);
       closeModal();
       // Mostrar SweetAlert de éxito
@@ -162,6 +167,8 @@ function Calendario() {
           error.response.data.error ||
           "Hubo un error al intentar agendar la visita.",
       });
+    } finally {
+      setGuardando(false); // Desactivar el estado de guardando sin importar si fue éxito o error
     }
   };
 
@@ -374,8 +381,7 @@ function Calendario() {
                               {aprendizInfo.numero_documento}
                             </div>
                             <div>
-                              <strong>Nombres:</strong>{" "}
-                              {aprendizInfo.nombres}
+                              <strong>Nombres:</strong> {aprendizInfo.nombres}
                             </div>
                             <div>
                               <strong>Apellidos:</strong>{" "}
@@ -484,8 +490,18 @@ function Calendario() {
                         className="btn btn-primary"
                         onClick={saveEvent}
                         style={{ backgroundColor: "#39A900", color: "#ffffff" }}
+                        disabled={guardando} // Deshabilitar el botón cuando esté guardando
                       >
-                        Guardar
+                        {guardando ? (
+                          <div
+                            className="spinner-border text-light"
+                            role="status"
+                          >
+                            <span className="visually-hidden">Cargando...</span>
+                          </div>
+                        ) : (
+                          "Guardar"
+                        )}
                       </button>
                     </div>
                   )}
@@ -526,7 +542,6 @@ function Calendario() {
                 bottom: 0,
                 left: 8,
                 right: 0,
-
               }}
             >
               <div

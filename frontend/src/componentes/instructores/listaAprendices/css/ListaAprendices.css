@@ -1,4 +1,5 @@
-.list-aprendices-box{
+/* Estilos existentes */
+.list-aprendices-box {
     margin-top: 30px;
     padding-top: 20px;
     display: flex;
@@ -9,32 +10,75 @@
     padding: 8px;
 }
 
-.list-col1{
-    margin-left: 1rem;
-    margin-right: 30%;
+.list-col1 {
+    margin-left: 3rem;
+    margin-right: 15%;
+    position: relative;
+    left: 4%;
 }
 
-.list-title{
+.list-title {
     text-align: center;
     font-size: 25px;
 }
 
-.list-col2{
-    width: 50%;
+/* Para permitir el desplazamiento interno */
+.list-col2 {
+    width: 45%;
     background-color: #f1EEEE;
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(0.1, 0.1, 0.1, 0.2);
+    overflow: hidden;
 }
 
 .list-col2 > div {
     border-radius: 8px;
     background-color: #fff;
     height: 100%;
-    padding: 4px;
+    padding: 8px;
+    margin-bottom: 1rem;
+    max-height: 70vh; /* Ajusta la altura máxima */
+    overflow-y: scroll;
+}
+
+/* Ocultar la barra de desplazamiento en navegadores Webkit (Chrome, Safari) */
+.list-col2 > div::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/* Ocultar la barra de desplazamiento en navegadores de Mozilla (Firefox) */
+.list-col2 > div {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.list-col2 > div::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
 }
 
 .list-col2 > div > label {
     font-weight: 600;
+}
+
+/* Nuevos estilos para la lista de aprendices con scroll oculto */
+.lista-aprendices-container {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.lista-aprendices-container::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+.lista-aprendices-container {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.lista-aprendices-container::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
 }
 
 .lista-aprendices {
@@ -57,18 +101,18 @@
     height: 60px;
 }
 
-.aprendices-fichas:hover{
+.aprendices-fichas:hover {
     cursor: pointer;
     transform: scaleY(1.1);
     margin-bottom: 10px;
     background-color: #f1f1f1;
 }
 
-.aprendices-fichas:last-child:hover{
+.aprendices-fichas:last-child:hover {
     margin-top: 10px;
 }
 
-.agendarVisita{
+.agendarVisita {
     text-decoration: none;
     border-radius: 10px;
     padding: 10px;
@@ -77,65 +121,88 @@
     margin-right: 9px;
 }
 
-.agendarVisita:hover{
+.agendarVisita:hover {
     background-color: #277102;
     padding: 8px;
     color: #fff;
 }
 
-.user-info{
+.user-info {
     font-size: 22px;
 }
 
-.user-icon{
+.user-icon {
     color: #39a900;
     position: relative;
     top: 5px;
     margin-right: 10px;
 }
 
+/* Estilos para dispositivos móviles */
 @media screen and (max-width: 480px) {
-    .list-aprendices-box{
-        margin-top: 140px;
+    .list-aprendices-box {
+        margin-top: 20px;
         padding-top: 20px;
-    }
-    .lista-aprendices {
-        list-style: none;
-        padding: 0;
-        margin: 20px auto;
-        max-width: 600px;
-        background-color: #f1EEEE;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-        padding: 8px;
+        display: block;
         position: relative;
-        left: 0%;
+        right: 10%;
     }
 
-    .list-title{
-        position: relative;
-        left: 0%;
+    .list-col1 {
+        margin: 0 auto;
+        width: 100%;
+        padding: 0 8px;
     }
-    
+
+    .list-col2 {
+        width: 100%;
+        margin-top: 20px;
+        padding: 0 8px;
+    }
+
+    .lista-aprendices {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        box-shadow: none;
+        background-color: transparent;
+    }
+
     .aprendices-fichas {
-        border-bottom: 2px solid #000;
-        padding: 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        padding: 10px;
+        font-size: 18px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .aprendices-fichas:hover {
+        transform: none;
+        margin-bottom: 0;
         background-color: #fff;
     }
-    .Regresar{
-        color: #39a900;
-        text-decoration: none;
-        font-size: 20px;
-        position: relative;
-        right: 40px;
+
+    .agendarVisita {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
     }
-    
-    .Regresar:hover{
-        background-color: #39a900;
-        color: #fff;
-        padding: 8px;
-        
+
+    .user-info {
+        font-size: 18px;
+    }
+
+    .user-icon {
+        position: static;
+        margin-right: 5px;
+    }
+
+    .list-title {
+        font-size: 20px;
+    }
+
+    .list-col2 > div {
+        padding: 16px;
+        margin-bottom: 20px;
     }
 }

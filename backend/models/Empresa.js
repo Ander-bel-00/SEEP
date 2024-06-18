@@ -12,7 +12,7 @@ const Empresa = sequelize.define('Empresa', {
         allowNull: false,
     },
     nit_empresa: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false,
     },
     direccion_empresa: {

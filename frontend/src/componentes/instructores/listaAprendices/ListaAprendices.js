@@ -7,8 +7,10 @@ import { FaUser } from "react-icons/fa";
 function ListaAprendices() {
   const [aprendices, setAprendices] = useState([]);
   const { numero_ficha } = useParams();
-  const [aprendizInfo, setAprendizInfo] = useState([]);
-  const [fichaAprendiz, setFichaAprendiz] = useState([]);
+  const [aprendizInfo, setAprendizInfo] = useState({});
+  const [fichaAprendiz, setFichaAprendiz] = useState({});
+  const [bitacorasAprendiz, setBitacorasAprendiz] = useState([]);
+  const [visitasAprendiz, setVisitasAprendiz] = useState([]);
 
   const consultarApi = async () => {
     try {
@@ -33,16 +35,27 @@ function ListaAprendices() {
 
   const getInfoAprendiz = async (id_aprendiz) => {
     try {
+      setBitacorasAprendiz([]); // Restablecer el estado de las bitácoras
+      setVisitasAprendiz([]);
       const res = await clienteAxios.get(`/aprendiz/id/${id_aprendiz}`);
       setAprendizInfo(res.data);
       const resFichas = await clienteAxios.get(
         `/ficha-aprendiz/ficha/${res.data.numero_ficha}`
       );
+      const resVisitas = await clienteAxios.get(`/visitas-aprendiz/${id_aprendiz}`);
+      setVisitasAprendiz(resVisitas.data.visitas);
+
       setFichaAprendiz(resFichas.data.ficha);
+      const resBitacoras = await clienteAxios.get(`/bitacoras-aprendiz/${id_aprendiz}`);
+      setBitacorasAprendiz(resBitacoras.data.bitacoras);
+
+
     } catch (error) {
       console.error("Hubo un error al obtener los datos del aprendiz", error);
     }
   };
+
+  console.log(bitacorasAprendiz)
 
   return (
     <Fragment>
@@ -81,7 +94,7 @@ function ListaAprendices() {
                 {aprendizInfo && !aprendizInfo.id_aprendiz ? (
                   <p>Selecciona un Aprendiz</p>
                 ) : (
-                  <p>Información del Aprendiz</p>
+                  <p className="text-center">Información del Aprendiz</p>
                 )}
               </h2>
               {/* Aquí la info del aprendiz */}
@@ -96,10 +109,14 @@ function ListaAprendices() {
                   </p>
                   <label>Número de Ficha</label>
                   <p>{aprendizInfo.numero_ficha}</p>
-                  <label>Programa Formación</label>
+                  <label>Programa de Formación</label>
                   <p>{fichaAprendiz.programa_formacion}</p>
                   <label>Estado del Aprendiz:</label>
                   <p>{aprendizInfo && aprendizInfo.estado ? aprendizInfo.estado : 'NO APROBADO'}</p>
+                  <label>Bitácoras Cargadas:</label>
+                  <p>{bitacorasAprendiz.length} de 12</p>
+                  <label>Visitas Agendadas:</label>
+                  <p>{visitasAprendiz.length} de 3</p>
                   {aprendizInfo && !aprendizInfo.id_aprendiz ? null : (
                     <div className="mt-4">
                       <button>

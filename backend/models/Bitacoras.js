@@ -30,6 +30,10 @@ const Bitacoras = sequelize.define('Bitacoras', {
     estado: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+    },
+    intentos: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     }
 },{
     sequelize,

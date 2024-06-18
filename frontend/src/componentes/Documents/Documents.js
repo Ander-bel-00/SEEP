@@ -45,6 +45,22 @@ function Documents() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Verificar si el tipo de documento ya ha sido subido
+    const documentoExistente = documentosAprendiz.find(
+      (doc) => doc.tipo_documento === documento.tipo_documento
+    );
+
+    if (documentoExistente) {
+      Swal.fire({
+        icon: "error",
+        title: "Tipo de documento ya subido",
+        text: `Ya se subió un archivo para el tipo de documento: ${documento.tipo_documento}`,
+        showConfirmButton: true,
+      });
+      return;
+    }
+
     const formData = new FormData();
     formData.append("tipo_documento", documento.tipo_documento);
     formData.append("archivo", documento.archivo);
@@ -64,9 +80,7 @@ function Documents() {
       });
 
       // Actualizar la lista de documentos del aprendiz después de cargar uno nuevo
-      const response = await clienteAxios.get(
-        `/documentos-aprendiz/${id_aprendiz}`
-      );
+      const response = await clienteAxios.get(`/documentos-aprendiz/${id_aprendiz}`);
       setDocumentosAprendiz(response.data.documentos);
     } catch (error) {
       console.error("Error al cargar el documento:", error);
@@ -74,7 +88,7 @@ function Documents() {
       Swal.fire({
         icon: "error",
         title: "Error al cargar el documento",
-        text: "Hubo un error al cargar el documento. Por favor, inténtalo de nuevo más tarde.",
+        text: error.response?.data?.mensaje || "Hubo un problema al subir el documento",
         showConfirmButton: true,
       });
     }
@@ -130,8 +144,11 @@ function Documents() {
                 <option value="Certificado Pruebas TYT">
                   Certificado Pruebas TYT
                 </option>
-                <option value="Formulario de Diligenciamiento">
-                  Formulario de Diligenciamiento
+                <option value="Carta Laboral Empresa">
+                  Carta Laboral Empresa
+                </option>
+                <option value="Certificado Agencia Pública de Empleo SENA">
+                  Certificado Agencia Pública de Empleo SENA.
                 </option>
               </select>
             </p>

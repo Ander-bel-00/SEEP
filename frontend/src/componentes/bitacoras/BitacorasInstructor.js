@@ -203,6 +203,7 @@ function BitacorasInstructor() {
         <thead className="Thead">
           <tr className="tr">
             <th className="th text-nowrap">N° bitácora</th>
+            <th className="th">N° veces cargada</th>
             <th className="th text-nowrap">N° Documento</th>
             <th className="th">Nombres</th>
             <th className="th">Apellidos</th>
@@ -220,6 +221,7 @@ function BitacorasInstructor() {
             return (
               <tr key={bitacora.id_bitacora} className="tr">
                 <td className="td-instru">{bitacora.numero_de_bitacora}</td>
+                <td className="td-instru">{bitacora.intentos}</td>
                 <td className="td-instru">{aprendiz.numero_documento}</td>
                 <td className="td-instru">{aprendiz.nombres}</td>
                 <td className="td-instru">{aprendiz.apellidos}</td>

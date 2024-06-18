@@ -2,6 +2,8 @@ const Visitas = require("../models/Visita");
 const Aprendices = require("../models/Aprendices");
 const moment = require("moment");
 const { Op } = require("sequelize");
+const enviarCorreo = require("../utils/enviarCorreo");
+const plantillasController = require("../controllers/templatesController");
 
 exports.crearEvento = async (req, res) => {
   const id_aprendiz = req.params.id_aprendiz;
@@ -70,7 +72,6 @@ exports.crearEvento = async (req, res) => {
           ],
         },
       });
-      
 
       if (visitaExistente) {
         return res.status(400).json({
@@ -78,6 +79,27 @@ exports.crearEvento = async (req, res) => {
             "Ya existe una visita agendada en este horario para otro aprendiz, Verifica que la hora de inicio y la hora de finalización de la visita no esté en el rango de una visita de otro aprendiz para este mismo día.",
         });
       }
+
+      const correo_electronico1 = aprendices.correo_electronico1;
+
+      // Formatear la fecha y la hora usando moment.js
+      const fechaFormateada = moment(fecha).locale('es').format('D [de] MMMM [de] YYYY');
+      const horaInicioFormateada = moment(hora_inicio, 'HH:mm').format('hh:mm A');
+
+      const datosPlantilla = {
+        nombreUsuario: aprendices.nombres,
+        tipoVisita: tipo_visita,
+        fechaVisita: fechaFormateada,
+        horainicio: horaInicioFormateada,
+      };
+
+      const cuerpoCorreo = plantillasController.VisitasPlantilla(datosPlantilla);
+
+      await enviarCorreo(
+        correo_electronico1,
+        "S.E.E.P-Le informamos que se le ha sido agendada una visita",
+        cuerpoCorreo
+      );
 
       // Permitir la creación de la nueva visita si no hay visitas del mismo tipo para el aprendiz en cualquier fecha
       const nuevaVisita = await Visitas.create({

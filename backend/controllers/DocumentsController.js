@@ -34,65 +34,76 @@ const storage = multer.diskStorage({
   },
 });
 
-// Crea un middleware de multer para manejar la subida de archivos.
+// Configuración de multer para el manejo de la carga de archivos
 const upload = multer({
-  // Configura el almacenamiento para los archivos subidos, utilizando el objeto 'storage' definido anteriormente.
+  // Define el almacenamiento para los archivos
   storage: storage,
-}).single("archivo");
-//.single Indica que solo se espera un archivo en la solicitud y que su nombre debe ser "archivo".
+  // Define un filtro de archivo para limitar los tipos de archivos permitidos
+  fileFilter: function (req, file, cb) {
+    // Lista de extensiones de archivo permitidas
+    const allowedFileTypes = [".pdf"];
+    // Obtiene la extensión del archivo cargado y la convierte a minúsculas
+    const fileExtension = path.extname(file.originalname).toLowerCase();
+    // Verifica si la extensión del archivo está incluida en la lista de tipos de archivo permitidos
+    if (allowedFileTypes.includes(fileExtension)) {
+      // Si la extensión está permitida, llama a la función de devolución de llamada con el indicador de que el archivo es válido
+      cb(null, true);
+    } else {
+      // Si la extensión no está permitida, llama a la función de devolución de llamada con un error
+      cb(new Error("Solo se permiten archivos en PDF"));
+    }
+  },
+}).single("archivo"); // Indica que solo se aceptará un archivo con el campo 'archivo' en el formulario
 
 // Exporta una función asincrónica llamada cargarDocumento que recibe los objetos req (solicitud) y res (respuesta).
 exports.cargarDocumento = async (req, res) => {
   try {
-    // Utiliza el middleware 'upload' (configurado anteriormente) para manejar la subida de archivos.
     upload(req, res, async function (err) {
-      // Maneja los errores que puedan ocurrir durante la subida del archivo.
-      if (err instanceof multer.MulterError) {
-        // Si el error es de tipo Multer, devuelve una respuesta de estado 500 con un mensaje de error.
-        return res
-          .status(500)
-          .json({ message: "Error al cargar el archivo", error: err });
-      } else if (err) {
-        // Si hay otro tipo de error, devuelve una respuesta de estado 500 con un mensaje de error.
-        return res
-          .status(500)
-          .json({ message: "Error al cargar el archivo", error: err });
+      if (err) {
+        return res.status(400).json({ mensaje: err.message });
       }
 
-      // Extrae el tipo de documento del cuerpo de la solicitud.
       const { tipo_documento } = req.body;
-
-      // Sincroniza el modelo 'Documentos' con la base de datos (si no existe, no se eliminarán datos).
       await Documentos.sync({ force: false });
 
-      // Busca un aprendiz en la base de datos utilizando el ID proporcionado en los parámetros de la solicitud.
       const aprendiz = await Aprendices.findOne({
         where: {
           id_aprendiz: req.params.id_aprendiz,
         },
       });
 
-      // Si no se encuentra el aprendiz, elimina el archivo subido y devuelve un mensaje de error.
       if (!aprendiz) {
         fs.unlinkSync(req.file.path); // Eliminar el archivo si el aprendiz no existe
         return res.status(404).json({ mensaje: "El aprendiz no existe" });
       }
 
-      // Crea un nuevo documento en la base de datos utilizando la información proporcionada.
+      // Verificar si el tipo de documento ya ha sido subido
+      const documentoExistente = await Documentos.findOne({
+        where: {
+          id_aprendiz: req.params.id_aprendiz,
+          tipo_documento: tipo_documento,
+        },
+      });
+
+      if (documentoExistente) {
+        fs.unlinkSync(req.file.path); // Eliminar el archivo si el tipo de documento ya existe
+        return res.status(400).json({
+          mensaje: `Ya se subió un archivo para el tipo de documento: ${tipo_documento}`,
+        });
+      }
+
       const nuevoDocumento = await Documentos.create({
         tipo_documento,
         archivo: req.file.filename,
         id_aprendiz: aprendiz.id_aprendiz,
       });
 
-      // Devuelve una respuesta de estado 201 (creado) con un mensaje de éxito y el documento creado.
       res.status(201).json({
         message: "Documento cargado exitosamente",
         documento: nuevoDocumento,
       });
     });
   } catch (error) {
-    // Si ocurre un error durante el proceso, devuelve una respuesta de estado 500 con un mensaje de error.
     res
       .status(500)
       .json({ message: "Error al cargar el documento", error: error.message });

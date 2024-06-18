@@ -57,3 +57,21 @@ exports.RegisterAprendiz = (datos) => {
         throw error;
     }
 }
+
+exports.VisitasPlantilla = (datos) => {
+    try {
+        // Cargar el contenido de la plantilla desde el archivo
+        const contenidoPlantilla = fs.readFileSync('./views/emails/visitas_email.hbs', 'utf8');
+
+        // Compilar la plantilla utilizando Handlebars
+        const template = handlebars.compile(contenidoPlantilla);
+
+        // Interpolar las variables dinámicas en la plantilla
+        const correoInterpolado = template(datos);
+
+        return correoInterpolado;
+    } catch (error) {
+        console.error('Error al cargar la plantilla para las visitas:', error);
+        throw error;
+    }
+}

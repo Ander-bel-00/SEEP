@@ -7,7 +7,9 @@ exports.nuevaEmpresa = async (req, res, next) => {
     await Empresa.sync({ force: false });
 
     const empresaExiste = await Empresa.findOne({
-      nit_empresa: req.body.nit_empresa,
+      where: {
+        nit_empresa: req.body.nit_empresa,
+      },
     });
 
     if (empresaExiste)
@@ -110,6 +112,11 @@ exports.empresaAprendiz = async (req, res) => {
   } catch (error) {
     // Se muestra una respuesta en consola y al usuario en caso de error en el servidor al realizar la consulta.
     console.error("Hubo un error al obtener la empresa del Aprendiz", error);
-    res.status(500).json({ message: 'Hubo un error al obtener la empresa del Aprendiz', error});
+    res
+      .status(500)
+      .json({
+        message: "Hubo un error al obtener la empresa del Aprendiz",
+        error,
+      });
   }
 };

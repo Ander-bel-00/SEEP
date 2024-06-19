@@ -1,5 +1,5 @@
 .Admin-main-box{
-  margin-top: 130px;
+  margin-top: 120px;
   padding-top: 20px;
 }
 /* Agrega estilos para centrar los botones en la interfaz */
@@ -55,41 +55,11 @@
 }
 
 @media (max-width: 480px) {
-  .contenedor-admin{
-    width: 500px;
-    position: relative;
-    left: 0px;
-    top: 204px;
+  .Admin-main-box{
+    margin-top: 90px;
+    padding-top: 20px;
   }
 
-  .titulo-panel {
-    margin-bottom: 30px; 
-    font-size: 27px;
-    position: relative;
-    top: 10px;
-  }
-
-  .icon-box {
-    display: inline-block;
-    text-align: center;
-    margin: 25px;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    background-color: #ffffff;
-    transition: background-color 0.3s; 
-    border-radius: 5px;
-    position: relative;
-    left: 70px;
-    top: -20px;
-  }
-
-  .icon{
-    position: relative;
-    left: 30px;
-  }
-}
-
-@media screen and (width: 690.91px) {
   .contenedor-admin{
     width: 300px;
     position: relative;

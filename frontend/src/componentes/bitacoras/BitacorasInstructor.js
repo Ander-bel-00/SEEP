@@ -91,11 +91,17 @@ function BitacorasInstructor() {
   };
 
   const handleNumeroFichaChange = (event) => {
-    setNumeroFicha(event.target.value);
+    const value = event.target.value;
+    if (/^\d*$/.test(value)) {
+      setNumeroFicha(value);
+    }
   };
 
   const handleNombreAprendizChange = (event) => {
-    setNombreAprendiz(event.target.value);
+    const value = event.target.value;
+    if (!/\d/.test(value)) {
+      setNombreAprendiz(value);
+    }
   };
 
   const handleObservacionChange = (event) => {
@@ -112,7 +118,7 @@ function BitacorasInstructor() {
   };
 
   const bitacorasFiltradas = bitacoras.filter((bitacora) => {
-    const aprendiz = bitacora.aprendiz ?? {};
+    const aprendiz = aprendizInfo[bitacora.id_aprendiz] || {};
     if (
       numeroFicha &&
       !aprendiz.numero_ficha?.toString().includes(numeroFicha.toString())

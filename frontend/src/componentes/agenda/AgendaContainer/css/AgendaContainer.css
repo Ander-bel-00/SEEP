@@ -56,4 +56,15 @@
 }
   
   
-  
+/* Ajustes para dispositivos móviles hasta 480px */
+@media screen and (max-width: 480px) {
+  .agenda-container {
+    height: auto; /* Ajuste la altura automática según el contenido */
+    margin-top: 0; /* Reducir el margen superior en dispositivos móviles */
+    border-radius: 0; /* Eliminar los bordes redondeados en móviles */
+  }
+
+  .page-navigation-container {
+    display: none; /* Ocultar paginación en dispositivos móviles */
+  }
+}

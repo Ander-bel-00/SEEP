@@ -1,58 +1,128 @@
-.new-aprendiz-content{
-    position: relative;
-    left: 0%;
-    margin-top: 120px;
-    padding-top: 20px;
+.new-aprendiz-content {
+  position: relative;
+  left: 0%;
+  margin-top: 120px;
+  padding-top: 20px;
 }
 .contenedor-formulario-aprendiz {
-    max-width: 600px; /* Ancho máximo del contenedor */
-    width: 100%; /* Hacer que el contenedor ocupe todo el ancho disponible */
-    margin: 20px auto; /* Margen superior e inferior de 20px y centrado horizontal */
-    padding: 20px; /* Espaciado interno del contenedor */
-    border: 1px solid #ccc; /* Borde del contenedor */
-    border-radius: 5px; /* Bordes redondeados */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra del contenedor */
-    display: flex; /* Mostrar los elementos en línea (en una sola columna) */
-    flex-direction: column; /* Establecer la dirección de los elementos en columna */
-    align-items: center; /* Centrar los elementos horizontalmente */
-
+  max-width: 600px;
+  width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 19px 10px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 2px 2px 19px 10px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 2px 2px 19px 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
 }
 .formulario-aprendiz {
-    max-width: 500px; /* Ancho máximo del formulario */
-    margin: 0 auto; /* Centra el formulario horizontalmente */
-    padding: 20px; /* Espaciado interno del formulario */
-    
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
 }
 
-/* Estilos para los inputs */
-.formulario-aprendiz input {
-    width: 100%; /* Ancho completo del input */
-    margin-bottom: 10px; /* Espaciado entre inputs */
-    padding: 10px; /* Espaciado interno del input */
-    border: 1px solid #ccc; /* Borde del input */
-    border-radius: 5px; /* Bordes redondeados */
-    background-color: #F5F5F5;
+.formulario-aprendiz .form-group > label {
+  font-weight: 600;
 }
 
-/* Estilos para el botón */
-.formulario-aprendiz button {
-    width: 100%; /* Ancho completo del botón */
-    padding: 10px; /* Espaciado interno del botón */
-    background-color: #39a900; /* Color de fondo del botón */
-    color: #fff; /* Color del texto del botón */
-    border: none; /* Borde del botón */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor al pasar sobre el botón */
+.formulario-aprendiz input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-/* Estilos para el botón al pasar el cursor */
-.formulario-aprendiz button:hover {
-    background-color: #2a7d00; /* Cambia el color de fondo al pasar el cursor */
+.formulario-aprendiz .btn-register {
+  grid-column: 1 / -1;
+  width: 100%;
+  padding: 10px;
+  background-color: #39a900;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.formulario-aprendiz .btn-register:hover {
+  background-color: #2a7d00;
+}
+
+.aprendices-new-title {
+  color: #39a900;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border-left-color: #fff;
+  margin: auto;
+  display: block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.modal-ficha-aprendiz {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 11px 1px rgba(129, 122, 122, 0.3);
+  z-index: 1000;
+}
+
+.overlay-Modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 999;
+}
+
+.modal-fichas-set-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-fichas-set-content  ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.modal-fichas-set-content li {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding: 5px;
+}
+
+.modal-fichas-set-content li:hover {
+  background-color: #eaeaea;
+  border-radius: 8px;
 }
 
 @media screen and (max-width: 480px) {
-    .new-aprendiz-content{
-        position: relative;
-        left: 60%;
-    }
+  .formulario-aprendiz {
+    grid-template-columns: 1fr;
+  }
 }

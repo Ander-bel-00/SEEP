@@ -97,35 +97,22 @@
 }
 /* Celulares con breakpoint de 480px */
 
+/* Estilos específicos para dispositivos móviles con ancho de pantalla hasta 480px */
 @media screen and (max-width: 480px) {
-  .calendar-box{
-    margin-top: 150px;
-    padding-top: 20px;
-    width: 400px;
-    position: relative;
-    left: -2px;
-  }
   .calendar-container {
-    height: 90vh; /* Ajusta la altura en pantallas aún más pequeñas */
-    width: 90vw;
-    top: -10px;
-}
-  .calendar-container .rbc-event{
-    position: relative;
-    top: -5px;
-    background-color: #39a900;
-    color: #fff;
+    left: -6%;
+    top: 3rem;
+    width: 100%;
+    max-width: none; /* Ajuste para ocupar todo el ancho disponible */
+    height: 90vh;
   }
 
-  .back__button-calendar{
-    position: relative;
-    left: 0px;
-    top: -9px;
+  .back__button-calendar {
+    left: -2rem;
+    top: 2rem;
   }
 
   .modal-title {
-    text-align: left; /* Ajusta la alineación a la izquierda en dispositivos móviles */
-    position: relative;
-    right: 45px;
+    text-align: left;
   }
 }

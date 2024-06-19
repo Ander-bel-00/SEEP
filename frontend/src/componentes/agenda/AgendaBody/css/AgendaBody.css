@@ -27,3 +27,18 @@
     border-radius: 8px;
   }
 }
+
+/* CSS para dispositivos móviles */
+@media screen and (max-width: 480px) {
+  .agenda-body {
+    display: block; /* Cambiar a bloque para que las visitas se apilen verticalmente */
+  }
+
+  .visit {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    margin-bottom: 20px; /* Espacio entre cada visita */
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+  }
+}

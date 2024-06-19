@@ -4,6 +4,10 @@ const plantillasController = require("../controllers/templatesController");
 const Fichas = require("../models/Fichas");
 const bcrypt = require("bcryptjs");
 const {generarContrasenaAleatoria} = require('./ContraseñaAleatoria');
+const {
+  Sequelize,
+  ValidationError: SequelizeValidationError,
+} = require("sequelize");
 
 
 exports.nuevoAprendiz = async (req, res, next) => {
@@ -85,6 +89,14 @@ exports.nuevoAprendiz = async (req, res, next) => {
     }
   } catch (error) {
     console.error("Error al crear un nuevo aprendiz", error);
+    // Aquí verificamos si el error es una instancia de SequelizeValidationError
+    if (error instanceof SequelizeValidationError) {
+      // Extraemos los mensajes de error y los enviamos al cliente
+      const errores = error.errors.map((e) => e.message);
+      return res
+        .status(400)
+        .json({ mensaje: "Hubo un error al validar los datos", errores });
+    }
     res
       .status(500)
       .json({ mensaje: "Hubo un error al procesar la solicitud", error });

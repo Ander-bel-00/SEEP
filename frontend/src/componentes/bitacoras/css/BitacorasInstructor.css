@@ -197,27 +197,30 @@
     content: "Número de bitácora:";
   }
   .td-instru:nth-of-type(2):before {
-    content: "Número de Documento:";
+    content: "N° veces cargada:";
   }
   .td-instru:nth-of-type(3):before {
-    content: "Nombres:";
+    content: "Número de Documento:";
   }
   .td-instru:nth-of-type(4):before {
-    content: "Apellidos:";
+    content: "Nombres:";
   }
   .td-instru:nth-of-type(5):before {
-    content: "Número de Ficha:";
+    content: "Apellidos:";
   }
   .td-instru:nth-of-type(6):before {
-    content: "Programa de Formación:";
+    content: "Número de Ficha:";
   }
   .td-instru:nth-of-type(7):before {
-    content: "Observaciones:";
+    content: "Programa de Formación:";
   }
   .td-instru:nth-of-type(8):before {
-    content: "Estado:";
+    content: "Observaciones:";
   }
   .td-instru:nth-of-type(9):before {
+    content: "Estado:";
+  }
+  .td-instru:nth-of-type(10):before {
     content: "Acciones:";
   }
 

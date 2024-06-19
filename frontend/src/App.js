@@ -82,7 +82,10 @@ function App() {
                     path="/"
                     element={
                       <main className="main-container">
-                        <Aprendices setModalIsOpen={setModalIsOpen} setModalEmpresaOpen={setModalEmpresaOpen} />
+                        <Aprendices
+                          setModalIsOpen={setModalIsOpen}
+                          setModalEmpresaOpen={setModalEmpresaOpen}
+                        />
                       </main>
                     }
                   />
@@ -234,48 +237,41 @@ function App() {
                   handleLogout={handleLogout}
                   setShowNav={setShowNav}
                 />
-                <main className="container contAdmin">
-                  <Routes>
-                    <Route
-                      path="/"
-                      element={
-                        <main className="Admin-main-box">
-                          <Administrador />
-                        </main>
-                      }
-                    />
-                    <Route
-                      path="/crear-ficha"
-                      element={
-                        <div>
-                          <main className="fichasForm-main-box">
-                            <FichasForm />
-                          </main>
-                        </div>
-                      }
-                    />
-                    <Route
-                      path="/crear-aprendiz"
-                      element={
-                        <div>
-                          <main className="AprendizForm-main-box">
-                            <AprendizForm />
-                          </main>
-                        </div>
-                      }
-                    />
-                    <Route
-                      path="/crear-instructor"
-                      element={
-                        <div>
-                          <main className="InstructorForm-main-box">
-                            <InstructorForm />
-                          </main>
-                        </div>
-                      }
-                    />
-                  </Routes>
-                </main>
+
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <main className="main-container">
+                        <Administrador />
+                      </main>
+                    }
+                  />
+                  <Route
+                    path="/crear-ficha"
+                    element={
+                      <main className="main-container">
+                        <NuevaFicha setModalIsOpen={setModalIsOpen} />
+                      </main>
+                    }
+                  />
+                  <Route
+                    path="/crear-aprendiz"
+                    element={
+                      <main className="new-aprendiz-content">
+                        <NuevoAprendiz setModalIsOpen={setModalIsOpen} />
+                      </main>
+                    }
+                  />
+                  <Route
+                    path="/crear-instructor"
+                    element={
+                      <main className="main-container">
+                        <InstructorForm />
+                      </main>
+                    }
+                  />
+                </Routes>
               </Fragment>
             </ProtectedRoute>
           }

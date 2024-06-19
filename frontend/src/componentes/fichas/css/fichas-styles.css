@@ -32,7 +32,8 @@
 }
 .formularioFichasInstructor input[type="text"],
 .formularioFichasInstructor input[type="date"],
-.formularioFichasInstructor button {
+.formularioFichasInstructor button,
+.formularioFichasInstructor select {
     width: 100%;
     margin-bottom: 10px;
     padding: 10px;

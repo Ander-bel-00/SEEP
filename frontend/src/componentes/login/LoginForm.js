@@ -91,7 +91,6 @@ const LoginForm = () => {
           
         </header>
         <main className="main-login-content">
-          <h1 className="text-center welcome-title">¡Bienvenidos!</h1>
           <form onSubmit={onSubmit} className="form-login-content">
             <h1 className="text-center">Iniciar Sesión</h1>
             <label className="form-login-content-label">

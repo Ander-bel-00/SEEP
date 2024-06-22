@@ -33,10 +33,10 @@
 }
 
 .sena-medio{
-    width: 15rem;
-    height: 14rem;
+    width: 16rem;
+    height: 16rem;
     position: relative;
-    bottom: 3.5rem;
+    bottom: 4.3rem;
     left: 5rem;
 }
 
@@ -252,10 +252,6 @@
         left: -4rem;
     }
     .cditi{
-        display: none;
-    }
-
-    .welcome-title{
         display: none;
     }
 

@@ -54,7 +54,7 @@ function Documents() {
     if (documentoExistente) {
       Swal.fire({
         icon: "error",
-        title: "Tipo de documento ya subido",
+        title: "El tipo de documento ya ha sido cargado",
         text: `Ya se subió un archivo para el tipo de documento: ${documento.tipo_documento}`,
         showConfirmButton: true,
       });
@@ -125,7 +125,7 @@ function Documents() {
   return (
     <Fragment>
       <div className="docs-content">
-        <h1 className="text-center upTitle">Carga de documentos</h1>
+        <h1 className="text-center upTitle">Cargar Documentos</h1>
         <div className="form-docs-aprendiz my-4">
           <form onSubmit={handleSubmit}>
             <p className="tipoDocumento">

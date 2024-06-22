@@ -3,13 +3,16 @@ import clienteAxios from "../../api/axios";
 import "./css/documents-instructores.css";
 import { FaDownload } from "react-icons/fa";
 
+const ITEMS_PER_PAGE = 20;
+
 function InstructorDocuments() {
   const [documentosAprendiz, setDocumentosAprendiz] = useState([]);
   const [numeroFicha, setNumeroFicha] = useState("");
   const [nombreAprendiz, setNombreAprendiz] = useState("");
   const [aprendizInfo, setAprendizInfo] = useState({});
   const [fichaAprendizInfo, setFichaAprendizInfo] = useState({});
-  const [hoveredButton, setHoveredButton] = useState(null); // Estado para controlar el hover
+  const [hoveredButton, setHoveredButton] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchDocumentosAprendiz = async () => {
@@ -73,6 +76,7 @@ function InstructorDocuments() {
     const value = event.target.value;
     if (/^\d*$/.test(value)) {
       setNumeroFicha(value);
+      setCurrentPage(1);  // Resetear a la primera página cuando se cambia el filtro
     }
   };
 
@@ -80,6 +84,7 @@ function InstructorDocuments() {
     const value = event.target.value;
     if (!/\d/.test(value)) {
       setNombreAprendiz(value);
+      setCurrentPage(1);  // Resetear a la primera página cuando se cambia el filtro
     }
   };
 
@@ -104,12 +109,42 @@ function InstructorDocuments() {
     return true;
   });
 
+  // Ordenar los documentos por el nombre del aprendiz
+  const documentosOrdenados = documentosFiltrados.sort((a, b) => {
+    const aprendizA = aprendizInfo[a.id_aprendiz] || {};
+    const aprendizB = aprendizInfo[b.id_aprendiz] || {};
+    const nombreA = (aprendizA.nombres || "").toLowerCase();
+    const nombreB = (aprendizB.nombres || "").toLowerCase();
+    if (nombreA < nombreB) return -1;
+    if (nombreA > nombreB) return 1;
+    return 0;
+  });
+
+  const totalPages = Math.ceil(documentosOrdenados.length / ITEMS_PER_PAGE);
+
+  const documentosPaginados = documentosOrdenados.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
   const handleMouseEnter = (id) => {
     setHoveredButton(id);
   };
 
   const handleMouseLeave = () => {
     setHoveredButton(null);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
   };
 
   return (
@@ -152,7 +187,7 @@ function InstructorDocuments() {
           </tr>
         </thead>
         <tbody className="tbody">
-          {documentosFiltrados.map((documento) => {
+          {documentosPaginados.map((documento) => {
             const aprendiz = aprendizInfo[documento.id_aprendiz] || {};
             const ficha = fichaAprendizInfo[aprendiz.numero_ficha] || {};
 
@@ -186,6 +221,25 @@ function InstructorDocuments() {
           })}
         </tbody>
       </table>
+      <div className="pagination">
+        <button
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+          className="pagination-button"
+        >
+          Anterior
+        </button>
+        <span>
+          Página {currentPage} de {totalPages}
+        </span>
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className="pagination-button"
+        >
+          Siguiente
+        </button>
+      </div>
     </div>
   );
 }

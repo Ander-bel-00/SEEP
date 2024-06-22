@@ -112,10 +112,10 @@ function ListaAprendices() {
                   <label>Programa de Formación</label>
                   <p>{fichaAprendiz.programa_formacion}</p>
                   <label>Estado del Aprendiz:</label>
-                  <p>{aprendizInfo && aprendizInfo.estado ? aprendizInfo.estado : 'NO APROBADO'}</p>
+                  <p>{aprendizInfo && aprendizInfo.estado ? aprendizInfo.estado : 'En Ejecución'}</p>
                   <label>Bitácoras Cargadas:</label>
                   <p>{bitacorasAprendiz.length} de 12</p>
-                  <label>Visitas Agendadas:</label>
+                  <label>Número de Visitas Agendadas:</label>
                   <p>{visitasAprendiz.length} de 3</p>
                   {aprendizInfo && !aprendizInfo.id_aprendiz ? null : (
                     <div className="mt-4">

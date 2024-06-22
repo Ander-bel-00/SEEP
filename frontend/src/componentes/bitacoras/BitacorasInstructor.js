@@ -6,6 +6,8 @@ import { FaClipboardCheck } from "react-icons/fa6";
 import { MdAddComment } from "react-icons/md";
 import { FaDownload } from "react-icons/fa";
 
+const ITEMS_PER_PAGE = 20;
+
 function BitacorasInstructor() {
   const [bitacoras, setBitacoras] = useState([]);
   const [numeroFicha, setNumeroFicha] = useState("");
@@ -18,6 +20,7 @@ function BitacorasInstructor() {
   const [hoveredButton, setHoveredButton] = useState(null); // Estado para controlar el hover
   const [hoveredObservaciones, setHoveredObservaciones] = useState(null);
   const [hoveredDownload, setHoveredDownload] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchBitacoras = async () => {
@@ -94,6 +97,7 @@ function BitacorasInstructor() {
     const value = event.target.value;
     if (/^\d*$/.test(value)) {
       setNumeroFicha(value);
+      setCurrentPage(1);  // Resetear a la primera página cuando se cambia el filtro
     }
   };
 
@@ -101,6 +105,7 @@ function BitacorasInstructor() {
     const value = event.target.value;
     if (!/\d/.test(value)) {
       setNombreAprendiz(value);
+      setCurrentPage(1);  // Resetear a la primera página cuando se cambia el filtro
     }
   };
 
@@ -119,18 +124,22 @@ function BitacorasInstructor() {
 
   const bitacorasFiltradas = bitacoras.filter((bitacora) => {
     const aprendiz = aprendizInfo[bitacora.id_aprendiz] || {};
+    if (!aprendiz) return false;
+
     if (
       numeroFicha &&
-      !aprendiz.numero_ficha?.toString().includes(numeroFicha.toString())
+      !aprendiz.numero_ficha.toString().includes(numeroFicha.toString())
     ) {
       return false;
     }
+
     if (
       nombreAprendiz &&
-      !aprendiz.nombres?.toLowerCase().includes(nombreAprendiz.toLowerCase())
+      !aprendiz.nombres.toLowerCase().includes(nombreAprendiz.toLowerCase())
     ) {
       return false;
     }
+
     return true;
   });
 
@@ -151,6 +160,38 @@ function BitacorasInstructor() {
       link.click();
     } catch (error) {
       console.error("Error al descargar el archivo:", error);
+    }
+  };
+
+  // Ordenar los documentos por el nombre del aprendiz
+  const bitacorasOrdenadas = bitacorasFiltradas.sort((a, b) => {
+    const aprendizA = aprendizInfo[a.id_aprendiz] || {};
+    const aprendizB = aprendizInfo[b.id_aprendiz] || {};
+    const nombreA = (aprendizA.nombres || "").toLowerCase();
+    const nombreB = (aprendizB.nombres || "").toLowerCase();
+    if (nombreA < nombreB) return -1;
+    if (nombreA > nombreB) return 1;
+    // Si los nombres son iguales, ordenar por número de bitácora ascendente
+    return a.numero_de_bitacora - b.numero_de_bitacora;
+  });
+  
+
+  const totalPages = Math.ceil(bitacorasOrdenadas.length / ITEMS_PER_PAGE);
+
+  const bitacorasPaginadas = bitacorasOrdenadas.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
     }
   };
 
@@ -221,7 +262,7 @@ function BitacorasInstructor() {
           </tr>
         </thead>
         <tbody className="tbody">
-          {bitacorasFiltradas.map((bitacora) => {
+          {bitacorasPaginadas.map((bitacora) => {
             const aprendiz = aprendizInfo[bitacora.id_aprendiz] || {};
             const ficha = fichaAprendizInfo[aprendiz.numero_ficha] || {};
             return (
@@ -326,6 +367,25 @@ function BitacorasInstructor() {
           </button>
         </div>
       </Modal>
+      <div className="pagination">
+        <button
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+          className="pagination-button"
+        >
+          Anterior
+        </button>
+        <span>
+          Página {currentPage} de {totalPages}
+        </span>
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className="pagination-button"
+        >
+          Siguiente
+        </button>
+      </div>
     </div>
   );
 }

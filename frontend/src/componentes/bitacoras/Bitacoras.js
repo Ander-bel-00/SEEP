@@ -180,7 +180,7 @@ function Bitacoras() {
   return (
     <Fragment>
       <div className="docs-content">
-        <h1 className="text-center upTitle">Carga de bitácoras</h1>
+        <h1 className="text-center upTitle">Cargar Bitácoras</h1>
         <div className="form-docs">
           <form onSubmit={handleSubmit}>
             <p className="tipoDocumento">

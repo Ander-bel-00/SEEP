@@ -308,7 +308,7 @@ function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
                     <table className="tabla">
                       <thead>
                         <tr>
-                          <th>Tipo de Visita</th>
+                          <th>Número de Visita</th>
                           <th>Fecha de Visita</th>
                           <th>Hora de Visita</th>
                         </tr>

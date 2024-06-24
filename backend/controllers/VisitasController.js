@@ -109,6 +109,7 @@ exports.crearEvento = async (req, res) => {
         hora_fin,
         lugar_visita,
         modalidad_visita,
+        estado: 'activo',  // Establecer el estado como activo al crear la visita
         aprendiz: id_aprendiz,
       });
 
@@ -142,6 +143,7 @@ exports.obtenerEventosAprendiz = async (req, res) => {
     const visitas = await Visitas.findAll({
       where: {
         aprendiz: idAprendiz,
+        estado: 'activo'
       },
     });
     if (visitas) {
@@ -197,5 +199,27 @@ exports.eliminarEvento = async (req, res) => {
     res.status(500).json({
       mensaje: "Error en el servidor",
     });
+  }
+};
+
+exports.cancelarEvento = async (req, res) => {
+  try {
+    const idVisita = req.params.id_visita;
+    const { motivo_cancelacion } = req.body;
+
+    const visita = await Visitas.findOne({
+      where: { id_visita: idVisita }
+    });
+
+    if (visita) {
+      visita.motivo_cancelacion = motivo_cancelacion;
+      visita.estado = 'cancelado';
+      await visita.save();
+      res.json({ mensaje: "La visita se ha cancelado" });
+    } else {
+      res.status(404).json({ mensaje: "Visita no encontrada" });
+    }
+  } catch (error) {
+    res.status(500).json({ mensaje: "Error en el servidor" });
   }
 };

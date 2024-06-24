@@ -20,6 +20,8 @@ function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
   const [empresaData, setEmpresaData] = useState([]);
   const [showVisits, setShowVisits] = useState(true);
   const [empresaInfo, setEmpresaInfo] = useState(null);
+  const [fichaAprendizInfo, setFichaAprendizInfo] = useState([]);
+  const [instructorInfo, setInstructorInfo] = useState([]);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -63,6 +65,14 @@ function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
           `/aprendiz/id/${response.data.usuario.id_aprendiz}`
         );
         setAprendizInfo(resAprendiz.data);
+
+        const fichaData = await clienteAxios.get(
+          `/ficha-aprendiz/ficha/${resAprendiz.data.numero_ficha}`
+        );
+        setFichaAprendizInfo(fichaData.data.ficha);
+
+        const instructorData = await clienteAxios.get(`/instructor/get/ficha/${resAprendiz.data.numero_ficha}`);
+        setInstructorInfo(instructorData.data);
 
         if (resAprendiz.data.contrasena_temporal) {
           openModal();
@@ -209,7 +219,9 @@ function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
                 value={nuevaContrasena}
                 onChange={(e) => setNuevaContrasena(e.target.value)}
               />
-              <button onClick={actualizarContrasena}>Actualizar contraseña</button>
+              <button onClick={actualizarContrasena}>
+                Actualizar contraseña
+              </button>
             </Modal>
             <Modal
               isOpen={modalEmpresa}
@@ -218,7 +230,10 @@ function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
               shouldCloseOnOverlayClick={false}
               shouldCloseOnEsc={false}
             >
-              <h2>Ingresa la información de la empresa en la que realiza sus prácticas</h2>
+              <h2>
+                Ingresa la información de la empresa en la que realiza sus
+                prácticas
+              </h2>
               <label htmlFor="razon_social">Razón social empresa:</label>
               <input
                 type="text"
@@ -233,51 +248,65 @@ function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
                 name="nit_empresa"
                 onChange={handleChange}
               />
-              <label htmlFor="direccion_empresa">Dirección de la empresa:</label>
+              <label htmlFor="direccion_empresa">
+                Dirección de la empresa:
+              </label>
               <input
                 type="text"
                 id="direccion_empresa"
                 name="direccion_empresa"
                 onChange={handleChange}
               />
-              <label htmlFor="nombre_jefe_inmediato">Nombres del jefe inmediato:</label>
+              <label htmlFor="nombre_jefe_inmediato">
+                Nombres del jefe inmediato:
+              </label>
               <input
                 type="text"
                 id="nombre_jefe_inmediato"
                 name="nombre_jefe_inmediato"
                 onChange={handleChange}
               />
-              <label htmlFor="apellidos_jefe_inmediato">Apellidos del jefe inmediato:</label>
+              <label htmlFor="apellidos_jefe_inmediato">
+                Apellidos del jefe inmediato:
+              </label>
               <input
                 type="text"
                 id="apellidos_jefe_inmediato"
                 name="apellidos_jefe_inmediato"
                 onChange={handleChange}
               />
-              <label htmlFor="cargo_jefe_inmediato">Cargo del jefe inmediato:</label>
+              <label htmlFor="cargo_jefe_inmediato">
+                Cargo del jefe inmediato:
+              </label>
               <input
                 type="text"
                 id="cargo_jefe_inmediato"
                 name="cargo_jefe_inmediato"
                 onChange={handleChange}
               />
-              <label htmlFor="telefono_jefe_inmediato">Teléfono del jefe inmediato:</label>
+              <label htmlFor="telefono_jefe_inmediato">
+                Teléfono del jefe inmediato:
+              </label>
               <input
                 type="number"
                 id="telefono_jefe_inmediato"
                 name="telefono_jefe_inmediato"
                 onChange={handleChange}
               />
-              <label htmlFor="email_jefe_imediato">E-mail del jefe inmediato:</label>
+              <label htmlFor="email_jefe_imediato">
+                E-mail del jefe inmediato:
+              </label>
               <input
                 type="email"
                 id="email_jefe_imediato"
                 name="email_jefe_imediato"
                 onChange={handleChange}
               />
-              <button onClick={añadirInfoEmpresa}>Añadir Información de la Empresa</button>
+              <button onClick={añadirInfoEmpresa}>
+                Añadir Información de la Empresa
+              </button>
             </Modal>
-  
+
             <div className="row">
               <div className="col-md-6 col-lg-6">
                 <div className="card carta info-aprendiz">
@@ -293,10 +322,11 @@ function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
                       <strong>Apellidos: </strong> {usuario.apellidos}
                     </p>
                     <p className="card-text texo-carta">
-                      <strong>Programa de formación: </strong> {usuario.programa_formacion}
+                      <strong>Número de Ficha: </strong> {usuario.numero_ficha}
                     </p>
                     <p className="card-text texo-carta">
-                      <strong>Número de Ficha: </strong> {usuario.numero_ficha}
+                      <strong>Programa de formación: </strong>{" "}
+                      {fichaAprendizInfo.programa_formacion}
                     </p>
                   </div>
                 </div>
@@ -318,12 +348,17 @@ function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
                           <td>Primera visita</td>
                           <td>
                             {fechasPorTipo["primera visita"]
-                              ? moment(fechasPorTipo["primera visita"]).format("LL")
+                              ? moment(fechasPorTipo["primera visita"]).format(
+                                  "LL"
+                                )
                               : "No agendada"}
                           </td>
                           <td>
                             {horasPorTipo["primera visita"]
-                              ? moment(horasPorTipo["primera visita"], "HH:mm").format("h:mm A")
+                              ? moment(
+                                  horasPorTipo["primera visita"],
+                                  "HH:mm"
+                                ).format("h:mm A")
                               : "No agendada"}
                           </td>
                         </tr>
@@ -331,12 +366,17 @@ function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
                           <td>Segunda visita</td>
                           <td>
                             {fechasPorTipo["segunda visita"]
-                              ? moment(fechasPorTipo["segunda visita"]).format("LL")
+                              ? moment(fechasPorTipo["segunda visita"]).format(
+                                  "LL"
+                                )
                               : "No agendada"}
                           </td>
                           <td>
                             {horasPorTipo["segunda visita"]
-                              ? moment(horasPorTipo["segunda visita"], "HH:mm").format("h:mm A")
+                              ? moment(
+                                  horasPorTipo["segunda visita"],
+                                  "HH:mm"
+                                ).format("h:mm A")
                               : "No agendada"}
                           </td>
                         </tr>
@@ -344,12 +384,17 @@ function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
                           <td>Tercera visita</td>
                           <td>
                             {fechasPorTipo["tercera visita"]
-                              ? moment(fechasPorTipo["tercera visita"]).format("LL")
+                              ? moment(fechasPorTipo["tercera visita"]).format(
+                                  "LL"
+                                )
                               : "No agendada"}
                           </td>
                           <td>
                             {horasPorTipo["tercera visita"]
-                              ? moment(horasPorTipo["tercera visita"], "HH:mm").format("h:mm A")
+                              ? moment(
+                                  horasPorTipo["tercera visita"],
+                                  "HH:mm"
+                                ).format("h:mm A")
                               : "No agendada"}
                           </td>
                         </tr>
@@ -364,14 +409,45 @@ function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
                     {empresaInfo ? (
                       <div className="empresa-info">
                         <h2>Información de la Empresa</h2>
-                        <p><strong>Razón Social:</strong> {empresaInfo.razon_social}</p>
-                        <p><strong>NIT:</strong> {empresaInfo.nit_empresa}</p>
-                        <p><strong>Dirección:</strong> {empresaInfo.direccion_empresa}</p>
-                        <p><strong>Nombre del Jefe Inmediato:</strong> {empresaInfo.nombre_jefe_inmediato}</p>
-                        <p><strong>Apellidos del Jefe Inmediato:</strong> {empresaInfo.apellidos_jefe_inmediato}</p>
-                        <p><strong>Cargo del Jefe Inmediato:</strong> {empresaInfo.cargo_jefe_inmediato}</p>
-                        <p><strong>Teléfono del Jefe Inmediato:</strong> {empresaInfo.telefono_jefe_inmediato}</p>
-                        <p><strong>Email del Jefe Inmediato:</strong> {empresaInfo.email_jefe_imediato}</p>
+                        <p>
+                          <strong>Razón Social:</strong>{" "}
+                          {empresaInfo.razon_social}
+                        </p>
+                        <p>
+                          <strong>NIT:</strong> {empresaInfo.nit_empresa}
+                        </p>
+                        <p>
+                          <strong>Dirección:</strong>{" "}
+                          {empresaInfo.direccion_empresa}
+                        </p>
+                        <p>
+                          <strong>Nombre del Jefe Inmediato:</strong>{" "}
+                          {empresaInfo.nombre_jefe_inmediato}
+                        </p>
+                        <p>
+                          <strong>Apellidos del Jefe Inmediato:</strong>{" "}
+                          {empresaInfo.apellidos_jefe_inmediato}
+                        </p>
+                        <p>
+                          <strong>Cargo del Jefe Inmediato:</strong>{" "}
+                          {empresaInfo.cargo_jefe_inmediato}
+                        </p>
+                        <p>
+                          <strong>Teléfono del Jefe Inmediato:</strong>{" "}
+                          {empresaInfo.telefono_jefe_inmediato}
+                        </p>
+                        <p>
+                          <strong>Email del Jefe Inmediato:</strong>{" "}
+                          {empresaInfo.email_jefe_imediato}
+                        </p>
+                        <p>
+                          <strong>Instructor Seguimiento Etapa Productiva:</strong>{" "}
+                          {instructorInfo.nombres} {instructorInfo.apellidos}
+                        </p>
+                        <p>
+                          <strong>E-mail Instructor Seguimiento Etapa Productiva:</strong>{" "}
+                          {instructorInfo.correo_electronico1}
+                        </p>
                       </div>
                     ) : (
                       <p>Cargando información de la empresa...</p>
@@ -390,7 +466,6 @@ function Aprendiz({ setModalIsOpen, setModalEmpresaOpen }) {
       </div>
     </Fragment>
   );
-  
 }
 
 export default Aprendiz;

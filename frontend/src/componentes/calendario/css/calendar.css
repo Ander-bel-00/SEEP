@@ -95,6 +95,80 @@
 .info-modal-calendar__col2 div {
   margin-bottom: 0.4rem;
 }
+
+/* Modal General */
+.modal-delete-visit {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content-visit-delete {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.modal-delete-visit h2 {
+  margin-bottom: 15px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  margin-left: 10px;
+}
+
+/* Input Fields */
+.modal-content-visit-delete label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.modal-content-visit-delete input[type="text"],
+.modal-content-visit-delete input[type="date"],
+.modal-content-visit-delete input[type="time"],
+.modal-content-visit-delete textarea {
+  width: calc(100% - 20px);
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+/* Textarea */
+.modal-content-visit-delete textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.btn-close-delet-modal{
+  background-color: #39a900;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.btn-close-delet-modal:hover{
+  background-color: #2f8901;
+}
+
+
 /* Celulares con breakpoint de 480px */
 
 /* Estilos específicos para dispositivos móviles con ancho de pantalla hasta 480px */

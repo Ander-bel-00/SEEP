@@ -184,6 +184,38 @@ exports.obtenerInstructorById = async (req, res, next) => {
   }
 };
 
+// Obtener un Instructor por número de ficha asignada.
+exports.obtenerInstructorByFicha = async (req, res, next) => {
+  try {
+    const numero_ficha = req.params.numero_ficha;
+
+    // Buscar un instructor cuya fichas_asignadas contenga el número de ficha buscado
+
+    /*[Sequelize.Op.like]: Indica que quieres realizar una búsqueda donde la columna fichas_asignadas 
+    contenga una subcadena que coincida con el valor de numero_ficha.
+    %${numero_ficha}%: Es la cadena de búsqueda donde % es un comodín que indica que 
+    puede haber cualquier número de caracteres (incluyendo ninguno) antes y después 
+    de numero_ficha. Esto permite buscar cualquier valor de fichas_asignadas que 
+    contenga numero_ficha en cualquier posición de la cadena. */
+    const instructor = await Instructores.findOne({
+      where: {
+        fichas_asignadas: {
+          [Sequelize.Op.like]: `%${numero_ficha}%`,
+        },
+      },
+    });
+
+    if (!instructor) {
+      return res.status(404).json({ mensaje: "No se encuentra el instructor" });
+    }
+
+    res.status(200).json(instructor);
+  } catch (error) {
+    console.error("Hubo error al obtener el instructor por ficha", error);
+    res.status(500).json({ mensaje: "Hubo error interno en el servidor" });
+  }
+};
+
 // Actualizar datos de un Instructor.
 exports.actualizarInstructor = async (req, res, next) => {
   try {

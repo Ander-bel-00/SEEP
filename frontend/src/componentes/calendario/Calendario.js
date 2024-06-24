@@ -33,6 +33,7 @@ function Calendario() {
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [eventTitle, setEventTitle] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -42,8 +43,13 @@ function Calendario() {
   const [selectedModalidadEvent, setSelectedModalidadEvent] = useState("");
   const [aprendizInfo, setAprendizInfo] = useState([]);
   const [fichaAprendizInfo, setFichaAprendizInfo] = useState([]);
-  // Dentro de tu componente Calendario
+  const [motivoCancelacion, setMotivoCancelacion] = useState("");
   const [guardando, setGuardando] = useState(false);
+  const [tiposVisitaActivos, setTiposVisitaActivos] = useState([
+    "Primera visita",
+    "Segunda visita",
+    "Tercera visita",
+  ]);
 
   useEffect(() => {
     const obtenerUsuario = async () => {
@@ -73,7 +79,14 @@ function Calendario() {
       const response = await clienteAxios.get(
         `/visitas-aprendiz/${id_aprendiz}`
       );
-      setEvents(response.data.visitas || []);
+      const eventosActivos = response.data.visitas.filter(
+        (evento) => evento.estado !== "cancelado"
+      );
+      setEvents(eventosActivos || []);
+
+      // Obtener todos los tipos de visita activos
+      const tiposActivos = eventosActivos.map((evento) => evento.tipo_visita);
+      setTiposVisitaActivos([...new Set(tiposActivos)]);
     } catch (error) {
       console.error("Error al cargar eventos:", error);
     }
@@ -103,14 +116,20 @@ function Calendario() {
     setSelectedPlaceEvent(selectedEvent.lugar_visita);
     setSelectedModalidadEvent(selectedEvent.modalidad_visita);
   };
+  const openCancelModal = () => {
+    setShowCancelModal(true);
+    setShowModal(false);
+  };
 
   const closeModal = () => {
     setShowModal(false);
     setShowEditModal(false);
+    setShowCancelModal(false);
     setSelectedDate(null);
     setEventTitle("");
     setSelectedTime("");
     setSelectedEvent(null);
+    setMotivoCancelacion("");
   };
 
   const saveEvent = async () => {
@@ -118,17 +137,14 @@ function Calendario() {
       console.error("Por favor, complete todos los campos.");
       return;
     }
-  
+
     const formattedStartTime = moment(selectedTime, "HH:mm").format("HH:mm");
     const formattedEndTime = moment(selectedEndTime, "HH:mm").format("HH:mm");
-  
-    // Obtener la fecha actual
+
     const currentDate = moment();
-  
-    // Verificar si la fecha seleccionada es anterior a la fecha actual
+
     if (moment(selectedDate).isBefore(currentDate, "day")) {
       console.error("No se pueden agregar eventos en fechas anteriores a hoy.");
-      // Mostrar mensaje de error en el frontend
       Swal.fire({
         icon: "error",
         title: "Error al agendar visita",
@@ -136,10 +152,10 @@ function Calendario() {
       });
       return;
     }
-  
+
     try {
-      setGuardando(true); // Activar el estado de guardando
-  
+      setGuardando(true);
+
       const response = await clienteAxios.post(`/nuevaVisita/${id_aprendiz}`, {
         tipo_visita: eventTitle,
         fecha: selectedDate,
@@ -148,10 +164,18 @@ function Calendario() {
         lugar_visita: selectedPlaceEvent,
         modalidad_visita: selectedModalidadEvent,
       });
-  
-      setEvents((prevEvents) => [...prevEvents, response.data]);
+
+      // Actualizar eventos con el nuevo evento creado
+      setEvents([...events, response.data]);
+
+      // Actualizar tiposVisitaActivos con los tipos activos después de agregar el nuevo evento
+      const tiposActivos = [
+        ...new Set([...tiposVisitaActivos, response.data.tipo_visita]),
+      ];
+      setTiposVisitaActivos(tiposActivos);
+
       closeModal();
-      // Mostrar SweetAlert de éxito
+
       Swal.fire({
         icon: "success",
         title: "Visita agendada correctamente",
@@ -159,7 +183,7 @@ function Calendario() {
       });
     } catch (error) {
       console.error("Error al guardar el evento:", error);
-      // Mostrar SweetAlert de error con el mensaje del backend
+
       Swal.fire({
         icon: "error",
         title: "Error al agendar visita",
@@ -168,7 +192,7 @@ function Calendario() {
           "Hubo un error al intentar agendar la visita.",
       });
     } finally {
-      setGuardando(false); // Desactivar el estado de guardando sin importar si fue éxito o error
+      setGuardando(false);
     }
   };
 
@@ -213,31 +237,29 @@ function Calendario() {
     }
   };
 
-  const eliminarEvento = async () => {
+  const cancelarEvento = async () => {
     try {
       const id_visita = selectedEvent.id_visita;
-      const response = await clienteAxios.delete(
-        `/visitas-delete/${id_visita}`
-      );
-      console.log("Eliminar evento:", response.data.mensaje);
-      // Eliminar el evento del estado local
-      setEvents((prevEvents) =>
-        prevEvents.filter((event) => event.id_visita !== id_visita)
-      );
-      // Mostrar SweetAlert de éxito
+      await clienteAxios.put(`/visitas-cancelar/${id_visita}`, {
+        motivo_cancelacion: motivoCancelacion,
+        estado: "cancelado", // Agregar este campo
+      });
+
+      // Recargar los eventos para reflejar la cancelación
+      await cargarEventos();
+
       Swal.fire({
         icon: "success",
         title: "Visita Cancelada",
         text: "La visita se ha cancelado correctamente",
       });
-      closeModal(); // Cerrar el modal solo si la visita se elimina con éxito
+
+      closeModal();
     } catch (error) {
-      console.error("Error al eliminar la Visita:", error);
-      // Mostrar SweetAlert de error
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Hubo un error al intentar eliminar la Visita",
+        text: "Hubo un error al intentar cancelar la visita",
       });
     }
   };
@@ -345,7 +367,7 @@ function Calendario() {
                           <div className="info-modal-calendar__col1">
                             <h2>Información de la Visita</h2>
                             <div>
-                              <strong>Tipo de Visita:</strong>{" "}
+                              <strong>Número de visita:</strong>{" "}
                               {selectedEvent.tipo_visita}
                             </div>
                             <div>
@@ -404,7 +426,7 @@ function Calendario() {
                           style={{ fontWeight: "bold" }}
                           className="inline-block"
                         >
-                          Tipo de visita:
+                          Número de Visita:
                         </label>
                         <select
                           value={eventTitle}
@@ -414,10 +436,23 @@ function Calendario() {
                           <option value="">
                             Seleccione el tipo de visita...
                           </option>
-                          <option value="Primera visita">Primera visita</option>
-                          <option value="Segunda Visita">Segunda visita</option>
-                          <option value="Tercera visita">Tercera visita</option>
+                          {!tiposVisitaActivos.includes("Primera visita") && (
+                            <option value="Primera visita">
+                              Primera visita
+                            </option>
+                          )}
+                          {!tiposVisitaActivos.includes("Segunda visita") && (
+                            <option value="Segunda visita">
+                              Segunda visita
+                            </option>
+                          )}
+                          {!tiposVisitaActivos.includes("Tercera visita") && (
+                            <option value="Tercera visita">
+                              Tercera visita
+                            </option>
+                          )}
                         </select>
+
                         <br />
                         <label
                           style={{ fontWeight: "bold" }}
@@ -518,7 +553,7 @@ function Calendario() {
                       <button
                         type="button"
                         className="btn btn-danger"
-                        onClick={eliminarEvento}
+                        onClick={openCancelModal}
                       >
                         Cancelar Visita
                       </button>
@@ -581,7 +616,7 @@ function Calendario() {
                   </div>
                   <div className="modal-body">
                     <label style={{ fontWeight: "bold" }}>
-                      Tipo de visita:
+                      Número de Visita:
                     </label>
                     <select
                       value={eventTitle}
@@ -671,6 +706,29 @@ function Calendario() {
                     </button>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* Modal para cancelar evento */}
+        {showCancelModal && (
+          <div className="modal-delete-visit">
+            <div className="modal-content-visit-delete">
+              <h2>Cancelar Visita</h2>
+              <form>
+                <label>Motivo de Cancelación:</label>
+                <textarea
+                  value={motivoCancelacion}
+                  onChange={(e) => setMotivoCancelacion(e.target.value)}
+                ></textarea>
+              </form>
+              <div className="modal-actions">
+                <button onClick={cancelarEvento} className="btn btn-danger">
+                  Confirmar Cancelación
+                </button>
+                <button onClick={closeModal} className="btn-close-delet-modal">
+                  Cerrar
+                </button>
               </div>
             </div>
           </div>

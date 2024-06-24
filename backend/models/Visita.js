@@ -3,7 +3,7 @@ const { sequelize } = require('../config/database');
 const Aprendiz = require('./Aprendices');
 
 const Visitas = sequelize.define('Visitas', {
-    id_visita:{
+    id_visita: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true
@@ -33,7 +33,16 @@ const Visitas = sequelize.define('Visitas', {
         values: ['Presencial', 'Virtual'],
         allowNull: false
     },
-    aprendiz:{
+    motivo_cancelacion: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    estado: {  // Nuevo campo estado
+        type: DataTypes.ENUM,
+        values: ['activo', 'cancelado'],
+        defaultValue: 'activo'
+    },
+    aprendiz: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
@@ -41,10 +50,9 @@ const Visitas = sequelize.define('Visitas', {
             key: 'id_aprendiz'
         }
     },
-},{
+}, {
     sequelize,
     modelName: 'Visitas'
 });
 
 module.exports = Visitas;
-

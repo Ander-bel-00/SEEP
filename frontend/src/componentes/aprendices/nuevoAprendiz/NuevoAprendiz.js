@@ -15,6 +15,7 @@ function NuevoAprendiz() {
   const [Fichas, setFichas] = useState([]);
   const [selectedFichaNumero, setSelectedFichaNumero] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     const obtenerFichas = async () => {
@@ -101,6 +102,18 @@ function NuevoAprendiz() {
     setFormData({ ...formData, numero_ficha: numero_ficha }); // Actualizar formData con el número de ficha seleccionado
     setModalIsOpen(false);
   };
+
+  const handleFilterChange = (event) => {
+    const { value } = event.target;
+    // Filtrar solo números
+    const filteredValue = value.replace(/\D/g, "");
+    setFilter(filteredValue);
+  };
+
+  // Filtrar las fichas basado en el número de ficha
+  const filteredFichas = Fichas.filter((ficha) =>
+    ficha.numero_ficha.toString().includes(filter)
+  );
   
 
   return (
@@ -305,20 +318,41 @@ function NuevoAprendiz() {
             overlayClassName="overlay-Modal"
           >
             <div className="modal-fichas-set-content">
+              {/* Campo de filtro */}
+              <input
+                type="text"
+                placeholder="Buscar Ficha Por Número"
+                value={filter}
+                onChange={handleFilterChange}
+                className="new-aprendiz-ficha-sel"
+              />
+              {/* Lista de fichas filtradas o todas las fichas si no hay filtro */}
               {Fichas.length > 0 ? (
                 <ul>
-                  {Fichas.map((ficha) => (
-                    <li key={ficha.numero_ficha}>
-                      <button
-                        onClick={() => handleSelectFicha(ficha.numero_ficha)}
-                      >
-                        {ficha.numero_ficha} - {ficha.programa_formacion}
-                      </button>
-                    </li>
-                  ))}
+                  {filter === "" ? (
+                    Fichas.map((ficha) => (
+                      <li key={ficha.numero_ficha}>
+                        <button
+                          onClick={() => handleSelectFicha(ficha.numero_ficha)}
+                        >
+                          {ficha.numero_ficha} - {ficha.programa_formacion}
+                        </button>
+                      </li>
+                    ))
+                  ) : (
+                    filteredFichas.map((ficha) => (
+                      <li key={ficha.numero_ficha}>
+                        <button
+                          onClick={() => handleSelectFicha(ficha.numero_ficha)}
+                        >
+                          {ficha.numero_ficha} - {ficha.programa_formacion}
+                        </button>
+                      </li>
+                    ))
+                  )}
                 </ul>
               ) : (
-                <p>No hay Fichas disponibles</p>
+                <p>No hay fichas disponibles</p>
               )}
             </div>
           </Modal>

@@ -67,6 +67,7 @@ module.exports = function () {
     router.get('/instructor/:numero_documento/fichas-asignadas', InstructorController.obtenerFichasAsignadas);
     router.get('/instructores/get-All', authRequired, InstructorController.obtenerInstructores);
     router.get('/instructores/get-Instructor/:id_instructor', authRequired, InstructorController.obtenerInstructorById);
+    router.get('/instructor/get/ficha/:numero_ficha', InstructorController.obtenerInstructorByFicha);
     router.put('/instructores/update/:id_instructor', authRequired, InstructorController.actualizarInstructor);
     router.put('/instructor/:id_instructor/nuevaContrasena', InstructorController.nueaContrasenaInstructor)
     router.delete('/instructores/delete/:id_instructor', authRequired, InstructorController.eliminarInstructor);
@@ -77,8 +78,9 @@ module.exports = function () {
     router.get('/visitas-getAll', authRequired, VisitasController.obtenerEventos);
     router.get('/visitas-aprendiz/:id_aprendiz', authRequired, VisitasController.obtenerEventosAprendiz);
     router.put('/visitas-update/:id_visita', authRequired, VisitasController.actualizarEventos);
+    router.put('/visitas-cancelar/:id_visita', authRequired, VisitasController.cancelarEvento);
     router.delete('/visitas-delete/:id_visita', authRequired, VisitasController.eliminarEvento);
-
+    
 
     // Rutas para los Documentos.
     router.post('/documentos-upload/:id_aprendiz', authRequired, DocumentsController.cargarDocumento);

@@ -712,9 +712,11 @@ function Calendario() {
         )}
         {/* Modal para cancelar evento */}
         {showCancelModal && (
-          <div className="modal-delete-visit">
+          <div className="modal-delete-visit" >
             <div className="modal-content-visit-delete">
+              <div>
               <h2>Cancelar Visita</h2>
+              </div>
               <form>
                 <label>Motivo de Cancelación:</label>
                 <textarea
@@ -723,9 +725,24 @@ function Calendario() {
                 ></textarea>
               </form>
               <div className="modal-actions">
-                <button onClick={cancelarEvento} className="btn btn-danger">
-                  Confirmar Cancelación
-                </button>
+              <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => {
+                        if (!motivoCancelacion) {
+                          Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Por favor, ingrese un motivo para la cancelación.",
+                          });
+                        } else {
+                          cancelarEvento();
+                        }
+                      }}
+                      style={{ backgroundColor: "#FF0000", color: "#ffffff" }}
+                    >
+                      Confirmar Cancelación
+                    </button>
                 <button onClick={closeModal} className="btn-close-delet-modal">
                   Cerrar
                 </button>

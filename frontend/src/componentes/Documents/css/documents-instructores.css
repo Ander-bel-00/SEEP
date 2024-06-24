@@ -113,6 +113,10 @@
 
 /* Media query para dispositivos móviles */
 @media screen and (max-width: 480px) {
+  .documents-main-cont{
+    position: relative;
+    left: 0.25rem;
+  }
   .main-ins-bitacoras{
     margin-top: 130px;
     padding-top: 20px;
@@ -129,6 +133,11 @@
     position: relative;
     right: 6%;
     width: 95%;
+  }
+
+  .div-docs-instruc{
+    position: relative;
+    left: -0.27rem;
   }
 
   .docsTab {

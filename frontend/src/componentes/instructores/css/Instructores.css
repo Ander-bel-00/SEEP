@@ -171,13 +171,13 @@
 
     .fichas-content{
         position: relative;
-        right: 8rem;
+        left: 1.3rem;
     }
 
     .fichas-grid {
         grid-template-columns: repeat(1, 1fr); /* Cambiar a una sola columna */
         position: relative;
-        right: 10rem;
+        left: -2rem;
         top: 80px;
     }
 
@@ -185,7 +185,7 @@
         width: 50%; /* Asegurar que cada ficha ocupe el ancho completo */
         margin-bottom: 20px; /* Agregar margen inferior para separar las fichas */
         position: relative;
-        right: 4.5rem;
+        right: 1rem;
     }
 
     .fichasAsignedTitle {
@@ -226,7 +226,7 @@
         left: -1rem;
         padding: 8px;
         border-bottom: 2px solid #808080;
-    }   
+    }
 }
 
 @media screen and (min-width: 1280px) {

@@ -146,7 +146,7 @@ function Instructor({ setModalIsOpen }) {
 
   return (
     <Fragment>
-      <div className="main-container__contenedor-hijo">
+      <div className="main-container__contenedor-hijo fichas-movil">
         <div className="titles mt-11">
           <h2 className="fichasAsignedTitle ">Agendamiento de visitas</h2>
           <h5 className=" text-gray-500 selctFicha">Selecciona una ficha</h5>

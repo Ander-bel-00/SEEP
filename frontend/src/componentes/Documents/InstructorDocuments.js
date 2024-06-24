@@ -148,7 +148,7 @@ function InstructorDocuments() {
   };
 
   return (
-    <div>
+    <div className="div-docs-instruc">
       <h2 className="text-center" style={{ color: "#39a900" }}>
         Documentos de los Aprendices
       </h2>

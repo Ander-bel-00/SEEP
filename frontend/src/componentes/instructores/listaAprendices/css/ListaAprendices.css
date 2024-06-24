@@ -145,7 +145,7 @@
         padding-top: 20px;
         display: block;
         position: relative;
-        right: 10%;
+        right: 0%;
     }
 
     .list-col1 {
@@ -166,6 +166,9 @@
         width: 100%;
         box-shadow: none;
         background-color: transparent;
+        position: relative;
+        right: 1rem;
+        margin-top: 1rem;
     }
 
     .aprendices-fichas {

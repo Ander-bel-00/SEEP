@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from 'js-cookie';
 
 const clienteAxios = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'http://10.200.80.126:5000',
     withCredentials: true,
 });
 

@@ -59,7 +59,7 @@ function ListaAprendices() {
 
   return (
     <Fragment>
-      <div className="main-container__contenedor-hijo">
+      <div className="main-container__contenedor-hijo fichas-movil">
         <div className="list-aprendices-box">
           <div className="list-col1">
             <h2 className="list-title">

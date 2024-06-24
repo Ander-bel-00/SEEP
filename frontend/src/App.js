@@ -141,7 +141,7 @@ function App() {
                   <Route
                     path=":id_instructor/documents-instructor"
                     element={
-                      <main className="main-ins-bitacoras">
+                      <main className="main-ins-bitacoras documents-main-cont">
                         <InstructorDocuments setModalIsOpen={setModalIsOpen} />
                       </main>
                     }
@@ -251,7 +251,7 @@ function App() {
                     path="/crear-ficha"
                     element={
                       <main className="main-container">
-                        <NuevaFicha setModalIsOpen={setModalIsOpen} />
+                        <FichasForm setModalIsOpen={setModalIsOpen} />
                       </main>
                     }
                   />

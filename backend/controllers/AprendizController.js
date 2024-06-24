@@ -12,14 +12,26 @@ const {
 
 exports.nuevoAprendiz = async (req, res, next) => {
   try {
+    const { correo_electronico1, correo_electronico_sofia_plus } = req.body;
+
+    // Verificar si el correo electrónico ya está registrado
+    const correoExistente = await Aprendices.findOne({
+      where: { correo_electronico1, correo_electronico_sofia_plus }
+    });
+
+    if (correoExistente) {
+      return res.status(400).json({
+        mensaje: "El correo electrónico ya está registrado"
+      });
+    }
+
     // Generar una contraseña aleatoria
     const contrasenaAleatoria = generarContrasenaAleatoria();
 
     // Validar la longitud de la contraseña antes de encriptarla
     if (contrasenaAleatoria.length < 8) {
       return res.status(400).json({
-        mensaje:
-          "La contraseña generada no cumple con los requisitos de longitud",
+        mensaje: "La contraseña generada no cumple con los requisitos de longitud",
       });
     }
 
@@ -29,16 +41,13 @@ exports.nuevoAprendiz = async (req, res, next) => {
 
     // Buscar la ficha correspondiente al número de ficha proporcionado
     const ficha = await Fichas.findOne({
-      where: {
-        numero_ficha: req.body.numero_ficha,
-      },
+      where: { numero_ficha: req.body.numero_ficha }
     });
 
     // Si no se encuentra la ficha, retornar un error
     if (!ficha) {
       return res.status(404).json({
-        mensaje:
-          "No se encontró la ficha correspondiente al número proporcionado",
+        mensaje: "No se encontró la ficha correspondiente al número proporcionado",
       });
     }
 
@@ -52,57 +61,46 @@ exports.nuevoAprendiz = async (req, res, next) => {
 
     // Verificar si el aprendiz existe antes de crearlo.
     const aprendizExistente = await Aprendices.findOne({
-      where: {
-        numero_documento: req.body.numero_documento,
-      },
+      where: { numero_documento: req.body.numero_documento }
     });
 
     // Si el aprendiz existe me envia un mensaje de error, de lo contrario me crea el aprendiz.
     if (aprendizExistente) {
-      res
-        .status(500)
-        .json({ mensaje: "El aprendiz ya se encuentra registrado" });
-    } else {
-      const correo_electronico1 = req.body.correo_electronico1;
-      // Crea el aprendiz en la base de datos
-      const aprendiz = await Aprendices.create(aprendizData);
-
-      const datosPlantilla = {
-        nombreUsuario: aprendiz.nombres,
-        numeroDocumento: aprendiz.numero_documento,
-        contrasenaUsuario: contrasenaAleatoria,
-      };
-      const cuerpoCorreo =
-        plantillasController.RegisterAprendiz(datosPlantilla);
-
-      await enviarCorreo(
-        correo_electronico1,
-        "S.E.E.P-Bienvenido al Sistema de Evaluación de Etapa Productiva",
-        cuerpoCorreo
-      );
-
-      // Enviar mensaje de respuesta con los datos del aprendiz creado.
-      res.json({
-        mensaje: "El aprendiz ha sido registrado exitosamente",
-        aprendiz,
-      });
+      return res.status(400).json({ mensaje: "El aprendiz ya se encuentra registrado" });
     }
+
+    // Crear el aprendiz en la base de datos
+    const aprendiz = await Aprendices.create(aprendizData);
+
+    const datosPlantilla = {
+      nombreUsuario: aprendiz.nombres,
+      numeroDocumento: aprendiz.numero_documento,
+      contrasenaUsuario: contrasenaAleatoria,
+    };
+    const cuerpoCorreo = plantillasController.RegisterAprendiz(datosPlantilla);
+
+    await enviarCorreo(
+      correo_electronico1,
+      "S.E.E.P-Bienvenido al Sistema de Evaluación de Etapa Productiva",
+      cuerpoCorreo
+    );
+
+    // Enviar mensaje de respuesta con los datos del aprendiz creado.
+    res.json({
+      mensaje: "El aprendiz ha sido registrado exitosamente",
+      aprendiz,
+    });
   } catch (error) {
     console.error("Error al crear un nuevo aprendiz", error);
-    // Aquí verificamos si el error es una instancia de SequelizeValidationError
     if (error instanceof SequelizeValidationError) {
-      // Extraemos los mensajes de error y los enviamos al cliente
       const errores = error.errors.map((e) => e.message);
-      return res
-        .status(400)
-        .json({ mensaje: "Hubo un error al validar los datos", errores });
+      return res.status(400).json({ mensaje: "Hubo un error al validar los datos", errores });
     }
-    res
-      .status(500)
-      .json({ mensaje: "Hubo un error al procesar la solicitud", error });
+    res.status(500).json({ mensaje: "Hubo un error al procesar la solicitud", error });
     next();
   }
 };
+
 
 // Obtener los datos de todos los aprendices almacenados en la base de datos.
 exports.mostrarAprendices = async (req, res, next) => {

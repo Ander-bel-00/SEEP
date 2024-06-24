@@ -62,7 +62,7 @@ function AgendaCell({ visita }) {
         </div>
         <div className="multiline">{fichaAprendizInfo.programa_formacion}</div>
         <div>
-          <strong>Tipo de Visita:</strong> {visita.tipo_visita}
+          <strong>Número de Visita Agendada:</strong> {visita.tipo_visita}
         </div>
         <div>
           <strong>Fecha:</strong> {formatDate(visita.fecha)}

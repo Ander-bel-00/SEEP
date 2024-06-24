@@ -64,11 +64,7 @@ function NuevoAprendiz() {
       console.error("Error al crear el aprendiz:", error);
 
       let errorMessage = "Hubo un error al procesar la solicitud";
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.mensaje
-      ) {
+      if (error.response && error.response.data && error.response.data.mensaje) {
         errorMessage = error.response.data.mensaje;
       }
       const errores = error.response.data.errores || [];

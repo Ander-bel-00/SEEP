@@ -11,6 +11,7 @@ const session = require('express-session');
 const cors = require('cors');
 const routes = require('./routes');
 const { sequelize, testConnection } = require('./config/database');
+require('dotenv').config(); // Cargar variables de entorno desde .env
 
 // Importar los modelos desde el archivo centralizado
 const models = require('./models');
@@ -25,16 +26,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
-    secret: 'my-secret-key', // Cambia esto por tu propia clave secreta
+    secret: 'my-secret-key', // Cambia esto por tu propia clave secreta del token
     resave: false,
     saveUninitialized: true
 }));
 
-// Habilitar cors.
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true // Establecer las cookies al frontend.
-}));
+const corsOptions = {
+    origin: 'https://front-seep.vercel.app', // Cambiar a tu dominio de frontend en Vercel
+    credentials: true // Permitir cookies desde el frontend
+};
+
+app.use(cors(corsOptions));
+
 
 // Configurar Handlebars como motor de plantillas
 app.engine('hbs', exphbs.engine);
@@ -44,7 +47,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Rutas
 app.use('/', routes());
 
-const port = process.env.PORT || 5000;
+const port = process.env.SERVERPORT || 5000;
 
 // Sincronizar los modelos con la base de datos
 async function startServer() {

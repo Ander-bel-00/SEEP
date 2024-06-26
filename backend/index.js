@@ -32,7 +32,7 @@ app.use(session({
 }));
 
 const corsOptions = {
-    origin: 'https://front-seep.vercel.app', // Cambiar a tu dominio de frontend en Vercel
+    origin: 'http://localhost:3000', // Cambiar a tu dominio de frontend en Vercel
     credentials: true // Permitir cookies desde el frontend
 };
 

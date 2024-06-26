@@ -23,20 +23,6 @@ exports.crearEvento = async (req, res) => {
     });
 
     if (aprendices) {
-      // Verificar si hay una visita del mismo tipo para el aprendiz en cualquier fecha
-      const visitaTipoExistente = await Visitas.findOne({
-        where: {
-          aprendiz: id_aprendiz,
-          tipo_visita: tipo_visita,
-        },
-      });
-
-      if (visitaTipoExistente) {
-        return res.status(400).json({
-          error: "Ya está agendada una visita de este tipo para el aprendiz",
-        });
-      }
-
       // Verificar si hay una visita agendada en el mismo día con horas posteriores
       const visitaPrevia = await Visitas.findOne({
         where: {

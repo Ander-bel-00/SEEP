@@ -1,20 +1,10 @@
 const { Sequelize } = require('sequelize');
 
-const Database = process.env.DATABASE || "seep";
-const User = process.env.USER || "Ander";
-const Password = process.env.PASSWORD || "Ab%12345";
-const Host = process.env.DBHOST || 'seep-db.mysql.database.azure.com';
 
-const sequelize = new Sequelize(Database, User, Password, {
-  host: Host,
+const sequelize = new Sequelize("seep", "root", "root", {
+  host: 'localhost',
   dialect: 'mysql',
-  port: process.env.PORTDB || 3306,
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
-  }
+  port: 3306,
 });
 
 async function testConnection() {
